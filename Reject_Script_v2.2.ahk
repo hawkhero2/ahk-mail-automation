@@ -58,15 +58,11 @@ Gui, Add, Checkbox, vProcessFleet, Process Fleet?
 Gui, Add, Text,,Signature Name
 Gui, Add, Edit, vsigName w200
 
-
 Gui, Show,AutoSize w500 h210
 Gui, Color,9ca2a6,e9edf0
 return
 
 ;--------------------------------------------Test Zone-------------------------------------------------------------------
-
-
-
 
 ;--------------------------------------------Test Zone-------------------------------------------------------------------
 
@@ -81,7 +77,6 @@ ButtonChatSend:
 	If(List){
 		message = %chatRecipient% %TrackNr% - %RejMes%
 		chatSendFunc(message)
-
 		Send ^{v}
 		Send {Enter}
 		Return
@@ -182,6 +177,7 @@ Return
 /*
 Checks and opens Capture2text app, Moves mouse in certain position and move clicks 
 */
+
 ScrollLock::
 	Gui, Submit, NoHide
 
@@ -301,7 +297,7 @@ mailSendFunc(message,message2){
 		
 	}
 	else
-		MsgBox, "The Window does not exist"	
+		MsgBox, "Mail App not running""	
 }
 
 chatSendFunc(message){
