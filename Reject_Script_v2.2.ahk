@@ -1,65 +1,66 @@
 #Persistent
 #NoEnv
 #NoTrayIcon
+#Include, MainGUI.ahk
 ;--------------------------------------------UI -------------------------------------------------------------------
-;trackID of your file
-Gui, Add, Text,, TrackID
-Gui, Add, Edit, vTrackNr w200 0x2000 0x1
+; ;trackID of your file
+; Gui, Add, Text,, TrackID
+; Gui, Add, Edit, vTrackNr w200 0x2000 0x1
 
-;the account for the subject
-Gui, Add, Text,, Account
-Gui, Add, Edit, vUserAcc w200 0x1
+; ;the account for the subject
+; Gui, Add, Text,, Account
+; Gui, Add, Edit, vUserAcc w200 0x1
 
-;trackID for doppelts
-Gui, Add, Text,, Doppelt 
-Gui, Add, Edit, vdoppeltNrs w200 0x2000 0x1
+; ;trackID for doppelts
+; Gui, Add, Text,, Doppelt 
+; Gui, Add, Edit, vdoppeltNrs w200 0x2000 0x1
 
-;date for the doppelt
-Gui, Add, Text,,Rejection Day
-Gui, Add, Edit, vrejDay w200 0x1
+; ;date for the doppelt
+; Gui, Add, Text,,Rejection Day
+; Gui, Add, Edit, vrejDay w200 0x1
 
-;field for difference value
-Gui, Add, Text,,Difference
-Gui, Add, Edit, vdiffVal w200 0x1
+; ;field for difference value
+; Gui, Add, Text,,Difference
+; Gui, Add, Edit, vdiffVal w200 0x1
 
-;DDL for rejection messages,
-;populated from rs_config.ini
-IniRead, IniOutput, rs_config.ini, Rejection,
-Gui, Add, DropDownList, vRejMes w200 Sort, % StrReplace(IniOutput,"`n","|")
+; ;DDL for rejection messages,
+; ;populated from rs_config.ini
+; IniRead, IniOutput, rs_config.ini, Rejection,
+; Gui, Add, DropDownList, vRejMes w200 Sort, % StrReplace(IniOutput,"`n","|")
 
-;Button Send Mail
-Gui, Add, Button,Default w200 gButtonSend , Mail
+; ;Button Send Mail
+; Gui, Add, Button,Default w200 gButtonSend , Mail
 
-;Button Chat Send
-Gui, Add, Button, w200 gButtonChatSend, Chat
+; ;Button Chat Send
+; Gui, Add, Button, w200 gButtonChatSend, Chat
 
-;radio List
-Gui, Add, Radio, vList, List
+; ;radio List
+; Gui, Add, Radio, vList, List
 
-;radio Doppler
-Gui, Add, Radio, vDoppler, Doppler
+; ;radio Doppler
+; Gui, Add, Radio, vDoppler, Doppler
 
-;radio Doppler2
-Gui, Add, Radio, vDoppler2, Doppler2
+; ;radio Doppler2
+; Gui, Add, Radio, vDoppler2, Doppler2
 
-;radio Doppler Kurze
-Gui, Add, Radio, vKurze, Doppler Kurze
+; ;radio Doppler Kurze
+; Gui, Add, Radio, vKurze, Doppler Kurze
 
-;radio Difference
-Gui, Add, Radio, vDifference, Difference
+; ;radio Difference
+; Gui, Add, Radio, vDifference, Difference
 
-;checkbox auto-send mail
-Gui, Add, Checkbox, vAutoSendMail, Auto-Send Mails?
+; ;checkbox auto-send mail
+; Gui, Add, Checkbox, vAutoSendMail, Auto-Send Mails?
 
-;checkbox Processing Fleet ?
-Gui, Add, Checkbox, vProcessFleet, Process Fleet?
+; ;checkbox Processing Fleet ?
+; Gui, Add, Checkbox, vProcessFleet, Process Fleet?
 
-;signature name
-Gui, Add, Text,,Signature Name
-Gui, Add, Edit, vsigName w200
+; ;signature name
+; Gui, Add, Text,,Signature Name
+; Gui, Add, Edit, vsigName w200
 
-Gui, Show,AutoSize w500 h210
-Gui, Color,9ca2a6,e9edf0
+Gui, Main:Show,AutoSize w500 h210
+Gui, Main:Color,9ca2a6,e9edf0
 return
 
 ;--------------------------------------------Test Zone-------------------------------------------------------------------
