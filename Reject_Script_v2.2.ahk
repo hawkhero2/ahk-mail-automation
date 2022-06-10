@@ -1,75 +1,27 @@
 #Persistent
 #NoEnv
 #NoTrayIcon
-#Include, MainGUI.ahk
+#Include, ui\Main_gui.ahk
+#Include, ui\Settings_gui.ahk
 ;--------------------------------------------UI -------------------------------------------------------------------
-; ;trackID of your file
-; Gui, Add, Text,, TrackID
-; Gui, Add, Edit, vTrackNr w200 0x2000 0x1
-
-; ;the account for the subject
-; Gui, Add, Text,, Account
-; Gui, Add, Edit, vUserAcc w200 0x1
-
-; ;trackID for doppelts
-; Gui, Add, Text,, Doppelt 
-; Gui, Add, Edit, vdoppeltNrs w200 0x2000 0x1
-
-; ;date for the doppelt
-; Gui, Add, Text,,Rejection Day
-; Gui, Add, Edit, vrejDay w200 0x1
-
-; ;field for difference value
-; Gui, Add, Text,,Difference
-; Gui, Add, Edit, vdiffVal w200 0x1
-
-; ;DDL for rejection messages,
-; ;populated from rs_config.ini
-; IniRead, IniOutput, rs_config.ini, Rejection,
-; Gui, Add, DropDownList, vRejMes w200 Sort, % StrReplace(IniOutput,"`n","|")
-
-; ;Button Send Mail
-; Gui, Add, Button,Default w200 gButtonSend , Mail
-
-; ;Button Chat Send
-; Gui, Add, Button, w200 gButtonChatSend, Chat
-
-; ;radio List
-; Gui, Add, Radio, vList, List
-
-; ;radio Doppler
-; Gui, Add, Radio, vDoppler, Doppler
-
-; ;radio Doppler2
-; Gui, Add, Radio, vDoppler2, Doppler2
-
-; ;radio Doppler Kurze
-; Gui, Add, Radio, vKurze, Doppler Kurze
-
-; ;radio Difference
-; Gui, Add, Radio, vDifference, Difference
-
-; ;checkbox auto-send mail
-; Gui, Add, Checkbox, vAutoSendMail, Auto-Send Mails?
-
-; ;checkbox Processing Fleet ?
-; Gui, Add, Checkbox, vProcessFleet, Process Fleet?
-
-; ;signature name
-; Gui, Add, Text,,Signature Name
-; Gui, Add, Edit, vsigName w200
 
 Gui, Main:Show,AutoSize w500 h210
 Gui, Main:Color,9ca2a6,e9edf0
 return
 
-;--------------------------------------------Test Zone-------------------------------------------------------------------
-
-;--------------------------------------------Test Zone-------------------------------------------------------------------
-
 ;---------------------------------------------Labels------------------------------------------------------------------
 
+ButtonSave:
+Gui, Submit, NoHide
+	Gui, Main:Show
+	Gui, Settings:Hide
+Return
 
+ButtonSettings:
+	Gui, Submit, NoHide
+	Gui, Main:Hide,
+	Gui, Settings:Show, w200 h200, Settings
+Return
 
 ButtonChatSend:
 	Gui, Submit, NoHide
@@ -184,11 +136,16 @@ ScrollLock::
 
     ;Check if process capture2text is running
     Process, Exist, capture2text.exe
-
-	;variables for mouse position
+	/*
+	variables for mouse position
+	Left edge of track id
+	*/
 	x1 = 409
 	y1 = 132
-
+	
+	/*
+	Right edge of track id
+	*/
 	x2 = 468
 	y2 = 153
     
@@ -223,7 +180,6 @@ Return
 /*
 Mouse 4th button remapped to enter
 */
-
 XButton1::
 	Loop{
 		Sleep, 50
@@ -254,8 +210,6 @@ Pause::
 	else
 		MsgBox, Counter is not running
 Return
-
-;to add : auto stop-start counter from tackid ->4x TAB-> 2x Enter-> 3x TAB
 
 +F5::Edit
 ^F5::Reload
@@ -325,6 +279,9 @@ chatSendFunc(message){
 }
 
 trackIdGet(x1,y1,x2,y2){
+	/*""
+	Mouse position for track id
+	*/
 	MouseMove, x1, y1, 0
     Sleep, 80
 	Clipboard:=""

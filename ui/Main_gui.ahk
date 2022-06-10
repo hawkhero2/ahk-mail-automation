@@ -1,6 +1,3 @@
-#SingleInstance, Force
-SetWorkingDir, %A_ScriptDir%
-
 ;trackID of your file
 Gui, Main:Add, Text,, TrackID
 Gui, Main:Add, Edit, vTrackNr w200 0x2000 0x1
@@ -28,6 +25,8 @@ Gui, Main:Add, DropDownList, vRejMes w200 Sort, % StrReplace(IniOutput,"`n","|")
 
 ;Button Send Mail
 Gui, Main:Add, Button,Default w200 gButtonSend , Mail
+
+Gui, Main:Add, Button, w200 gButtonSettings, Settings
 
 ;Button Chat Send
 Gui, Main:Add, Button, w200 gButtonChatSend, Chat
