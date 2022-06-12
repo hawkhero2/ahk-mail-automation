@@ -1,3 +1,10 @@
+/*
+*       Extracted the Main_UI elements from the main script Reject_Script
+TODO :  Dynamically create the UI elements based on Class_GUI
+TODO :  Dynamical values for the keybinds and coordinates x y previously setup in Settings Window
+TODO :  Themes for the UI elements chosen from Settings_GUI
+*/
+
 ;trackID of your file
 Gui, Main:Add, Text,, TrackID
 Gui, Main:Add, Edit, vTrackNr w200 0x2000 0x1
@@ -17,9 +24,10 @@ Gui, Main:Add, Edit, vrejDay w200 0x1
 ;field for difference value
 Gui, Main:Add, Text,,Difference
 Gui, Main:Add, Edit, vdiffVal w200 0x1
-
-;DDL for rejection messages,
-;populated from rs_config.ini
+/*
+DDL for rejection messages,
+populated from rs_config.ini
+*/
 IniRead, IniOutput, rs_config.ini, Rejection,
 Gui, Main:Add, DropDownList, vRejMes w200 Sort, % StrReplace(IniOutput,"`n","|")
 

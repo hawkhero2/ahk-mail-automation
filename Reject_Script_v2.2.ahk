@@ -122,10 +122,6 @@ ButtonSend:
 	}
 Return
 
-Disable_Tooltip:
-	ToolTip
-Return
-
 ;---------------------------------------------------------Remmapings-----------------------------------------------------------------------
 /*
 Checks and opens Capture2text app, Moves mouse in certain position and move clicks 
@@ -133,7 +129,6 @@ Checks and opens Capture2text app, Moves mouse in certain position and move clic
 
 ScrollLock::
 	Gui, Submit, NoHide
-
     ;Check if process capture2text is running
     Process, Exist, capture2text.exe
 	/*
@@ -221,12 +216,8 @@ ExitApp
 /*
 Switches to mail window and fills up the email fields with message from input, and sends it
 */
+; function to send mail
 mailSendFunc(message,message2){
-	Debug := False
-	If (Debug){
-		ToolTip,in %message%, 250, 250
-		SetTimer, Disable_Tooltip, 10000
-	}
 	If WinExist("Roundcube"){
 		WinActivate
 		Sleep, 350
@@ -255,6 +246,7 @@ mailSendFunc(message,message2){
 		MsgBox, "Mail App not running""	
 }
 
+; function to send message on chat
 chatSendFunc(message){
 	If WinExist("Data"){
 		WinActivate
@@ -278,6 +270,7 @@ chatSendFunc(message){
 		MsgBox, "Chat is not open"
 }
 
+; function to get track id
 trackIdGet(x1,y1,x2,y2){
 	/*""
 	Mouse position for track id
