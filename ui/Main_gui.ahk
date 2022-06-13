@@ -1,7 +1,7 @@
 /*
 *       Extracted the Main_UI elements from the main script Reject_Script
 TODO :  Dynamically create the UI elements based on Class_GUI
-TODO :  Dynamical values for the keybinds and coordinates x y previously setup in Settings Window
+TODO :  Dynamical values for the keybinds and coordinates x y setup in Settings Window
 TODO :  Themes for the UI elements chosen from Settings_GUI
 */
 

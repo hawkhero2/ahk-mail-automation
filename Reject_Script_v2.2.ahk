@@ -7,10 +7,13 @@
 
 Gui, Main:Show,AutoSize w500 h210
 Gui, Main:Color,9ca2a6,e9edf0
+Gui, Settings:Hide
+
 return
 
 ;---------------------------------------------Labels------------------------------------------------------------------
 
+; Save settings in Settings GUI
 ButtonSave:
 Gui, Submit, NoHide
 	Gui, Main:Show
@@ -20,7 +23,7 @@ Return
 ButtonSettings:
 	Gui, Submit, NoHide
 	Gui, Main:Hide,
-	Gui, Settings:Show, w200 h200, Settings
+	Gui, Settings:Show, w350 h200, Settings
 Return
 
 ButtonChatSend:
@@ -126,7 +129,7 @@ Return
 /*
 Checks and opens Capture2text app, Moves mouse in certain position and move clicks 
 */
-
+; TODO : Set key from Settings window from a getKeyPressed function -> save key into config file
 ScrollLock::
 	Gui, Submit, NoHide
     ;Check if process capture2text is running
@@ -216,7 +219,7 @@ ExitApp
 /*
 Switches to mail window and fills up the email fields with message from input, and sends it
 */
-; function to send mail
+; function to send mail, message=subject & message2 = body
 mailSendFunc(message,message2){
 	If WinExist("Roundcube"){
 		WinActivate
@@ -246,7 +249,7 @@ mailSendFunc(message,message2){
 		MsgBox, "Mail App not running""	
 }
 
-; function to send message on chat
+; function to send message in chat in the appropiate channel
 chatSendFunc(message){
 	If WinExist("Data"){
 		WinActivate
@@ -272,14 +275,20 @@ chatSendFunc(message){
 
 ; function to get track id
 trackIdGet(x1,y1,x2,y2){
-	/*""
-	Mouse position for track id
+	/*
+	First x1, y2 coordinates are where the selection starts
 	*/
 	MouseMove, x1, y1, 0
     Sleep, 80
 	Clipboard:=""
     Send #q
     Sleep, 60
+	/*
+	Second x2, y2 coordinates are where the selection ends
+	*/
     MouseClick, Left, x2,y2
     MouseMove, 70, 400, 0
+}
+Submit(){
+	Gui, Submit, NoHide
 }
