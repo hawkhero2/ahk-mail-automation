@@ -24,11 +24,12 @@ Gui, Main:Add, Edit, vrejDay w200 0x1
 ;field for difference value
 Gui, Main:Add, Text,,Difference
 Gui, Main:Add, Edit, vdiffVal w200 0x1
+
+IniRead, IniOutput, rs_config.ini, Rejection,
 /*
 DDL for rejection messages,
 populated from rs_config.ini
 */
-IniRead, IniOutput, rs_config.ini, Rejection,
 Gui, Main:Add, DropDownList, vRejMes w200 Sort, % StrReplace(IniOutput,"`n","|")
 
 ;Button Send Mail
