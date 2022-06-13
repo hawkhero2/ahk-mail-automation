@@ -1,0 +1,22 @@
+{
+    "ui": {
+        "theme": [
+            "dark",
+            "light"
+        ]
+    },
+    "track_id_position": {
+        "default":{
+            "x1": 0,
+            "y1": 0,
+            "x2": 0,
+            "y2": 0
+        },
+        "glass":{
+            "x1": 0,
+            "y1": 0,
+            "x2": 0,
+            "y2": 0
+        }
+    }
+}
