@@ -1,10 +1,13 @@
-class GUI{
+class Base_UI{
     /*
     *       This class is the main class of the GUI.
     TODO    Continue reading Class documentation for more information.
     */
 
-    Destroy(name){
+    static name := ""
+
+;   Destroy UI
+    __Destroy(name){
         ;* Destroy the GUI
         ; TODO 
         global
@@ -17,18 +20,21 @@ class GUI{
         
     }
 
-    New(){
+;   Create new UI
+    __New(name, title, width, height){
         ;* Create a new GUI
         ; TODO 
-
+        return Gui, %name%:Show, w%width% h%height%, %title%
     }
 
-    Color(){
+;   Set UI Color
+    __Color(){
         ;* Set the color of the GUI
         ; TODO 
     }
 
-    Add(){
+;   Add new Control
+    __Add(){
         ;* Add a new element to the GUI
         ; TODO 
     }
