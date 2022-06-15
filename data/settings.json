@@ -1,9 +1,9 @@
 {
     "ui": {
-        "theme": [
-            "dark",
-            "light"
-        ]
+        "theme": {
+            "dark": "9ca2a6",
+            "light": "e3e3e3"
+        }
     },
     "track_id_position": {
         "default":{
