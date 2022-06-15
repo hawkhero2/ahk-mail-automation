@@ -1,4 +1,9 @@
 class GUI{
+    /*
+    *       This class is the main class of the GUI.
+    TODO    Continue reading Class documentation for more information.
+    */
+
     Destroy(name){
         ;* Destroy the GUI
         ; TODO 
