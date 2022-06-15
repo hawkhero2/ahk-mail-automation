@@ -6,7 +6,7 @@
 ;--------------------------------------------UI -------------------------------------------------------------------
 
 Gui, Main:Show,AutoSize w500 h210
-Gui, Main:Color,9ca2a6,e9edf0
+Gui, Main:Color,selected_theme(),e9edf0
 Gui, Settings:Hide
 
 return
@@ -14,11 +14,6 @@ return
 ;---------------------------------------------Labels------------------------------------------------------------------
 
 ; Save settings in Settings GUI
-ButtonSave:
-Gui, Submit, NoHide
-	Gui, Main:Show
-	Gui, Settings:Hide
-Return
 
 ButtonSettings:
 	Gui, Submit, NoHide
