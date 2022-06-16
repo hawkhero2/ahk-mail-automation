@@ -24,17 +24,17 @@ Return
 GuiClose:
 ExitApp
 
-;   returns default theme color code from settings.ini
-get_default_theme(){    
-    IniRead, tempVar, settings.ini, Default Settings, theme
-    Return %tempVar%
-}
-get_theme(theme){
-    theme := theme
-    IniRead, color_code, settings.ini, Themes,%theme%
-    Return %color_code%
-}
+;returns default theme color code from settings.ini
+; get_default_theme(){    
+;     IniRead, tempVar, settings.ini, Default Settings, theme
+;     Return %tempVar%
+; }
+; get_theme(theme){
+;     theme := theme
+;     IniRead, color_code, settings.ini, Themes,%theme%
+;     Return %color_code%
+; }
 
-set_theme(theme_name){
+; set_theme(theme_name){
 
-}
+; }

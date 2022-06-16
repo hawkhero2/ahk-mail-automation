@@ -8,37 +8,28 @@ TODO : Use InputHook to get the keybinds
 */
 ; #Include, lib\third-party\JSON.ahk
 ; #Include, lib\third-party\Jxon.ahk
+#Include, lib\Functions.ahk
 
-Gui, Settings:Add, DDL, vthemeVal, Dark|Light
+Gui, Settings:Add, DDL, vtheme_key, Dark|Light
 Gui, Settings:Add, Button,x200 y150 w60 h25 gButtonSave,Save
+Gui, Settings:Add, Button,x200 y175 w60 h25 gButtonCancel,Cancel
 
-; Get default theme value from settings.ini
-; get_theme(){ ; ! Not tested yet
-    
-;     IniRead, tempVar, settings.ini, Default Settings, theme
-;     global default_theme_code := tempVar
-;     Return default_theme_code ; TODO Test output for "default_theme_code"
-; }
 
-; Set default theme value in settings.ini
-; set_theme(){
-;     global theme_code
-;     global default_theme_code
-;     default_theme_code := tempVar
-
-;     ; Reads settings.ini and sets the theme based on the ddl var
-;     ; ! Not working yet
-;     IniRead, tempVar,settings.ini , Themes,%themeVal%
-;     theme_code := tempVar
-    
-; 	IniWrite, %theme_code%, settings.ini, Default Settings, theme
-; }
+def_theme = get_default_theme()
+Gui, Settings:Color,%def_theme%
+   
 
 ButtonSave:
-Gui, Submit, NoHide
-    set_theme()
-    ; color_code := get_default_theme()
+	Gui, Submit, NoHide
+	theme_name = %theme_key%
+	IniRead, temp_color_code, settings.ini, Themes,% theme_name
+    IniWrite, %temp_color_code%, settings.ini, Default Settings, theme
+    def_theme := get_default_theme() 
 	Gui, Main:Show
 	Gui, Main:Color,%color_code%,e9edf0
 	Gui, Settings:Hide
+Return
+
+ButtonCancel:
+	Gui, Main:Show
 Return
