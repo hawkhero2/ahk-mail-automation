@@ -141,8 +141,8 @@ stop_start_func(tabs_nr){ ;is_glass is a boolean value, true if glass is being u
 
 ; runs stop_start_func() for the appropriate number of tabs based on the activity
 stop_start_func_activity(is_fleet){
-    If (is_glass = True){
-        stop_start_func(7)
+    If (is_fleet = True){
+        stop_start_func(6)
     }
     Else{
         stop_start_func(4)
