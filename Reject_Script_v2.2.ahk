@@ -10,7 +10,6 @@
 Note	:	Always do Gui Color before Gui Show
 */
 
-
 /*
 *												GLOBAL VARIABLES
 */
@@ -97,9 +96,6 @@ Gui, Main:Add, Edit, vsigName w200
 Gui, Main:Show,AutoSize w500 h210
 Gui, Main:Color,%DEFAULT_THEME%
 
-
-
-
 /*
 *												LABELS
 */
@@ -107,7 +103,7 @@ ButtonSave:
 	Gui, Submit, NoHide
 	theme_name = %theme_key%
 	IniRead, temp_color_code, %SETTINGS_FILE%, Themes,% theme_name
-    IniWrite, %temp_color_code%, %SETTINGS_FILE%, Default Settings, theme
+	IniWrite, %temp_color_code%, %SETTINGS_FILE%, Default Settings, theme
 	Gui, Main:Color,%DEFAULT_THEME%
 	Gui, Main:Show
 	Gui, Settings:Hide
@@ -143,7 +139,7 @@ ButtonChatSend:
 		Return
 	}
 	If(Doppler2){
-		message = %chatRecipient%  %TrackNr% - Dieser Vorgang wurde bereits unter Vorgang %doppeltNrs% geprüft.
+		message = %chatRecipient% %TrackNr% - Dieser Vorgang wurde bereits unter Vorgang %doppeltNrs% geprüft.
 		chatSendFunc(message)
 		Send ^{v}
 		Send {Enter}
@@ -170,12 +166,12 @@ ButtonSend:
 	Gui, Submit, NoHide
 	If (List){
 		message2 = %TrackNr%-%A_DD%.%A_MM%.%A_YYYY%, %UserAcc%
-		message =  Hello, `n`n%TrackNr% %RejMes%`n`n`nBest Regards,`n%sigName%`nDatamondial
+		message = Hello, `n`n%TrackNr% %RejMes%`n`n`nBest Regards,`n%sigName%`nDatamondial
 
 		mailSendFunc(message,message2)
 		if (AutoSendMail)
 			Send {Enter}
-	Return
+		Return
 	}
 
 	If (Doppler){
@@ -185,7 +181,7 @@ ButtonSend:
 		mailSendFunc(message,message2)
 		if (AutoSendMail)
 			Send {Enter}
-	Return
+		Return
 	}
 
 	If(Doppler2){
@@ -195,7 +191,7 @@ ButtonSend:
 		mailSendFunc(message,message2)
 		if (AutoSendMail)
 			Send {Enter}
-	Return
+		Return
 	}
 
 	If (Kurze){
@@ -205,7 +201,7 @@ ButtonSend:
 		mailSendFunc(message,message2)
 		if (AutoSendMail)
 			Send {Enter}
-	Return
+		Return
 	}
 
 	If (Difference){
@@ -213,9 +209,9 @@ ButtonSend:
 		message = Hello, `n`n%TrackNr% Difference of %diffVal% € - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von %diffVal%€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n%sigName%`nDatamondial
 
 		mailSendFunc(message,message2)
-	if (AutoSendMail)
+		if (AutoSendMail)
 			Send {Enter}
-	Return
+		Return
 	}
 
 	else{
@@ -223,13 +219,10 @@ ButtonSend:
 	}
 Return
 
-
 get_theme = get_default_theme()
-
 
 Gui, Main:Color,%DEFAULT_THEME%,e9edf0
 Gui, Settings:Hide
-
 
 /*
 *												HOTKEYS
