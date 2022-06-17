@@ -1,29 +1,127 @@
+/*
+*												IMPORTS & ##
+*/
 #Persistent
 #NoEnv
 #NoTrayIcon
-#Include, ui\Main_gui.ahk
-#Include, ui\Settings_gui.ahk
 #Include, lib\Functions.ahk
-;--------------------------------------------UI -------------------------------------------------------------------
 
-; ! get_default_theme not working
 
-get_theme = get_default_theme()
+
+/*
+*												GLOBAL VARIABLES
+*/
+global DEFAULT_THEME = get_default_theme()
+
+
+
+
+
+/*
+*												UI ELEMENTS
+*/
+
+;trackID of your file
+Gui, Main:Add, Text,, TrackID
+Gui, Main:Add, Edit, vTrackNr w200 0x2000 0x1
+
+;the account for the subject
+Gui, Main:Add, Text,, Account
+Gui, Main:Add, Edit, vUserAcc w200 0x1
+
+;trackID for doppelts
+Gui, Main:Add, Text,, Doppelt 
+Gui, Main:Add, Edit, vdoppeltNrs w200 0x2000 0x1
+
+;date for the doppelt
+Gui, Main:Add, Text,,Rejection Day
+Gui, Main:Add, Edit, vrejDay w200 0x1
+
+;field for difference value
+Gui, Main:Add, Text,,Difference
+Gui, Main:Add, Edit, vdiffVal w200 0x1
+
+IniRead, IniOutput, rs_config.ini, Rejection,
+/*
+DDL for rejection messages,
+populated from rs_config.ini
+*/
+Gui, Main:Add, DropDownList, vRejMes w200 Sort, % StrReplace(IniOutput,"`n","|")
+
+;Button Send Mail
+Gui, Main:Add, Button,Default w200 gButtonSend , Mail
+
+Gui, Main:Add, Button, w200 gButtonSettings, Settings
+
+;Button Chat Send
+Gui, Main:Add, Button, w200 gButtonChatSend, Chat
+
+;radio List
+Gui, Main:Add, Radio, vList, List
+
+;radio Doppler
+Gui, Main:Add, Radio, vDoppler, Doppler
+
+;radio Doppler2
+Gui, Main:Add, Radio, vDoppler2, Doppler2
+
+;radio Doppler Kurze
+Gui, Main:Add, Radio, vKurze, Doppler Kurze
+
+;radio Difference
+Gui, Main:Add, Radio, vDifference, Difference
+
+;checkbox auto-send mail
+Gui, Main:Add, Checkbox, vAutoSendMail, Auto-Send Mails?
+
+;checkbox Processing Fleet ?
+Gui, Main:Add, Checkbox, vProcessFleet, Process Fleet?
+
+; Settings ddl for theme
+Gui, Settings:Add, DDL, vtheme_key, Dark|Light
+
+; Settings Save button
+Gui, Settings:Add, Button,x200 y150 w60 h25 gButtonSave,Save
+
+; Settings Cancel button
+Gui, Settings:Add, Button,x200 y195 w60 h25 gButtonCancel,Cancel
+
+; Settings Theme select
+Gui, Settings:Color,%DEFAULT_THEME%
+
+;signature name
+Gui, Main:Add, Text,,Signature Name
+Gui, Main:Add, Edit, vsigName w200
 
 Gui, Main:Show,AutoSize w500 h210
-Gui, Main:Color,%get_theme%,e9edf0
-Gui, Settings:Hide
+Gui, Main:Color,%DEFAULT_THEME%
+Return
 
-return
 
-;---------------------------------------------Labels------------------------------------------------------------------
 
-; Save settings in Settings GUI
+/*
+*												LABELS
+*/
+ButtonSave:
+	Gui, Submit, NoHide
+	theme_name = %theme_key%
+	IniRead, temp_color_code, settings.ini, Themes,% theme_name
+    IniWrite, %temp_color_code%, settings.ini, Default Settings, theme
+    DEFAULT_THEME := get_default_theme() 
+	Gui, Main:Show
+	Gui, Main:Color,%DEFAULT_THEME%
+	Gui, Settings:Hide
+Return
+
+ButtonCancel:
+	Gui, Main:Show
+Return
 
 ButtonSettings:
 	Gui, Submit, NoHide
 	Gui, Main:Hide,
 	Gui, Settings:Show, w350 h200, Settings
+	Gui, Settings:Color,%DEFAULT_THEME%
 Return
 
 ButtonChatSend:
@@ -66,7 +164,7 @@ ButtonChatSend:
 		Return
 	}
 
-	Return
+Return
 
 ButtonSend:
 	Gui, Submit, NoHide
@@ -125,11 +223,19 @@ ButtonSend:
 	}
 Return
 
-;---------------------------------------------------------Remmapings-----------------------------------------------------------------------
+
+; ! get_default_theme not working
+
+get_theme = get_default_theme()
+
+; Gui, Main:Show,AutoSize w500 h210
+Gui, Main:Color,%DEFAULT_THEME%,e9edf0
+Gui, Settings:Hide
+
+
 /*
-Checks and opens Capture2text app, Moves mouse in certain position and move clicks 
+*												HOTKEY
 */
-; TODO : Set key from Settings window from a getKeyPressed function -> save key into config file
 
 MButton::
 	Gui, Submit, NoHide

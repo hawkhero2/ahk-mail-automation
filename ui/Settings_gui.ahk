@@ -13,11 +13,12 @@ TODO : Use InputHook to get the keybinds
 Gui, Settings:Add, DDL, vtheme_key, Dark|Light
 Gui, Settings:Add, Button,x200 y150 w60 h25 gButtonSave,Save
 Gui, Settings:Add, Button,x200 y195 w60 h25 gButtonCancel,Cancel
-
+Return
 
 def_theme = get_default_theme()
 Gui, Settings:Color,%def_theme%
-   
+
+Return
 
 /*
 todo	Save previous track_id to file and show it if needed

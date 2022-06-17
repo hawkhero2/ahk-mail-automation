@@ -64,3 +64,110 @@ Gui, Main:Add, Checkbox, vProcessFleet, Process Fleet?
 ;signature name
 Gui, Main:Add, Text,,Signature Name
 Gui, Main:Add, Edit, vsigName w200
+Gui, Main:Show,AutoSize w500 h210
+Return
+
+ButtonSettings:
+	Gui, Submit, NoHide
+	Gui, Main:Hide,
+	Gui, Settings:Show, w350 h200, Settings
+Return
+
+ButtonChatSend:
+	Gui, Submit, NoHide
+	IniRead, chatAcc, rs_config.ini, Chat
+	chatRecipient := %chatAcc%
+	If(List){
+		message = %chatRecipient% %TrackNr% - %RejMes%
+		chatSendFunc(message)
+		Send ^{v}
+		Send {Enter}
+		Return
+	}
+	If(Doppler){
+		message = %chatRecipient% %TrackNr% - Dieser Vorgang wurde bereits am %rejDay% unter Vorgang %doppeltNrs% geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt
+		chatSendFunc(message)
+		Send ^{v}
+		Send {Enter}
+		Return
+	}
+	If(Doppler2){
+		message = %chatRecipient%  %TrackNr% - Dieser Vorgang wurde bereits unter Vorgang %doppeltNrs% geprüft.
+		chatSendFunc(message)
+		Send ^{v}
+		Send {Enter}
+		Return
+	}
+	If(Kurze){
+		message = %chatRecipient% %TrackNr% - Doppelt %doppeltNrs% - Der Vorgang steht unter der Vorgangsnummer %doppeltNrs% zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.
+		chatSendFunc(message)
+		Send ^{v}
+		Send {Enter}
+		Return
+	}
+	If(Difference){
+		message = %chatRecipient% %TrackNr% - Difference of %diffVal% € - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von %diffVal%€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!
+		chatSendFunc(message)
+		Send ^{v}
+		Send {Enter}
+		Return
+	}
+
+Return
+
+ButtonSend:
+	Gui, Submit, NoHide
+	If (List){
+		message2 = %TrackNr%-%A_DD%.%A_MM%.%A_YYYY%, %UserAcc%
+		message =  Hello, `n`n%TrackNr% %RejMes%`n`n`nBest Regards,`n%sigName%`nDatamondial
+
+		mailSendFunc(message,message2)
+		if (AutoSendMail)
+			Send {Enter}
+	Return
+	}
+
+	If (Doppler){
+		message2 = %TrackNr%-%A_DD%.%A_MM%.%A_YYYY%, %UserAcc%
+		message = Hello,`n`nDoppelt %TrackNr% - Dieser Vorgang wurde bereits am %rejDay% unter Vorgang %doppeltNrs% geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n%sigName% `nDatamondial
+
+		mailSendFunc(message,message2)
+		if (AutoSendMail)
+			Send {Enter}
+	Return
+	}
+
+	If(Doppler2){
+		message2 = %TrackNr%-%A_DD%.%A_MM%.%A_YYYY%, %UserAcc%
+		message = Hello,`n`nDoppelt %TrackNr% - Dieser Vorgang wurde bereits unter Vorgang %doppeltNrs% geprüft. `n`n`nBest Regards,`n%sigName% `nDatamondial
+
+		mailSendFunc(message,message2)
+		if (AutoSendMail)
+			Send {Enter}
+	Return
+	}
+
+	If (Kurze){
+		message2 = %TrackNr%-%A_DD%.%A_MM%.%A_YYYY%, %UserAcc%
+		message = Hello,`n`nDoppelt %doppeltNrs% - Der Vorgang steht unter der Vorgangsnummer %doppeltNrs% zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.`n`n`nBest Regards,`n%sigName% `nDatamondial
+
+		mailSendFunc(message,message2)
+		if (AutoSendMail)
+			Send {Enter}
+	Return
+	}
+
+	If (Difference){
+		message2 = %TrackNr%-%A_DD%.%A_MM%.%A_YYYY%, %UserAcc%
+		message = Hello, `n`n%TrackNr% Difference of %diffVal% € - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von %diffVal%€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n%sigName%`nDatamondial
+
+		mailSendFunc(message,message2)
+	if (AutoSendMail)
+			Send {Enter}
+	Return
+	}
+
+	else{
+		MsgBox, You must select one option
+	}
+Return
