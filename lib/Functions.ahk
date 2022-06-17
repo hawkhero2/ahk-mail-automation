@@ -1,6 +1,6 @@
 ;grabs default theme color code from settings.ini
 get_default_theme(){    
-    IniRead, tempVar, settings.ini, Default Settings, theme
+    IniRead, tempVar, data\settings.ini, Default Settings, theme
     Return %tempVar%
 }
 

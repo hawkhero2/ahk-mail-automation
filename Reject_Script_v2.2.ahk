@@ -6,17 +6,17 @@
 #NoEnv
 #NoTrayIcon
 #Include, lib\Functions.ahk
-
+/*
+Note	:	Always do Gui Color before Gui Show
+*/
 
 
 /*
 *												GLOBAL VARIABLES
 */
 global DEFAULT_THEME = get_default_theme()
-
-
-
-
+global SETTINGS_FILE = "data/settings.ini"
+global RS_CFG = "data/rs_config.ini"
 
 /*
 *												UI ELEMENTS
@@ -42,7 +42,7 @@ Gui, Main:Add, Edit, vrejDay w200 0x1
 Gui, Main:Add, Text,,Difference
 Gui, Main:Add, Edit, vdiffVal w200 0x1
 
-IniRead, IniOutput, rs_config.ini, Rejection,
+IniRead, IniOutput, %RS_CFG%, Rejection,
 /*
 DDL for rejection messages,
 populated from rs_config.ini
@@ -85,7 +85,7 @@ Gui, Settings:Add, DDL, vtheme_key, Dark|Light
 Gui, Settings:Add, Button,x200 y150 w60 h25 gButtonSave,Save
 
 ; Settings Cancel button
-Gui, Settings:Add, Button,x200 y195 w60 h25 gButtonCancel,Cancel
+Gui, Settings:Add, Button,x200 y150 w60 h25 gButtonCancel,Cancel
 
 ; Settings Theme select
 Gui, Settings:Color,%DEFAULT_THEME%
@@ -96,7 +96,7 @@ Gui, Main:Add, Edit, vsigName w200
 
 Gui, Main:Show,AutoSize w500 h210
 Gui, Main:Color,%DEFAULT_THEME%
-Return
+
 
 
 
@@ -106,11 +106,10 @@ Return
 ButtonSave:
 	Gui, Submit, NoHide
 	theme_name = %theme_key%
-	IniRead, temp_color_code, settings.ini, Themes,% theme_name
-    IniWrite, %temp_color_code%, settings.ini, Default Settings, theme
-    DEFAULT_THEME := get_default_theme() 
-	Gui, Main:Show
+	IniRead, temp_color_code, %SETTINGS_FILE%, Themes,% theme_name
+    IniWrite, %temp_color_code%, %SETTINGS_FILE%, Default Settings, theme
 	Gui, Main:Color,%DEFAULT_THEME%
+	Gui, Main:Show
 	Gui, Settings:Hide
 Return
 
@@ -121,8 +120,8 @@ Return
 ButtonSettings:
 	Gui, Submit, NoHide
 	Gui, Main:Hide,
-	Gui, Settings:Show, w350 h200, Settings
 	Gui, Settings:Color,%DEFAULT_THEME%
+	Gui, Settings:Show, w350 h200, Settings
 Return
 
 ButtonChatSend:
@@ -225,17 +224,15 @@ ButtonSend:
 Return
 
 
-; ! get_default_theme not working
-
 get_theme = get_default_theme()
 
-; Gui, Main:Show,AutoSize w500 h210
+
 Gui, Main:Color,%DEFAULT_THEME%,e9edf0
 Gui, Settings:Hide
 
 
 /*
-*												HOTKEY
+*												HOTKEYS
 */
 
 MButton::
