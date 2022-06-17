@@ -76,21 +76,21 @@ grab_track_id(x1,y1,x2,y2){
 }
 
 ;Set track id to counter
-set_track_id(){
+set_track_id(x1,y1,x2,y2){
 	    ;Check if process capture2text is running
     Process, Exist, capture2text.exe
 	/*
 	variables for mouse position
 	Left edge of track id
 	*/
-	x1 = 409
-	y1 = 132
+	; x1 = 409
+	; y1 = 132
 	
 	/*
 	Right edge of track id
 	*/
-	x2 = 468
-	y2 = 153
+	; x2 = 468
+	; y2 = 153
     
     ;if the ErrorLevel is not 0 that means its running, and the automation will commence
     If !(ErrorLevel=0){
