@@ -8,7 +8,7 @@
 
 ; ! get_default_theme not working
 
-get_theme := get_default_theme()
+get_theme = get_default_theme()
 
 Gui, Main:Show,AutoSize w500 h210
 Gui, Main:Color,%get_theme%,e9edf0
