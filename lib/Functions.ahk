@@ -79,30 +79,13 @@ grab_track_id(x1,y1,x2,y2){
 set_track_id(x1,y1,x2,y2){
 	    ;Check if process capture2text is running
     Process, Exist, capture2text.exe
-	/*
-	variables for mouse position
-	Left edge of track id
-	*/
-	; x1 = 409
-	; y1 = 132
-	
-	/*
-	Right edge of track id
-	*/
-	; x2 = 468
-	; y2 = 153
-    
+
     ;if the ErrorLevel is not 0 that means its running, and the automation will commence
     If !(ErrorLevel=0){
         If (WinExist("CaptureThis")){
             WinActivate
-			If !(ProcessFleet){
-				grab_track_id(x1,y1,x2,y2)
-			}Else{
-				grab_track_id(x1-10,y1,x2-10,y2)
-			}
+			grab_track_id(x1,y1,x2,y2)
         }
-        
         ;checks for the counter app
         If (WinExist("(")){
             WinActivate
@@ -147,4 +130,15 @@ stop_start_func_activity(is_fleet){
     Else{
         stop_start_func(4)
     }
+}
+
+; write to ini
+write_ini( value, file, section_name, key ){
+	IniWrite, %value%, %file%, %section_name%, %key%
+}
+
+; read from ini
+read_ini( file, section_name, key ){
+	IniRead, val, %file%, %section_name%, %key%
+	Return %val%
 }

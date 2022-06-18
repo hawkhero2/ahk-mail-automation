@@ -6,8 +6,9 @@
 #NoEnv
 #NoTrayIcon
 #Include, lib\Functions.ahk
+#InstallMouseHook
 /*
-Note	:	Always do Gui Color before Gui Show
+!Note	:	Always do Gui Color before Gui Show
 */
 
 /*
@@ -16,14 +17,23 @@ Note	:	Always do Gui Color before Gui Show
 global DEFAULT_THEME = get_default_theme()
 global SETTINGS_FILE = "data/settings.ini"
 global RS_CFG = "data/rs_config.ini"
-IniRead, x1, %SETTINGS_FILE%,Track Id Location,x1
-IniRead, y1, %SETTINGS_FILE%,Track Id Location,y1
-IniRead, x2, %SETTINGS_FILE%,Track Id Location,x2
-IniRead, y2, %SETTINGS_FILE%,Track Id Location,y2
-global x_pos_1 = x1
-global y_pos_1 = y1
-global x_pos_2 = x2
-global y_pos_2 = y2
+
+/*
+*												DEFAULT POSITION OF THE TRACK ID
+*/
+global x_pos_1 = read_ini(SETTINGS_FILE, "Track Id Location", "x1")
+global y_pos_1 = read_ini(SETTINGS_FILE, "Track Id Location", "y1")
+global x_pos_2 = read_ini(SETTINGS_FILE, "Track Id Location", "x2")
+global y_pos_2 = read_ini(SETTINGS_FILE, "Track Id Location", "y2")
+/*
+*												FLEET POSITION OF THE TRACK ID
+*/
+global x_fleet_pos_1 = read_ini(SETTINGS_FILE, "Fleet Track Id Location", "x1")
+global y_fleet_pos_1 = read_ini(SETTINGS_FILE, "Fleet Track Id Location", "y1")
+global x_fleet_pos_2 = read_ini(SETTINGS_FILE, "Fleet Track Id Location", "x2")
+global y_fleet_pos_2 = read_ini(SETTINGS_FILE, "Fleet Track Id Location", "y2")
+
+
 /*
 *												UI ELEMENTS
 */
@@ -116,11 +126,34 @@ Return
 *												LABELS
 */
 ButtonSetFleetTrackID:
-	
+	KeyWait, LButton, D
+	MouseGetPos, cstm_x_pos1, cstm_y_pos1	;*	get start position of the track id coords
+	KeyWait, LButton,
+	MouseGetPos, cstm_x_pos2, cstm_y_pos2	;*	get end position of the track id coords
+	write_ini(cstm_x_pos1,SETTINGS_FILE,"Fleet Track Id Location","x1")
+	write_ini(cstm_y_pos1,SETTINGS_FILE,"Fleet Track Id Location","y1")
+	write_ini(cstm_x_pos2,SETTINGS_FILE,"Fleet Track Id Location","x2")
+	write_ini(cstm_y_pos2,SETTINGS_FILE,"Fleet Track Id Location","y2")	
 Return
 
 ButtonSetTrackID:
-
+	/*
+	todo	Save previous track_id to file and show it if needed
+	todo	Set app to run at startup
+	todo	Set manually grab_track_id() coordinates -> use MouseGetPos and KeyWait
+	*/
+	KeyWait, LButton, D
+	MouseGetPos, cstm_x_pos1, cstm_y_pos1	;*	get start position of the track id coords
+	KeyWait, LButton,
+	MouseGetPos, cstm_x_pos2, cstm_y_pos2	;*	get end position of the track id coords
+	write_ini(cstm_x_pos1,SETTINGS_FILE,"Track Id Location","x1")
+	write_ini(cstm_y_pos1,SETTINGS_FILE,"Track Id Location","y1")
+	write_ini(cstm_x_pos2,SETTINGS_FILE,"Track Id Location","x2")
+	write_ini(cstm_y_pos2,SETTINGS_FILE,"Track Id Location","y2")
+	; IniWrite, %cstm_x_pos1%, %SETTINGS_FILE%, Track Id Location, x1
+	; IniWrite, %cstm_y_pos1%, %SETTINGS_FILE%, Track Id Location, y1
+	; IniWrite, %cstm_x_pos2%, %SETTINGS_FILE%, Track Id Location, x2
+	; IniWrite, %cstm_y_pos2%, %SETTINGS_FILE%, Track Id Location, y2
 Return
 
 ButtonSave:
@@ -138,7 +171,9 @@ ButtonSave:
 Return
 
 ButtonCancel:
+	Gui, Main:Color,%DEFAULT_THEME%
 	Gui, Main:Show
+	Gui, Settings:Hide
 Return
 
 ButtonSettings:
@@ -267,17 +302,29 @@ TODO	:	the function the subtracted values
 
 MButton::
 	Gui, Submit, NoHide
-	set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2)
+	If !(%ProcessFleet%){
+		set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2)
+	}else{
+		set_track_id(x_fleet_pos_1, y_fleet_pos_1, x_fleet_pos_2, y_fleet_pos_2)
+	}
 Return
 
 XButton2::
 	Gui, Submit, NoHide
-	set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2)
+	If !(%ProcessFleet%){
+		set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2)
+	}else{
+		set_track_id(x_fleet_pos_1, y_fleet_pos_1, x_fleet_pos_2, y_fleet_pos_2)
+	}
 Return
 
 ScrollLock::
 	Gui, Submit, NoHide
-	set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2)
+	If !(%ProcessFleet%){
+		set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2)
+	}else{
+		set_track_id(x_fleet_pos_1, y_fleet_pos_1, x_fleet_pos_2, y_fleet_pos_2)
+	}
 Return
 
 /*
