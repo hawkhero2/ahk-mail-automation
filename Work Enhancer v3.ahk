@@ -126,6 +126,7 @@ Return
 *												LABELS
 */
 ButtonSetFleetTrackID:
+	MsgBox, "Make a diagonal selection of where track id is positioned then click save"
 	KeyWait, LButton, D
 	MouseGetPos, cstm_x_pos1, cstm_y_pos1	;*	get start position of the track id coords
 	KeyWait, LButton,
@@ -142,6 +143,7 @@ ButtonSetTrackID:
 	todo	Set app to run at startup
 	todo	Set manually grab_track_id() coordinates -> use MouseGetPos and KeyWait
 	*/
+	MsgBox, "Make a diagonal selection of where track id is positioned then click save"
 	KeyWait, LButton, D
 	MouseGetPos, cstm_x_pos1, cstm_y_pos1	;*	get start position of the track id coords
 	KeyWait, LButton,
@@ -150,10 +152,6 @@ ButtonSetTrackID:
 	write_ini(cstm_y_pos1,SETTINGS_FILE,"Track Id Location","y1")
 	write_ini(cstm_x_pos2,SETTINGS_FILE,"Track Id Location","x2")
 	write_ini(cstm_y_pos2,SETTINGS_FILE,"Track Id Location","y2")
-	; IniWrite, %cstm_x_pos1%, %SETTINGS_FILE%, Track Id Location, x1
-	; IniWrite, %cstm_y_pos1%, %SETTINGS_FILE%, Track Id Location, y1
-	; IniWrite, %cstm_x_pos2%, %SETTINGS_FILE%, Track Id Location, x2
-	; IniWrite, %cstm_y_pos2%, %SETTINGS_FILE%, Track Id Location, y2
 Return
 
 ButtonSave:
