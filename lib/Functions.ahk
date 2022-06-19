@@ -85,6 +85,7 @@ set_track_id(x1,y1,x2,y2){
         If (WinExist("CaptureThis")){
             WinActivate
 			grab_track_id(x1,y1,x2,y2)
+			FileAppend, Clipboard, data\track_id.txt ; ! Not tested appending to .txt file track id from Clipboard
         }
         ;checks for the counter app
         If (WinExist("(")){

@@ -1,4 +1,16 @@
 /*
+
+*	Work Enhancer is an Autohotkey script designed to help with my daily work.
+*	Its features include:	
+*	-	Able to grab track id of a file using an Open Source OCR library.
+*	-	Macro to automatically stop-start current job in counter app used to track time.
+*	-	Send formatted messaged containing track id to internal chat @-ing a specific user.
+*	-	Send emails to a specific email address containing formatted message.
+*	-	Light and Dark Theme Support.
+*	- 	Manually set the location of the track id via settings ui.
+*	-	Storing previous track ids in a file.
+*/
+/*
 *												IMPORTS & ##
 */
 
@@ -288,15 +300,14 @@ Gui, Settings:Hide
 /*
 *												HOTKEYS
 */
-
 /*
-TODO	:	Currently grabs the values from ini file, 
-TODO	:	However need to remake the function if 
-TODO	:	we want different positions for Fleet activity 
-TODO	:	OR we use same function and subtract some pixels
-TODO	:	OR use another if inside Hotkeys and feed 
-TODO	:	the function the subtracted values
+TODO	:	Possibly have the function write the track id in a file aswell
+TODO	:	The writting should happen in the set_track_id() function
+!		:	Possible problem -> OCR sometimes adds a space somewhere in the track id
+
+
 */
+
 
 MButton::
 	Gui, Submit, NoHide
