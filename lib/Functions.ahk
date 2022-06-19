@@ -138,7 +138,7 @@ write_ini( value, file, section_name, key ){
 	IniWrite, %value%, %file%, %section_name%, %key%
 }
 
-; read from ini
+; read from dot ini files
 read_ini( file, section_name, key ){
 	IniRead, val, %file%, %section_name%, %key%
 	Return %val%

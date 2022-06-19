@@ -1,5 +1,4 @@
 /*
-
 *	Work Enhancer is an Autohotkey script designed to help with my daily work.
 *	Its features include:	
 *	-	Able to grab track id of a file using an Open Source OCR library.
@@ -10,6 +9,7 @@
 *	- 	Manually set the location of the track id via settings ui.
 *	-	Storing previous track ids in a file.
 */
+
 /*
 *												IMPORTS & ##
 */
@@ -30,6 +30,10 @@ global DEFAULT_THEME = get_default_theme()
 global SETTINGS_FILE = "data/settings.ini"
 global RS_CFG = "data/rs_config.ini"
 
+; global MAIN_UI_SIZE := Array(600,400) 
+; global SETTINGS_UI_SIZE := Array(600,400)
+global MAIN_WIDTH := 600
+global MAIN_HEIGHT := 400
 /*
 *												DEFAULT POSITION OF THE TRACK ID
 */
@@ -45,30 +49,31 @@ global y_fleet_pos_1 = read_ini(SETTINGS_FILE, "Fleet Track Id Location", "y1")
 global x_fleet_pos_2 = read_ini(SETTINGS_FILE, "Fleet Track Id Location", "x2")
 global y_fleet_pos_2 = read_ini(SETTINGS_FILE, "Fleet Track Id Location", "y2")
 
-
+global NUMBERS_ONLY = 0x2000
+global CENTER_INPUT = 0x1
 /*
 *												UI ELEMENTS
 */
 
 ;trackID of your file
 Gui, Main:Add, Text,, TrackID
-Gui, Main:Add, Edit, vTrackNr w200 0x2000 0x1
+Gui, Main:Add, Edit, vTrackNr w200 %NUMBERS_ONLY% %CENTER_INPUT%
 
 ;the account for the subject
 Gui, Main:Add, Text,, Account
-Gui, Main:Add, Edit, vUserAcc w200 0x1
+Gui, Main:Add, Edit, vUserAcc w200 %CENTER_INPUT%
 
 ;trackID for doppelts
 Gui, Main:Add, Text,, Doppelt 
-Gui, Main:Add, Edit, vdoppeltNrs w200 0x2000 0x1
+Gui, Main:Add, Edit, vdoppeltNrs w200 %NUMBERS_ONLY% %CENTER_INPUT%
 
 ;date for the doppelt
 Gui, Main:Add, Text,,Rejection Day
-Gui, Main:Add, Edit, vrejDay w200 0x1
+Gui, Main:Add, Edit, vrejDay w200 %CENTER_INPUT%
 
 ;field for difference value
 Gui, Main:Add, Text,,Difference
-Gui, Main:Add, Edit, vdiffVal w200 0x1
+Gui, Main:Add, Edit, vdiffVal w200 %CENTER_INPUT%
 
 IniRead, IniOutput, %RS_CFG%, Rejection,
 /*
@@ -106,6 +111,14 @@ Gui, Main:Add, Checkbox, vAutoSendMail, Auto-Send Mails?
 ;checkbox Processing Fleet ?
 Gui, Main:Add, Checkbox, vProcessFleet, Process Fleet?
 
+/*
+TODO:	Add Groupbox for settings
+TODO:	Gui, Add, GroupBox, w200 h100, Track Id Locations
+TODO:	Add Tab3 for settings to group settings
+TODO:	e.g. Gui, Add, Tab3,, General|View|Settings
+
+*/
+
 ; Setting Text Label for DDL
 Gui, Settings:Add, Text,y25, Theme
 
@@ -131,7 +144,7 @@ Gui, Settings:Color,%DEFAULT_THEME%
 Gui, Main:Add, Text,,Signature Name
 Gui, Main:Add, Edit, vsigName w200
 
-Gui, Main:Show,AutoSize w500 h210
+Gui, Main:Show, w%MAIN_WIDTH% h%MAIN_HEIGHT%
 Gui, Main:Color,%DEFAULT_THEME%
 Return
 /*
@@ -151,9 +164,7 @@ Return
 
 ButtonSetTrackID:
 	/*
-	todo	Save previous track_id to file and show it if needed
 	todo	Set app to run at startup
-	todo	Set manually grab_track_id() coordinates -> use MouseGetPos and KeyWait
 	*/
 	MsgBox, "Make a diagonal selection of where track id is positioned then click save"
 	KeyWait, LButton, D
@@ -348,7 +359,6 @@ XButton1::
 		Else
 			Break
 	}
-
 Return
 
 Pause::
