@@ -1,5 +1,6 @@
 /*
-*	Work Enhancer is an Autohotkey script designed to help with my daily work.
+*	AHK-MAIL-AUTOMATION is an Autohotkey script designed to help with my daily work.
+*	It uses v1.1+ AutoHotkey
 *	Its features include:	
 *	-	Able to grab track id of a file using an Open Source OCR library.
 *	-	Macro to automatically stop-start current job in counter app used to track time.
