@@ -47,6 +47,10 @@ Main_UI.Add("Text",,"Doppelt Date")
 
 Main_UI.Add("Edit",CENTER_INPUT vdoppelt_date :="",)
 
+Main_UI.Add("Text",,"Difference")
+
+Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdifference :="",)
+
 /*
 !   reads the rs_config.ini file and returns array of strings
 !   Not functional yet.
