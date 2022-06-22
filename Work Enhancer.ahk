@@ -31,17 +31,15 @@ Main_UI.Add("Text",,"Track Id")
 ;! Need to concatenate the strings and blank space in between them
 ;! VAR . " " . VAR . " " . VAR
 
-Main_UI.Add(
-    "Edit",NUMBERS_ONLY . " " . CENTER_INPUT vtrack_id :="",
-) 
+id_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vtrack_id :="",) 
 
 Main_UI.Add("Text",,"Account")
 
-Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vaccount :="",)
+acc_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vaccount :="",)
 
 Main_UI.Add("Text",,"Doppelt Number")
 
-Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdoppelt_nr :="",)
+doppelt_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdoppelt_nr :="",)
 
 Main_UI.Add("Text",,"Doppelt Date")
 
@@ -57,14 +55,13 @@ Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdifference :="",)
 */
 ini_reject_list := IniRead(RS_CFG,Rejection,,)
 Main_UI.Add("Text",,"Rejectiion Reason")
-Main_UI.Add("DropDownList", vreject_reason :="",StrReplace(ini_reject_list,"`n","|")) ;! Not tested yet
+ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",StrReplace(ini_reject_list,"`n","|")) ;! Not tested yet
 
 Main_UI.Add("Text",,"Signature")
 
-Main_UI.Add("Edit", CENTER_INPUT vsignature :="",)
+sign_field := Main_UI.Add("Edit", CENTER_INPUT vsignature :="",)
 
 Main_UI.Show("w600" "h400")
-
 
 
 /*
@@ -72,3 +69,10 @@ Main_UI.Show("w600" "h400")
 */
 
 Settings_UI := Gui("-Resize -MaximizeBox", "Settings",Settings_UI_listener:=[])
+
+save_btn := Settings_UI.Add("Button","Default","Save")
+save_btn.OnEvent("Click",save_btn_listener)
+/*
+todo    Set chat recipient in ini file from settings window
+todo    Set account and signature in ini file from settings window
+*/
