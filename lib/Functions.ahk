@@ -1,6 +1,6 @@
 ;grabs default theme color code from settings.ini
 get_default_theme(settings){    
-    global def_theme := IniRead( settings, Default Settings, theme)
+    global def_theme := IniRead( settings, "Default Settings", "theme","")
     Return def_theme
 }
 

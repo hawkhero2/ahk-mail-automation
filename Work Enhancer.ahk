@@ -77,7 +77,7 @@ diff_fiel := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdifference :=
 */
 ; ini_reject_list := IniRead(RS_CFG, "Rejection", , )
 Main_UI.Add("Text",,"Rejectiion Reason")
-ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",StrReplace(IniRead(RS_CFG, "Rejection", , ),"`n","|")) ;! Not tested yet
+ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",StrReplace(IniRead(RS_CFG, "Rejection","" , ""),"`n","|")) ;! Not tested yet
 
 Main_UI.Add("Text",,"Signature")
 
