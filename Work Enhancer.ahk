@@ -15,7 +15,7 @@
  *                                              IMPORTS
 */
 Persistent()
-#Warn All, Off
+; #Warn All, Off
 #Include "lib\Functions.ahk"
 
 /*
@@ -30,10 +30,10 @@ global RS_CFG := "data/rs_config.ini"
 global NUMBERS_ONLY := "0x2000"
 global CENTER_INPUT := "0x1"
 
-global x_pos_1 := IniRead(SETTINGS_FILE, "Track Id Location","x1")
-global y_pos_1 := IniRead(SETTINGS_FILE, "Track Id Location","y1")
-global x_pos_2 := IniRead(SETTINGS_FILE, "Track Id Location","x2")
-global y_pos_2 := IniRead(SETTINGS_FILE, "Track Id Location","y2")
+global x_pos_1 := IniRead(SETTINGS_FILE, "Track Id Location","x1","")
+global y_pos_1 := IniRead(SETTINGS_FILE, "Track Id Location","y1","")
+global x_pos_2 := IniRead(SETTINGS_FILE, "Track Id Location","x2","")
+global y_pos_2 := IniRead(SETTINGS_FILE, "Track Id Location","y2","")
 
 global x_fleet_pos_1 := IniRead(SETTINGS_FILE,"Fleet Track Id Location","x1")
 global y_fleet_pos_1 := IniRead(SETTINGS_FILE,"Fleet Track Id Location","y1")
@@ -43,11 +43,12 @@ global y_fleet_pos_2 := IniRead(SETTINGS_FILE,"Fleet Track Id Location","y2")
 /*
  *                                              MAIN UI
 */
+
 /*
 *   In order to pass constraints to UI elements they must be a string and
 *   We need to concatenate the strings and blank space in between them
 *   VAR . " " . VAR . " " . VAR
- */
+*/
 
 Main_UI := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0",Main_UI_listener:=[])
 
@@ -72,12 +73,16 @@ Main_UI.Add("Text",,"Difference")
 diff_fiel := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdifference :="",)
 
 /*
+
 !   reads the rs_config.ini file and returns array of strings
 !   Not functional yet.
+
 */
-; ini_reject_list := IniRead(RS_CFG, "Rejection", , )
+ini_reject_list := IniRead(RS_CFG, "Rejection","","" )
 Main_UI.Add("Text",,"Rejectiion Reason")
-ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",StrReplace(IniRead(RS_CFG, "Rejection","" , ""),"`n","|")) ;! Not tested yet
+
+; ! NEEDS TO RECEIVE AN ARRAY WITH THE REJECTION REASONS
+ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",StrReplace(ini_reject_list,"`n","|")) ;! Not tested yet
 
 Main_UI.Add("Text",,"Signature")
 
