@@ -53,7 +53,7 @@ Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdifference :="",)
 !   reads the rs_config.ini file and returns array of strings
 !   Not functional yet.
 */
-ini_reject_list := IniRead(RS_CFG,Rejection,,)
+ini_reject_list := IniRead(RS_CFG,Rejection,"","")
 Main_UI.Add("Text",,"Rejectiion Reason")
 ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",StrReplace(ini_reject_list,"`n","|")) ;! Not tested yet
 
@@ -72,7 +72,12 @@ Settings_UI := Gui("-Resize -MaximizeBox", "Settings",Settings_UI_listener:=[])
 
 save_btn := Settings_UI.Add("Button","Default","Save")
 save_btn.OnEvent("Click",save_btn_listener)
+
 /*
-todo    Set chat recipient in ini file from settings window
-todo    Set account and signature in ini file from settings window
+TODO    Set chat recipient in ini file from settings window
+TODO    Set account and signature in ini file from settings window
+TODO    Get and Set hotstrings
+TODO    Look into python OCR library 
+
+TODO    Or switch to a different framework like Electron or Python with Qt and integrate AHK with it.
 */
