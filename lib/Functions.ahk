@@ -1,7 +1,23 @@
-;grabs default theme color code from settings.ini
-get_default_theme(settings){    
-    global def_theme := IniRead( settings, "Default Settings", "theme","")
+/*
+Grabs default theme color code from .ini file
+@param filename: String file path to .ini file
+@return > String with color code
+*/
+get_default_theme(filename := ""){    
+    global def_theme := IniRead( filename, "Default Settings", "theme","")
     Return def_theme
+}
+/*
+Reads items from .ini file and given section and returns array of strings
+@param filename: name of ini file, must be string
+@param section: name of section, must be string, if omitted, returns all sections
+@param key: name of key, must be string, if omitted, returns all items in section
+@return: Array of strings
+*/ 
+get_list(filename :="",section :="",key :=""){
+    ; reads ini file => array of strings
+    global rej_list := StrSplit(IniRead(filename, section, key,"" ),"`n")
+    Return rej_list
 }
 
 ; ;send mail, message=subject & message2 = body

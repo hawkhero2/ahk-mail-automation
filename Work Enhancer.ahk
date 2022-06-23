@@ -15,7 +15,7 @@
  *                                              IMPORTS
 */
 Persistent()
-; #Warn All, Off
+#Warn All, Off
 #Include "lib\Functions.ahk"
 
 /*
@@ -72,17 +72,11 @@ Main_UI.Add("Text",,"Difference")
 
 diff_fiel := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdifference :="",)
 
-/*
-
-!   reads the rs_config.ini file and returns array of strings
-!   Not functional yet.
-
-*/
-ini_reject_list := IniRead(RS_CFG, "Rejection","","" )
+arr_rej_list := get_list(RS_CFG)
 Main_UI.Add("Text",,"Rejectiion Reason")
 
 ; ! NEEDS TO RECEIVE AN ARRAY WITH THE REJECTION REASONS
-ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",StrReplace(ini_reject_list,"`n","|")) ;! Not tested yet
+ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",arr_rej_list) ;! Not tested yet
 
 Main_UI.Add("Text",,"Signature")
 
