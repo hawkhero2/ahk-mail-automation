@@ -70,7 +70,7 @@ dopp_date_field :=  Main_UI.Add("Edit",CENTER_INPUT vdoppelt_date :="",)
 
 Main_UI.Add("Text",,"Difference")
 
-diff_fiel := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdifference :="",)
+diff_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vdifference :="",)
 
 arr_rej_list := get_list(RS_CFG)
 Main_UI.Add("Text",,"Rejectiion Reason")
@@ -79,6 +79,8 @@ Main_UI.Add("Text",,"Rejectiion Reason")
 ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",arr_rej_list) ;! Not tested yet
 
 Main_UI.Add("Text",,"Signature")
+
+settings_btn := Main_UI.Add("Button",,"Settings")
 
 sign_field := Main_UI.Add("Edit", CENTER_INPUT vsignature :="",)
 
@@ -92,18 +94,18 @@ Main_UI.Show("w600" "h400")
 Settings_UI := Gui("-Resize -MaximizeBox", "Settings",Settings_UI_listener:=[])
 
 save_btn := Settings_UI.Add("Button","Default","Save")
-save_btn.OnEvent("Click",save_btn_listener)
+save_btn.OnEvent("Click",save_btn_listener :="")
 
 cancel_btn := Settings_UI.Add("Button", ,"Cancel")
-cancel_btn.OnEvent("Click",cancel_btn_listener)
+cancel_btn.OnEvent("Click",cancel_btn_listener :="")
 
 Settings_UI.Add("Text",,"Set default track id location")
 set_btn := Settings_UI.Add("Button",,"Set")
-set_btn.OnEvent("Click",set_btn_listener)
+set_btn.OnEvent("Click",set_btn_listener :="")
 
 Settings_UI.Add("Text",,"Set Fleet track id location")
 set_fleet_btn := Settings_UI.Add("Button",,"Set")
-set_fleet_btn.OnEvent("Click",set_fleet_btn_listener)
+set_fleet_btn.OnEvent("Click",set_fleet_btn_listener :="")
 
 
 return
