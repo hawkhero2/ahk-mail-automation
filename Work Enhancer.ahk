@@ -22,8 +22,8 @@ Persistent()
 *												GLOBAL VARIABLES
 */
 
-
 global SETTINGS_FILE := "data/settings.ini"
+global id_history := "data/id_history.txt"
 global DEFAULT_THEME := get_default_theme(SETTINGS_FILE)
 
 global RS_CFG := "data/rs_config.ini"
@@ -58,7 +58,7 @@ id_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vtrack_id :="",
 
 Main_UI.Add("Text",,"Account")
 
-acc_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vaccount :="",)
+acc_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vaccount :="",get_acc(SETTINGS_FILE))
 
 Main_UI.Add("Text",,"Doppelt Number")
 
@@ -80,9 +80,9 @@ ddl_field := Main_UI.Add("DropDownList", vreject_reason :="",arr_rej_list) ;! No
 
 Main_UI.Add("Text",,"Signature")
 
-settings_btn := Main_UI.Add("Button",,"Settings")
+sign_field := Main_UI.Add("Edit", CENTER_INPUT vsignature :="", get_sign(SETTINGS_FILE) )
 
-sign_field := Main_UI.Add("Edit", CENTER_INPUT vsignature :="",)
+settings_btn := Main_UI.Add("Button",,"Settings")
 
 Main_UI.Show("w600" "h400")
 

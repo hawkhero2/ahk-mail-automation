@@ -1,3 +1,56 @@
+
+
+/*
+Write id to file
+Function used to write grabbed id + date to a .txt file to act as history
+@param String filename
+@param String value
+@return void
+*/
+write_id(filename :="", value :=""){
+    FileAppend(value . "->" . A_DD . "-" . A_MM . "-" . A_YYYY,filename)
+}
+
+/*
+Grab account from ini file 
+@param String filename
+@return String account
+*/
+get_acc(filename :="" ){
+    result := IniRead(filename,"Account","acc")
+    return result
+}
+
+/*
+Set account to ini file 
+@param string filename
+@param string value
+@return void
+*/
+set_acc(filename :="", value :=""){
+    IniWrite(value, filename, "Account","acc")
+}
+
+/*
+Grab signature from ini file 
+@param String filename
+@return String signature
+*/
+get_sign(filename :=""){
+    result := IniRead(filename,"Signature","acc")
+    return result
+}
+
+/*
+Set signature to ini file
+@param String filename
+@param String signature
+@return void
+*/
+set_sign(filename :="", signature :=""){
+    IniWrite(signature, filename,"Signature","acc")
+}
+
 /*
 Grabs default theme color code from .ini file
 @param filename: String file path to .ini file
