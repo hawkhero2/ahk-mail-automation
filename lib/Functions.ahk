@@ -1,4 +1,22 @@
+/*
+Get mail from rs_config.ini
+@param String filename
+@return String email 
+*/
+get_email(filename){
+    result := IniRead(filename,"Email")
+    return result
+}
 
+/*
+Set chat account to be @mentioned
+@param String filename
+@param String recipient
+@return void
+*/
+set_recipient(filename, recipient){
+    IniWrite(recipient,filename,"Recipient","acc")    
+}
 
 /*
 Write id to file
@@ -32,12 +50,22 @@ set_acc(filename :="", value :=""){
 }
 
 /*
+Grab recipient from ini file
+@param String filename 
+@return String recipient
+*/
+get_recipient(filename :=""){
+    result := IniRead(filename, "Account", "acc" )
+    return result
+}
+
+/*
 Grab signature from ini file 
 @param String filename
 @return String signature
 */
 get_sign(filename :=""){
-    result := IniRead(filename,"Signature","acc")
+    result := IniRead(filename,"Signature","sign")
     return result
 }
 
@@ -74,28 +102,29 @@ get_list(filename :="",section :="",key :=""){
 }
 /*
 Send mail macro
-@param String message = subject
-@param message2 = body 
+@param String subject
+@param string body 
+@param String filename
 */
-mail_send(message,message2){
+mail_send(body, subject, filename){
 	If WinExist("Roundcube"){
 		WinActivate
 		Sleep(350)
         MouseClick(left, 60, 140)
 		A_Clipboard := ""
-		A_Clipboard := IniRead(rs_config,Email)
+		A_Clipboard := get_email(filename)
 		Sleep(1000)
 		Send "^{V}"
-		Loop, 3{
+		Loop 3{
 			Send "{Tab}"
 		}
 		A_Clipboard:=""
-		A_Clipboard := message2 
+		A_Clipboard := subject 
 		Sleep( 100)
 		Send "^{V}"
 		Send "{Tab}"
 		A_Clipboard := ""
-		A_Clipboard := message
+		A_Clipboard := body
 		Send "^{V}"
 		Send "{Tab}"
 		Sleep(100)
@@ -151,10 +180,11 @@ grab_track_id(x1,y1,x2,y2){
 }
 
 /*
-Set track id to counter
+Set track id to counter and write to .txt file
 @params int x1, int y1, int x2, int y2
+@param String filename
 */
-set_track_id(x1,y1,x2,y2){
+set_track_id(x1,y1,x2,y2,filename){
 	    ;Check if process capture2text is running
     ProcessExist(capture2text)
 
@@ -163,7 +193,8 @@ set_track_id(x1,y1,x2,y2){
         If (WinExist("CaptureThis")){
             WinActivate()
 			grab_track_id(x1,y1,x2,y2)
-			FileAppend(A_Clipboard, "data\track_id.txt") ; ! Not tested appending to .txt file track id from Clipboard
+            ; writes id to .txt file for history
+			FileAppend(A_Clipboard, filename) ; ! Not tested appending to .txt file track id from Clipboard
         }
         ;checks for the counter app
         If (WinExist("(")){
@@ -175,9 +206,9 @@ set_track_id(x1,y1,x2,y2){
             If (WinExist("CaptureThis")){
                 WinActivate()
             }Else
-                MsgBox(Cadosys not running)
+                MsgBox("Cadosys not running")
         } else
-            MsgBox(Counter not running)
+            MsgBox("Counter not running")
     }Else
         Run(Capture2Text.exe)
 }
@@ -202,7 +233,7 @@ stop_start(tabs_nr){ ;is_glass is a boolean value, true if glass is being used, 
 		}
 	}
 	else
-		MsgBox(Counter is not running)
+		MsgBox("Counter is not running")
 }
 
 /*
