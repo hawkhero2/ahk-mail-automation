@@ -1,3 +1,4 @@
+;@Ahk2Exe-AddResource lib\Functions.ahk, MYRESOURCE
 #Include "lib\Functions.ahk"
 /*
 *                       Work Enhancer v1.0 is an AHK script used to macro some of the work.
@@ -36,7 +37,7 @@ global CENTER_INPUT := "0x1"
 global ACC := get_acc( SETTINGS_FILE )
 global SIGN := get_sign( SETTINGS_FILE )
 global RECIPIENT := get_recipient( SETTINGS_FILE )
-global EMAIL := get_email( SETTINGS_FILE )
+global EMAIL := get_email( RS_CFG )
 
 ; Assign positions to variables for default position
 global x_pos_1 := IniRead(SETTINGS_FILE, "Track Id Location","x1","")
@@ -65,7 +66,7 @@ Main_UI := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0" )
 
 ; *             TRACK ID
 Main_UI.Add("Text",,"Track Id" )
-id_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vtrack_id" ,"" ) 
+Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vtrack_id" ,"" ) 
 
 
 ; Main_UI.Add("Text",,"Account" )
@@ -73,17 +74,18 @@ id_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vtrack
 
 ; *             DOPPELT NR
 Main_UI.Add("Text",,"Doppelt Number" )
-doppelt_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr", "")
+Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr", "")
 
 ; *             DOPPELT DATE
 Main_UI.Add("Text",,"Doppelt Date" )
-dopp_date_field :=  Main_UI.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date", "")
+Main_UI.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date", "")
 
 ; *             DIFFERENCE
 Main_UI.Add("Text",,"Difference" )
-diff_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val", "")
+Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val", "")
 
 ; Radio buttons
+; ! not working yet
 Main_UI.Add("Radio","vList","List")
 Main_UI.Add("Radio","vDoppelt","Doppelt")
 Main_UI.Add("Radio","vDoppelt2","Doppelt v2")
@@ -94,7 +96,7 @@ Main_UI.Add("Radio","vKurze","Doppelt Kurze")
 ; *             DROPDOWN REJECTION LIST
 arr_rej_list := get_list(RS_CFG,"Rejection")
 Main_UI.Add("Text",,"Rejection Reason" )
-ddl_field := Main_UI.Add("DropDownList", "vreject_reason" ,arr_rej_list ) ; ! NEEDS TO RECEIVE AN ARRAY WITH THE REJECTION REASONS
+Main_UI.Add("DropDownList", "vreject_reason" ,arr_rej_list ) ; ! NEEDS TO RECEIVE AN ARRAY WITH THE REJECTION REASONS
 
 Main_UI.Add("Checkbox", "vcheck_fleet", "Fleet Processesing ?")
 
@@ -129,15 +131,15 @@ Settings_UI.Add("Button",,"Set").OnEvent("Click", set_fleet_btn_listener )
 
 ; *             ACCOUNT
 Settings_UI.Add("Text", ,"Account" )
-Settings_UI.Add("Edit", CENTER_INPUT "vaccount",ACC )
+Settings_UI.Add("Edit", CENTER_INPUT . " " . "vaccount",ACC )
 
 ; *             RECIPIENT
 Settings_UI.Add("Text",,"Chat Recipient" )
-Settings_UI.Add("Edit",CENTER_INPUT "vrecipient" ,RECIPIENT )
+Settings_UI.Add("Edit",CENTER_INPUT . " " . "vrecipient" ,RECIPIENT )
 
 ; *             SIGNATURE
 Settings_UI.Add("Text",,"Signature" )
-sign_field := Settings_UI.Add("Edit", CENTER_INPUT "vsignature", SIGN )
+sign_field := Settings_UI.Add("Edit", CENTER_INPUT . " " . "vsignature", SIGN )
 
 
 
@@ -163,7 +165,7 @@ save_btn_listener(*){
 }
 
 send_email_listener(*){
-    Main_UI.Submit()
+    Main_UI.Submit(true)
     
     subject := track_id . "-" . A_DD . "." . A_MM . "." . A_YYYY . "-" . ACC
     
@@ -196,6 +198,7 @@ send_email_listener(*){
 }
 
 send_chat_listener(*){
+    Main_UI.Submit(true)
     if (List){
         body := RECIPIENT . " " . track_id "-" reject_reason
         chat_send(body)
@@ -222,12 +225,10 @@ send_chat_listener(*){
         MsgBox("Please select an option")
     }
 }
-
 cancel_btn_listener(*){
     Settings_UI.Hide()
     Main_UI.Show()
 }
-
 set_btn_listener(*){
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
     
@@ -239,7 +240,6 @@ set_btn_listener(*){
     set_default_pos(cstm_x1,cstm_y1,cstm_x2,cstm_y2,SETTINGS_FILE,"Track Id Location")
     MsgBox("Position set")
 }
-
 set_fleet_btn_listener(*){
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
     
@@ -250,6 +250,10 @@ set_fleet_btn_listener(*){
 
     set_default_pos(cstm_x1,cstm_y1,cstm_x2,cstm_y2,SETTINGS_FILE,"Fleet Track Id Location")
     MsgBox("Position set")
+}
+settings_btn_listener(*){
+    Main_UI.Hide()
+    Settings_UI.Show()
 }
 
 /*
