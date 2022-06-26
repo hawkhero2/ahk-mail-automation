@@ -1,3 +1,4 @@
+#Include "lib\Functions.ahk"
 /*
 *                       Work Enhancer v1.0 is an AHK script used to macro some of the work.
 *                       It uses AutoHotkey beta v2.
@@ -14,9 +15,12 @@
 /*
  *                                              IMPORTS
 */
+
+
+
+; ----------------------------------------
 Persistent()
 #Warn All, Off
-#Include "lib\Functions.ahk"
 
 /*
 *												GLOBAL VARIABLES
@@ -46,7 +50,6 @@ global y_fleet_pos_1 := IniRead(SETTINGS_FILE,"Fleet Track Id Location","y1")
 global x_fleet_pos_2 := IniRead(SETTINGS_FILE,"Fleet Track Id Location","x2")
 global y_fleet_pos_2 := IniRead(SETTINGS_FILE,"Fleet Track Id Location","y2")
 
-MsgBox(A_DD . "." . A_MM . "." . A_YYYY)
 
 /*
  *                                              MAIN UI
@@ -62,7 +65,7 @@ Main_UI := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0" )
 
 ; *             TRACK ID
 Main_UI.Add("Text",,"Track Id" )
-id_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT "vtrack_id" ,"" ) 
+id_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vtrack_id" ,"" ) 
 
 
 ; Main_UI.Add("Text",,"Account" )
@@ -70,15 +73,15 @@ id_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT "vtrack_id" ,""
 
 ; *             DOPPELT NR
 Main_UI.Add("Text",,"Doppelt Number" )
-doppelt_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT "vdoppelt_nr", "")
+doppelt_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr", "")
 
 ; *             DOPPELT DATE
 Main_UI.Add("Text",,"Doppelt Date" )
-dopp_date_field :=  Main_UI.Add("Edit",CENTER_INPUT "vdoppelt_date", "")
+dopp_date_field :=  Main_UI.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date", "")
 
 ; *             DIFFERENCE
 Main_UI.Add("Text",,"Difference" )
-diff_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT "vdifference_val", "")
+diff_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val", "")
 
 ; Radio buttons
 Main_UI.Add("Radio","vList","List")
@@ -89,8 +92,8 @@ Main_UI.Add("Radio","vKurze","Doppelt Kurze")
 
 
 ; *             DROPDOWN REJECTION LIST
-arr_rej_list := get_list(RS_CFG)
-Main_UI.Add("Text",,"Rejectiion Reason" )
+arr_rej_list := get_list(RS_CFG,"Rejection")
+Main_UI.Add("Text",,"Rejection Reason" )
 ddl_field := Main_UI.Add("DropDownList", "vreject_reason" ,arr_rej_list ) ; ! NEEDS TO RECEIVE AN ARRAY WITH THE REJECTION REASONS
 
 Main_UI.Add("Checkbox", "vcheck_fleet", "Fleet Processesing ?")
@@ -165,7 +168,7 @@ send_email_listener(*){
     subject := track_id . "-" . A_DD . "." . A_MM . "." . A_YYYY . "-" . ACC
     
     if (List){
-        body := "Hello, `n`n" . track_id "-" reject_reason"`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+        body := "Hello, `n`n" . track_id . "-" . reject_reason . "`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Doppelt){

@@ -4,7 +4,7 @@ Set default location of the track id to ini file
 @param String filename
 @return void
 */ 
-set_default_pos(x1, y1, x2, y2, filename, section){
+set_default_pos(x1 :="", y1 :="", x2 :="", y2 :="", filename :="", section :=""){
 	IniWrite(x1, filename, section, "x1")
     IniWrite(y1, filename, section, "y1")
     IniWrite(x2, filename, section, "x2")
@@ -16,7 +16,7 @@ Get mail from rs_config.ini
 @param String filename
 @return String email 
 */
-get_email(filename){
+get_email(filename :=""){
     result := IniRead(filename,"Email")
     return result
 }
@@ -27,7 +27,7 @@ Set chat account to be @mentioned
 @param String recipient
 @return void
 */
-set_recipient(filename, recipient){
+set_recipient(filename :="", recipient :=""){
     IniWrite(recipient,filename,"Recipient","acc")    
 }
 
