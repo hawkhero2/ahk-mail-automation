@@ -199,7 +199,7 @@ Set track id to counter and write to .txt file
 */
 set_track_id(x1,y1,x2,y2,filename){
 	    ;Check if process capture2text is running
-    ProcessExist(capture2text)
+    ProcessExist("Capture2text")
 
     ;if the ErrorLevel is not 0 that means its running, and the automation will commence
     If !(ErrorLevel=0){

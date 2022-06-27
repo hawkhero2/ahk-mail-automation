@@ -1,5 +1,3 @@
-;@Ahk2Exe-AddResource lib\Functions.ahk, MYRESOURCE
-#Include "lib\Functions.ahk"
 /*
 *                       Work Enhancer v1.0 is an AHK script used to macro some of the work.
 *                       It uses AutoHotkey beta v2.
@@ -19,14 +17,15 @@
 
 
 
+#Include "lib\Functions.ahk" ;! import not working when compiling the script to .exe
 ; ----------------------------------------
-Persistent()
-#Warn All, Off
 
 /*
 *												GLOBAL VARIABLES
 */
-
+Persistent()
+#Warn All, Off
+startup_path := A_Startup "\Work Enhancer.ink"
 global SETTINGS_FILE := "data/settings.ini"
 global ID_HISTORY := "data/id_history.txt"
 global DEFAULT_THEME := get_default_theme(SETTINGS_FILE)
@@ -38,6 +37,7 @@ global ACC := get_acc( SETTINGS_FILE )
 global SIGN := get_sign( SETTINGS_FILE )
 global RECIPIENT := get_recipient( SETTINGS_FILE )
 global EMAIL := get_email( RS_CFG )
+global CURRENT_DATE := A_DD . "-" . A_MM . "-" . A_YYYY
 
 ; Assign positions to variables for default position
 global x_pos_1 := IniRead(SETTINGS_FILE, "Track Id Location","x1","")
@@ -66,7 +66,7 @@ Main_UI := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0" )
 
 ; *             TRACK ID
 Main_UI.Add("Text",,"Track Id" )
-Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vtrack_id" ,"" ) 
+track_id := Main_UI.Add("Edit","0x2000 0x1 vtrack_id" ,"" ) 
 
 
 ; Main_UI.Add("Text",,"Account" )
@@ -74,31 +74,31 @@ Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vtrack_id" ,"" )
 
 ; *             DOPPELT NR
 Main_UI.Add("Text",,"Doppelt Number" )
-Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr", "")
+doppelt_nr := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr", "")
 
 ; *             DOPPELT DATE
 Main_UI.Add("Text",,"Doppelt Date" )
-Main_UI.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date", "")
+doppelt_date := Main_UI.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date", "")
 
 ; *             DIFFERENCE
 Main_UI.Add("Text",,"Difference" )
-Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val", "")
+diff_val := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val", "")
 
 ; Radio buttons
 ; ! not working yet
-Main_UI.Add("Radio","vList","List")
-Main_UI.Add("Radio","vDoppelt","Doppelt")
-Main_UI.Add("Radio","vDoppelt2","Doppelt v2")
-Main_UI.Add("Radio","vDifference","Difference")
-Main_UI.Add("Radio","vKurze","Doppelt Kurze")
+List := Main_UI.Add("Radio","vList","List")
+Doppelt := Main_UI.Add("Radio","vDoppelt","Doppelt")
+Doppelt2 := Main_UI.Add("Radio","vDoppelt2","Doppelt v2")
+Diff := Main_UI.Add("Radio","vDifference","Difference")
+Kurze := Main_UI.Add("Radio","vKurze","Doppelt Kurze")
 
 
 ; *             DROPDOWN REJECTION LIST
 arr_rej_list := get_list(RS_CFG,"Rejection")
 Main_UI.Add("Text",,"Rejection Reason" )
-Main_UI.Add("DropDownList", "vreject_reason" ,arr_rej_list ) ; ! NEEDS TO RECEIVE AN ARRAY WITH THE REJECTION REASONS
+reject_reason := Main_UI.Add("DropDownList", "vreject_reason" ,arr_rej_list ) ; ! NEEDS TO RECEIVE AN ARRAY WITH THE REJECTION REASONS
 
-Main_UI.Add("Checkbox", "vcheck_fleet", "Fleet Processesing ?")
+check_fleet := Main_UI.Add("Checkbox", "vcheck_fleet", "Fleet Processesing ?")
 
 Main_UI.Add("Button",,"Send Mail").OnEvent("Click", send_email_listener )
 
@@ -129,17 +129,20 @@ Settings_UI.Add("Button",,"Set").OnEvent("Click",set_btn_listener )
 Settings_UI.Add("Text",,"Set Fleet track id location" )
 Settings_UI.Add("Button",,"Set").OnEvent("Click", set_fleet_btn_listener )
 
+; *            RUN AT STARTUP
+Settings_UI.Add("Button",,"Run at startup").OnEvent("Click", run_at_startup_listener )
+
 ; *             ACCOUNT
 Settings_UI.Add("Text", ,"Account" )
-Settings_UI.Add("Edit", CENTER_INPUT . " " . "vaccount",ACC )
+acc_field := Settings_UI.Add("Edit", CENTER_INPUT . " " . "vaccount",ACC )
 
 ; *             RECIPIENT
 Settings_UI.Add("Text",,"Chat Recipient" )
-Settings_UI.Add("Edit",CENTER_INPUT . " " . "vrecipient" ,RECIPIENT )
+chat_acc := Settings_UI.Add("Edit",CENTER_INPUT . " " . "vrecipient" ,RECIPIENT )
 
 ; *             SIGNATURE
 Settings_UI.Add("Text",,"Signature" )
-sign_field := Settings_UI.Add("Edit", CENTER_INPUT . " " . "vsignature", SIGN )
+signature_field := Settings_UI.Add("Edit", CENTER_INPUT . " " . "vsignature", SIGN )
 
 
 
@@ -165,28 +168,26 @@ save_btn_listener(*){
 
 send_email_listener(*){
     Main_UI.Submit(true)
-    
-    subject := track_id . "-" . A_DD . "." . A_MM . "." . A_YYYY . "-" . ACC
-    
-    if (List){
-        body := "Hello, `n`n" . track_id . "-" . reject_reason . "`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+    subject := track_id.Value . A_Space . CURRENT_DATE . "," . A_Space . ACC
+    if (List.Value){
+        body := "Hello, `n`n" . track_id.Value . "-" . reject_reason.Text . "`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
-    else if(Doppelt){
-		body := "Hello,`n`nDoppelt" . track_id . "-" . "Dieser Vorgang wurde bereits am" . doppelt_date . "unter Vorgang" . doppelt_nr . "geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+    else if(Doppelt.Value){
+		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits am" . doppelt_date.Value . "unter Vorgang" . doppelt_nr.Value . "geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
-    else if(Doppelt2){
-        body := "Hello,`n`nDoppelt" . track_id . "-" . "Dieser Vorgang wurde bereits unter Vorgang" . doppelt_nr . "geprüft. `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+    else if(Doppelt2.Value){
+        body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits unter Vorgang" . doppelt_nr.Value . "geprüft. `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
 
     }
-    else if(Difference){
-		body := "Hello, `n`n" . track_id . "Difference of" . difference_val . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . difference_val . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+    else if(Difference.Value){
+		body := "Hello, `n`n" . track_id.Value . "Difference of" . difference_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . difference_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
-    else if(Kurze){
-		body := "Hello,`n`nDoppelt" . track_id . "-" . "Der Vorgang steht unter der Vorgangsnummer" . doppelt_nr . "zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+    else if(Kurze.Value){
+		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Der Vorgang steht unter der Vorgangsnummer" . doppelt_nr.Value . "zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else
@@ -198,25 +199,25 @@ send_email_listener(*){
 
 send_chat_listener(*){
     Main_UI.Submit(true)
-    if (List){
-        body := RECIPIENT . " " . track_id "-" reject_reason
+    if (List.Value){
+        body := RECIPIENT . " " . track_id.Value "-" reject_reason.Text
         chat_send(body)
     }
-    else if(Doppelt){
-		body := RECIPIENT . " " . track_id . "-" . "Dieser Vorgang wurde bereits am" . doppelt_date . "unter Vorgang" . doppelt_nr . "geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
+    else if(Doppelt.Value){
+		body := RECIPIENT . " " . track_id.Value . "-" . "Dieser Vorgang wurde bereits am" . doppelt_date.Value . "unter Vorgang" . doppelt_nr.Value . "geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
         chat_send(body)
     }
-    else if(Doppelt2){
-        body := RECIPIENT . " " . track_id . "-" . "Dieser Vorgang wurde bereits unter Vorgang" . doppelt_nr . "geprüft."
+    else if(Doppelt2.Value){
+        body := RECIPIENT . " " . track_id.Value . "-" . "Dieser Vorgang wurde bereits unter Vorgang" . doppelt_nr.Value . "geprüft."
         chat_send(body)
 
     }
-    else if(Difference){
-		body := RECIPIENT . " " . track_id . "Difference of" . difference_val . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . difference_val . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
+    else if(Difference.Value){
+		body := RECIPIENT . " " . track_id.Value . "Difference of" . difference_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . difference_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
         chat_send(body)
     }
-    else if(Kurze){
-		body := RECIPIENT . " " . track_id . "-" . "Der Vorgang steht unter der Vorgangsnummer" . doppelt_nr . "zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
+    else if(Kurze.Value){
+		body := RECIPIENT . " " . track_id.Value . "-" . "Der Vorgang steht unter der Vorgangsnummer" . doppelt_nr.Value . "zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
         chat_send(body)
     }
     else
@@ -254,14 +255,20 @@ settings_btn_listener(*){
     Main_UI.Hide()
     Settings_UI.Show()
 }
-
+run_at_startup_listener(*){
+    if(FileExist(A_Startup"\Work Enhancer.ink")){
+        MsgBox("Work Enhancer is already set to run at startup")
+    }else{
+        FileCreateShortcut(A_ScriptFullPath,A_Startup "\Work Enhancer.lnk")
+    }
+}
 /*
 *                                               HOTKEYS 
 */
 MButton::
 {
     Main_UI.Submit(true)
-    if !(check_fleet){
+    if !(check_fleet.Value){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
     }
     else{
@@ -271,7 +278,7 @@ MButton::
 XButton2::
 {
     Main_UI.Submit(true)
-    if !(check_fleet){
+    if !(check_fleet.Value){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
     }
     else{
@@ -281,7 +288,7 @@ XButton2::
 ScrollLock::
 {
     Main_UI.Submit(true)
-    if !(check_fleet){
+    if !(check_fleet.Value){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
     }
     else{
@@ -291,7 +298,7 @@ ScrollLock::
 Pause::
 {
     Main_UI.Submit(true)
-    if !(check_fleet){
+    if !(check_fleet.Value){
         stop_start_activity(false)
     }
     else{
