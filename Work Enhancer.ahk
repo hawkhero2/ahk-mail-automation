@@ -147,7 +147,6 @@ return
 /*
 TODO    Get and Set hotstrings
 TODO    Look into python OCR library
-TODO    Make up run at startup option
 */
 
 /*
@@ -261,7 +260,7 @@ settings_btn_listener(*){
 */
 MButton::
 {
-    Main_UI.Submit()
+    Main_UI.Submit(true)
     if !(check_fleet){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
     }
@@ -271,7 +270,7 @@ MButton::
 }
 XButton2::
 {
-    Main_UI.Submit()
+    Main_UI.Submit(true)
     if !(check_fleet){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
     }
@@ -281,7 +280,7 @@ XButton2::
 }
 ScrollLock::
 {
-    Main_UI.Submit()
+    Main_UI.Submit(true)
     if !(check_fleet){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
     }
@@ -291,7 +290,7 @@ ScrollLock::
 }
 Pause::
 {
-    Main_UI.Submit()
+    Main_UI.Submit(true)
     if !(check_fleet){
         stop_start_activity(false)
     }

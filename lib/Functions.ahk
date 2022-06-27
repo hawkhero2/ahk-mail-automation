@@ -28,7 +28,7 @@ Set chat account to be @mentioned
 @return void
 */
 set_recipient(filename :="", recipient :=""){
-    IniWrite(recipient,filename,"Recipient","acc")    
+    IniWrite(recipient,filename,"Chat","acc")    
 }
 
 /*
@@ -68,7 +68,7 @@ Grab recipient from ini file
 @return String recipient
 */
 get_recipient(filename :=""){
-    result := IniRead(filename, "Account", "acc" )
+    result := IniRead(filename, "Chat", "acc" )
     return result
 }
 
