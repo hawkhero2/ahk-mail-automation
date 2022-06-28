@@ -65,48 +65,48 @@ global y_fleet_pos_2 := IniRead(SETTINGS_FILE,"Fleet Track Id Location","y2")
 Main_UI := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0" )
 
 ; *             TRACK ID
-Main_UI.Add("Text",,"Track Id" )
-track_id := Main_UI.Add("Edit","0x2000 0x1 vtrack_id" ,"" ) 
+Main_UI.Add("Text","x140 y15","Track Id" )
+track_id := Main_UI.Add("Edit","0x2000 0x1 vtrack_id x10 y10" ,"" ) 
 
 
 ; Main_UI.Add("Text",,"Account" )
 ; acc_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vaccount :="",get_acc(SETTINGS_FILE) )
 
 ; *             DOPPELT NR
-Main_UI.Add("Text",,"Doppelt Number" )
-doppelt_nr := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr", "")
+Main_UI.Add("Text","x140 y55","Doppelt Number" )
+doppelt_nr := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr x10 y50 ", "")
 
 ; *             DOPPELT DATE
-Main_UI.Add("Text",,"Doppelt Date" )
-doppelt_date := Main_UI.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date", "")
+Main_UI.Add("Text", "x140 y95","Doppelt Date" )
+doppelt_date := Main_UI.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date x10 y90", "")
 
 ; *             DIFFERENCE
-Main_UI.Add("Text",,"Difference" )
-diff_val := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val", "")
+Main_UI.Add("Text", "x140 y135","Difference" )
+diff_val := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val x10 y130", "")
 
 ; Radio buttons
 ; ! not working yet
-List := Main_UI.Add("Radio","vList","List")
-Doppelt := Main_UI.Add("Radio","vDoppelt","Doppelt")
-Doppelt2 := Main_UI.Add("Radio","vDoppelt2","Doppelt v2")
-Diff := Main_UI.Add("Radio","vDifference","Difference")
-Kurze := Main_UI.Add("Radio","vKurze","Doppelt Kurze")
+List := Main_UI.Add("Radio","vList x260 y15","List")
+Doppelt := Main_UI.Add("Radio","vDoppelt x260 y35","Doppelt")
+Doppelt2 := Main_UI.Add("Radio","vDoppelt2 x260 y55","Doppelt v2")
+Diff := Main_UI.Add("Radio","vDifference x260 y75","Difference")
+Kurze := Main_UI.Add("Radio","vKurze x260 y95","Doppelt Kurze")
 
 
 ; *             DROPDOWN REJECTION LIST
 arr_rej_list := get_list(RS_CFG,"Rejection")
-Main_UI.Add("Text",,"Rejection Reason" )
-reject_reason := Main_UI.Add("DropDownList", "vreject_reason" ,arr_rej_list ) ; ! NEEDS TO RECEIVE AN ARRAY WITH THE REJECTION REASONS
+Main_UI.Add("Text", "x10 y174","Rejection Reason" )
+reject_reason := Main_UI.Add("DropDownList", "vreject_reason w580 x10" ,arr_rej_list ) 
 
-check_fleet := Main_UI.Add("Checkbox", "vcheck_fleet", "Fleet Processesing ?")
+check_fleet := Main_UI.Add("Checkbox", "vcheck_fleet x255 y130", "Fleet Processesing ?")
 
-Main_UI.Add("Button",,"Send Mail").OnEvent("Click", send_email_listener )
+Main_UI.Add("Button","w150 h50 x10 y220","Send Mail").OnEvent("Click", send_email_listener )
 
-Main_UI.Add("Button",,"Send Chat").OnEvent("Click", send_chat_listener )
+Main_UI.Add("Button", "w150 h50 x200 y220","Send Chat").OnEvent("Click", send_chat_listener )
 
-Main_UI.Add("Button",,"Settings").OnEvent("Click",settings_btn_listener )
+Main_UI.Add("Button", "w150 h50 x400 y220","Settings").OnEvent("Click",settings_btn_listener )
 
-Main_UI.Show("w600" "h400")
+Main_UI.Show("w600" "h280")
 
 
 /*
@@ -182,7 +182,7 @@ send_email_listener(*){
         mail_send(body, subject, RS_CFG)
 
     }
-    else if(Difference.Value){
+    else if(Diff.Value){
 		body := "Hello, `n`n" . track_id.Value . "Difference of" . difference_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . difference_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
@@ -256,7 +256,8 @@ settings_btn_listener(*){
     Settings_UI.Show()
 }
 run_at_startup_listener(*){
-    if(FileExist(A_Startup"\Work Enhancer.ink")){
+
+    if(FileExist(A_Startup . "\Work Enhancer.ink")){
         MsgBox("Work Enhancer is already set to run at startup")
     }else{
         FileCreateShortcut(A_ScriptFullPath,A_Startup "\Work Enhancer.lnk")

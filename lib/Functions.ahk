@@ -194,7 +194,7 @@ grab_track_id(x1,y1,x2,y2){
 
 /*
 Set track id to counter and write to .txt file
-@params int x1, int y1, int x2, int y2
+@params Int x1, int y1, int x2, int y2
 @param String filename
 */
 set_track_id(x1,y1,x2,y2,filename){
