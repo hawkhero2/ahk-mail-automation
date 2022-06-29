@@ -19,7 +19,7 @@
 
 
 #Include "lib\Functions.ahk" ;! import not working when compiling to .exe
-; #Warn All, Off
+#Warn All, Off
 ; ----------------------------------------
 
 /*
@@ -31,6 +31,9 @@ global ID_HISTORY := "data/id_history.txt"
 global DEFAULT_THEME := get_default_theme(SETTINGS_FILE)
 global RS_CFG := "data/rs_config.ini"
 
+global SETTINGS_SIZE :="w600 h240"
+global MAIN_SIZE := "w600 h270"
+global BUTTON_SIZE := "w90 h30"
 global NUMBERS_ONLY := "0x2000"
 global CENTER_INPUT := "0x1"
 global ACC := get_acc( SETTINGS_FILE )
@@ -87,16 +90,24 @@ arr_rej_list := get_list(RS_CFG,"Rejection")
 main_ui.Add("Text", "x10 y174","Rejection Reason" )
 reject_reason := main_ui.Add("DropDownList", "vreject_reason w580 x10" ,arr_rej_list ) 
 
-check_fleet := main_ui.Add("Checkbox", "vcheck_fleet x255 y130", "Fleet Processesing ?")
+check_fleet := main_ui.Add("Checkbox", "vcheck_fleet x260 y130", "Fleet Processesing ?")
 
-main_ui.Add("Button","w150 h50 x10 y220","Send Mail").OnEvent("Click", send_email_listener )
+main_ui.Add("Button",BUTTON_SIZE . A_Space . "x10 y220","Send Mail").OnEvent("Click", send_email_listener )
 
-main_ui.Add("Button", "w150 h50 x200 y220","Send Chat").OnEvent("Click", send_chat_listener )
+main_ui.Add("Button", BUTTON_SIZE . A_Space . "x120 y220","Send Chat").OnEvent("Click", send_chat_listener )
 
-main_ui.Add("Button", "w150 h50 x400 y220","Settings").OnEvent("Click",settings_btn_listener )
+main_ui.Add("Button", BUTTON_SIZE . A_Space . "x230 y220","Settings").OnEvent("Click",settings_btn_listener )
 
-main_ui.Show("w600" "h280")
+main_ui.Add("Button", BUTTON_SIZE . A_Space . "x340 y220","Browse").OnEvent("Click",browse_btn_listener )
 
+main_ui.Show(MAIN_SIZE)
+
+browse_btn_listener(*){
+    pick_file := FileSelect() ; returns the path of the file selected
+    /*
+     * could be used for a functionality?
+     */
+}
 
 
 
@@ -106,37 +117,41 @@ main_ui.Show("w600" "h280")
 
 settings_ui := Gui("-Resize -MaximizeBox", "Settings",settings_ui_listener:=[] )
 
+settings_ui.Add("GroupBox", "x290 y10 w250 h110", "Misc")
+settings_ui.Add("GroupBox", "x10 y10 w250 h110", "Track Id Position")
+
+
 ; *             SAVE BUTTON
-settings_ui.Add("Button","x10 y100 Default","Save").OnEvent("Click", save_btn_listener )
+settings_ui.Add("Button","x10 y200 Default" . A_Space . BUTTON_SIZE,"Save").OnEvent("Click", save_btn_listener )
 
 ; *             CANCEL BUTTON
-settings_ui.Add("Button","x60 y100","Cancel").OnEvent("Click", cancel_btn_listener )
+settings_ui.Add("Button","x110 y200" . A_Space . BUTTON_SIZE,"Cancel").OnEvent("Click", cancel_btn_listener )
 
-; *             DEFAULT ID LOCATION
-settings_ui.Add("Text","x100 y20","Set default track id location")
-settings_ui.Add("Button","x10 y15","Set").OnEvent("Click",set_btn_listener )
+; *                  ID LOCATION
+settings_ui.Add("Text","x110 y35","Set default track id location")
+settings_ui.Add("Button","x15 y30" . A_Space . BUTTON_SIZE,"Set").OnEvent("Click",set_btn_listener )
 
 ; *             FLEET ID LOCATION 
-settings_ui.Add("Text", "x100 y40","Set Fleet track id location" )
-settings_ui.Add("Button","x10 y","Set").OnEvent("Click", set_fleet_btn_listener )
+settings_ui.Add("Text", "x110 y85","Set Fleet track id location" )
+settings_ui.Add("Button","x15 y80" . A_Space . BUTTON_SIZE,"Set").OnEvent("Click", set_fleet_btn_listener )
 
 ; *            RUN AT STARTUP
-settings_ui.Add("Button","","Run at startup").OnEvent("Click", run_at_startup_listener )
+settings_ui.Add("Button","x10 y140" . A_Space . BUTTON_SIZE,"Run at startup").OnEvent("Click", run_at_startup_listener )
+
 
 ; *             ACCOUNT
-settings_ui.Add("Text", ,"Account" )
-acc_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vaccount",ACC )
+settings_ui.Add("Text", "x440 y20","Account" )
+acc_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vaccount w90 x330 y25",ACC )
 
 ; *             RECIPIENT
-settings_ui.Add("Text",,"Chat Recipient" )
-chat_acc := settings_ui.Add("Edit",CENTER_INPUT . " " . "vrecipient" ,RECIPIENT )
+settings_ui.Add("Text","x440 y50" ,"Chat Recipient" )
+chat_acc := settings_ui.Add("Edit",CENTER_INPUT . " " . "vrecipient w90 x330 y55" ,RECIPIENT )
 
 ; *             SIGNATURE
-settings_ui.Add("Text",,"Signature" )
-signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature", SIGN )
+settings_ui.Add("Text","x440 y80" ,"Signature" )
+signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature w90 x330 y85", SIGN )
 
-
-
+; settings_ui.Show(SETTINGS_SIZE)
 return
 /*
 TODO    Get and Set hotstrings
@@ -148,12 +163,12 @@ TODO    Quick Launch apps hotkeys
 *                                             LISTENERS
 */ 
 save_btn_listener(*){
-    Setting.Submit()
+    settings_ui.Submit(true)
     settings_ui.Show()
 
-    set_acc(SETTINGS_FILE, account)
-    set_sign(SETTINGS_FILE, signature)
-    set_recipient(SETTINGS_FILE, RECIPIENT)+
+    set_acc(SETTINGS_FILE, acc_field.Value)
+    set_sign(SETTINGS_FILE, signature_field.Value)
+    set_recipient(SETTINGS_FILE, chat_acc.Value)
 
     settings_ui.Hide()
 }
@@ -245,7 +260,7 @@ set_fleet_btn_listener(*){
 }
 settings_btn_listener(*){
     main_ui.Hide()
-    settings_ui.Show("w400 h150")
+    settings_ui.Show(SETTINGS_SIZE)
 }
 run_at_startup_listener(*){
 
