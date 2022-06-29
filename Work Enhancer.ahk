@@ -9,6 +9,7 @@
 *	                    -	Light and Dark Theme Support.
 *	                    - 	Manually set the location of the track id via settings ui.
 *	                    -	Storing previous track ids in a file.
+*                       -   Run at startup.
 */
 
 /*
@@ -17,14 +18,13 @@
 
 
 
-#Include "lib\Functions.ahk" ;! import not working when compiling the script to .exe
+#Include "lib\Functions.ahk" ;! import not working when compiling to .exe
+; #Warn All, Off
 ; ----------------------------------------
 
 /*
 *												GLOBAL VARIABLES
 */
-Persistent()
-#Warn All, Off
 startup_path := A_Startup "\Work Enhancer.ink"
 global SETTINGS_FILE := "data/settings.ini"
 global ID_HISTORY := "data/id_history.txt"
@@ -56,93 +56,84 @@ global y_fleet_pos_2 := IniRead(SETTINGS_FILE,"Fleet Track Id Location","y2")
  *                                              MAIN UI
 */
 
-/*
-*   In order to pass constraints to UI elements they must be a string and
-*   We need to concatenate the strings and blank space in between them
-*   VAR . " " . VAR . " " . VAR
-*/
-
-Main_UI := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0" )
+main_ui := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0" )
 
 ; *             TRACK ID
-Main_UI.Add("Text","x140 y15","Track Id" )
-track_id := Main_UI.Add("Edit","0x2000 0x1 vtrack_id x10 y10" ,"" ) 
-
-
-; Main_UI.Add("Text",,"Account" )
-; acc_field := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT vaccount :="",get_acc(SETTINGS_FILE) )
+main_ui.Add("Text","x140 y15","Track Id" )
+track_id := main_ui.Add("Edit","0x2000 0x1 vtrack_id x10 y10" ,"" ) 
 
 ; *             DOPPELT NR
-Main_UI.Add("Text","x140 y55","Doppelt Number" )
-doppelt_nr := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr x10 y50 ", "")
+main_ui.Add("Text","x140 y55","Doppelt Number" )
+doppelt_nr := main_ui.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdoppelt_nr x10 y50 ", "")
 
 ; *             DOPPELT DATE
-Main_UI.Add("Text", "x140 y95","Doppelt Date" )
-doppelt_date := Main_UI.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date x10 y90", "")
+main_ui.Add("Text", "x140 y95","Doppelt Date" )
+doppelt_date := main_ui.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date x10 y90", "")
 
 ; *             DIFFERENCE
-Main_UI.Add("Text", "x140 y135","Difference" )
-diff_val := Main_UI.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val x10 y130", "")
+main_ui.Add("Text", "x140 y135","Difference" )
+diff_val := main_ui.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val x10 y130", "")
 
-; Radio buttons
-; ! not working yet
-List := Main_UI.Add("Radio","vList x260 y15","List")
-Doppelt := Main_UI.Add("Radio","vDoppelt x260 y35","Doppelt")
-Doppelt2 := Main_UI.Add("Radio","vDoppelt2 x260 y55","Doppelt v2")
-Diff := Main_UI.Add("Radio","vDifference x260 y75","Difference")
-Kurze := Main_UI.Add("Radio","vKurze x260 y95","Doppelt Kurze")
+; *             RADIO BUTTONS
+List := main_ui.Add("Radio","vList x260 y15","List")
+Doppelt := main_ui.Add("Radio","vDoppelt x260 y35","Doppelt")
+Doppelt2 := main_ui.Add("Radio","vDoppelt2 x260 y55","Doppelt v2")
+Diff := main_ui.Add("Radio","vDifference x260 y75","Difference")
+Kurze := main_ui.Add("Radio","vKurze x260 y95","Doppelt Kurze")
 
 
 ; *             DROPDOWN REJECTION LIST
 arr_rej_list := get_list(RS_CFG,"Rejection")
-Main_UI.Add("Text", "x10 y174","Rejection Reason" )
-reject_reason := Main_UI.Add("DropDownList", "vreject_reason w580 x10" ,arr_rej_list ) 
+main_ui.Add("Text", "x10 y174","Rejection Reason" )
+reject_reason := main_ui.Add("DropDownList", "vreject_reason w580 x10" ,arr_rej_list ) 
 
-check_fleet := Main_UI.Add("Checkbox", "vcheck_fleet x255 y130", "Fleet Processesing ?")
+check_fleet := main_ui.Add("Checkbox", "vcheck_fleet x255 y130", "Fleet Processesing ?")
 
-Main_UI.Add("Button","w150 h50 x10 y220","Send Mail").OnEvent("Click", send_email_listener )
+main_ui.Add("Button","w150 h50 x10 y220","Send Mail").OnEvent("Click", send_email_listener )
 
-Main_UI.Add("Button", "w150 h50 x200 y220","Send Chat").OnEvent("Click", send_chat_listener )
+main_ui.Add("Button", "w150 h50 x200 y220","Send Chat").OnEvent("Click", send_chat_listener )
 
-Main_UI.Add("Button", "w150 h50 x400 y220","Settings").OnEvent("Click",settings_btn_listener )
+main_ui.Add("Button", "w150 h50 x400 y220","Settings").OnEvent("Click",settings_btn_listener )
 
-Main_UI.Show("w600" "h280")
+main_ui.Show("w600" "h280")
+
+
 
 
 /*
 *                                             SETTINGS UI
 */
 
-Settings_UI := Gui("-Resize -MaximizeBox", "Settings",Settings_UI_listener:=[] )
+settings_ui := Gui("-Resize -MaximizeBox", "Settings",settings_ui_listener:=[] )
 
 ; *             SAVE BUTTON
-Settings_UI.Add("Button","Default","Save").OnEvent("Click", save_btn_listener )
+settings_ui.Add("Button","x10 y100 Default","Save").OnEvent("Click", save_btn_listener )
 
 ; *             CANCEL BUTTON
-Settings_UI.Add("Button", ,"Cancel").OnEvent("Click", cancel_btn_listener )
+settings_ui.Add("Button","x60 y100","Cancel").OnEvent("Click", cancel_btn_listener )
 
 ; *             DEFAULT ID LOCATION
-Settings_UI.Add("Text",,"Set default track id location")
-Settings_UI.Add("Button",,"Set").OnEvent("Click",set_btn_listener )
+settings_ui.Add("Text","x100 y20","Set default track id location")
+settings_ui.Add("Button","x10 y15","Set").OnEvent("Click",set_btn_listener )
 
 ; *             FLEET ID LOCATION 
-Settings_UI.Add("Text",,"Set Fleet track id location" )
-Settings_UI.Add("Button",,"Set").OnEvent("Click", set_fleet_btn_listener )
+settings_ui.Add("Text", "x100 y40","Set Fleet track id location" )
+settings_ui.Add("Button","x10 y","Set").OnEvent("Click", set_fleet_btn_listener )
 
 ; *            RUN AT STARTUP
-Settings_UI.Add("Button",,"Run at startup").OnEvent("Click", run_at_startup_listener )
+settings_ui.Add("Button","","Run at startup").OnEvent("Click", run_at_startup_listener )
 
 ; *             ACCOUNT
-Settings_UI.Add("Text", ,"Account" )
-acc_field := Settings_UI.Add("Edit", CENTER_INPUT . " " . "vaccount",ACC )
+settings_ui.Add("Text", ,"Account" )
+acc_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vaccount",ACC )
 
 ; *             RECIPIENT
-Settings_UI.Add("Text",,"Chat Recipient" )
-chat_acc := Settings_UI.Add("Edit",CENTER_INPUT . " " . "vrecipient" ,RECIPIENT )
+settings_ui.Add("Text",,"Chat Recipient" )
+chat_acc := settings_ui.Add("Edit",CENTER_INPUT . " " . "vrecipient" ,RECIPIENT )
 
 ; *             SIGNATURE
-Settings_UI.Add("Text",,"Signature" )
-signature_field := Settings_UI.Add("Edit", CENTER_INPUT . " " . "vsignature", SIGN )
+settings_ui.Add("Text",,"Signature" )
+signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature", SIGN )
 
 
 
@@ -150,6 +141,7 @@ return
 /*
 TODO    Get and Set hotstrings
 TODO    Look into python OCR library
+TODO    Quick Launch apps hotkeys
 */
 
 /*
@@ -157,17 +149,17 @@ TODO    Look into python OCR library
 */ 
 save_btn_listener(*){
     Setting.Submit()
-    Settings_UI.Show()
+    settings_ui.Show()
 
     set_acc(SETTINGS_FILE, account)
     set_sign(SETTINGS_FILE, signature)
     set_recipient(SETTINGS_FILE, RECIPIENT)+
 
-    Settings_UI.Hide()
+    settings_ui.Hide()
 }
 
 send_email_listener(*){
-    Main_UI.Submit(true)
+    main_ui.Submit(true)
     subject := track_id.Value . A_Space . CURRENT_DATE . "," . A_Space . ACC
     if (List.Value){
         body := "Hello, `n`n" . track_id.Value . "-" . reject_reason.Text . "`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
@@ -198,7 +190,7 @@ send_email_listener(*){
 }
 
 send_chat_listener(*){
-    Main_UI.Submit(true)
+    main_ui.Submit(true)
     if (List.Value){
         body := RECIPIENT . " " . track_id.Value "-" reject_reason.Text
         chat_send(body)
@@ -226,8 +218,8 @@ send_chat_listener(*){
     }
 }
 cancel_btn_listener(*){
-    Settings_UI.Hide()
-    Main_UI.Show()
+    settings_ui.Hide()
+    main_ui.Show()
 }
 set_btn_listener(*){
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
@@ -252,8 +244,8 @@ set_fleet_btn_listener(*){
     MsgBox("Position set")
 }
 settings_btn_listener(*){
-    Main_UI.Hide()
-    Settings_UI.Show()
+    main_ui.Hide()
+    settings_ui.Show("w400 h150")
 }
 run_at_startup_listener(*){
 
@@ -268,7 +260,7 @@ run_at_startup_listener(*){
 */
 MButton::
 {
-    Main_UI.Submit(true)
+    main_ui.Submit(true)
     if !(check_fleet.Value){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
     }
@@ -278,7 +270,7 @@ MButton::
 }
 XButton2::
 {
-    Main_UI.Submit(true)
+    main_ui.Submit(true)
     if !(check_fleet.Value){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
     }
@@ -288,7 +280,7 @@ XButton2::
 }
 ScrollLock::
 {
-    Main_UI.Submit(true)
+    main_ui.Submit(true)
     if !(check_fleet.Value){
         set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
     }
@@ -298,7 +290,7 @@ ScrollLock::
 }
 Pause::
 {
-    Main_UI.Submit(true)
+    main_ui.Submit(true)
     if !(check_fleet.Value){
         stop_start_activity(false)
     }
