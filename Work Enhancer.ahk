@@ -100,6 +100,8 @@ main_ui.Add("Button", BUTTON_SIZE . A_Space . "x230 y220","Settings").OnEvent("C
 
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x340 y220","Browse").OnEvent("Click",browse_btn_listener )
 
+main_ui.OnEvent("Close", main_close)
+
 main_ui.Show(MAIN_SIZE)
 
 browse_btn_listener(*){
@@ -151,6 +153,7 @@ chat_acc := settings_ui.Add("Edit",CENTER_INPUT . " " . "vrecipient w90 x330 y55
 settings_ui.Add("Text","x440 y80" ,"Signature" )
 signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature w90 x330 y85", SIGN )
 
+settings.OnEvent("Close", settings_close)
 ; settings_ui.Show(SETTINGS_SIZE)
 return
 /*
@@ -162,13 +165,22 @@ TODO    Quick Launch apps hotkeys
 /*
 *                                             LISTENERS
 */ 
+settings_close(*){
+    settings_ui.Hide()
+    main_ui.Show(MAIN_SIZE)
+}
+
+main_close(*){
+    ExitApp
+}
+
 save_btn_listener(*){
     settings_ui.Submit(true)
     settings_ui.Show()
 
-    set_acc(SETTINGS_FILE, acc_field.Value)
-    set_sign(SETTINGS_FILE, signature_field.Value)
-    set_recipient(SETTINGS_FILE, chat_acc.Value)
+    set_acc(SETTINGS_FILE, acc_field.Text)
+    set_sign(SETTINGS_FILE, signature_field.Text)
+    set_recipient(SETTINGS_FILE, chat_acc.Text)
 
     settings_ui.Hide()
 }
