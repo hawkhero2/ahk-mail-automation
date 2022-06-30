@@ -1,3 +1,13 @@
+
+/*
+Grab default txt color from ini file
+@param String filename
+@return String color code
+*/
+get_def_txt_color(filename){
+	color := IniRead(filename,"Default Settings","txt_color")
+	return color
+}
 /*
 Set default location of the track id to ini file
 @params int x1, int y1, int x2, int y2
@@ -78,7 +88,7 @@ Grab signature from ini file
 @return String signature
 */
 get_sign(filename :=""){
-    result := IniRead(filename,"Signature","sign")
+    result := IniRead(filename,"Signature","acc")
     return result
 }
 
@@ -100,6 +110,28 @@ Grabs default theme color code from .ini file
 get_default_theme(filename := ""){    
     global def_theme := IniRead( filename, "Default Settings", "theme","")
     Return def_theme
+}
+/*
+Sets default theme color code to .ini file
+@param filename: String file path to .ini file
+@return void
+*/
+set_default_theme(filename := "", value := ""){
+	if(value = "Light"){
+		theme := IniRead(filename, "Themes", "Light")
+		txt_color := IniRead(filename, "Themes","Dark")
+		IniWrite(theme, filename, "Default Settings", "theme")
+		IniWrite(txt_color, filename, "Default Settings", "txt_color")
+	}
+	if(value = "Dark"){
+		theme := IniRead(filename, "Themes", "Dark")
+		txt_color := IniRead(filename, "Themes","Light")
+		IniWrite(theme, filename, "Default Settings", "theme")
+		IniWrite(txt_color, filename, "Default Settings", "txt_color")
+	}
+/*
+TODO: Add support for other themes	
+ */
 }
 /*
 Reads items from .ini file and given section and returns array of strings
