@@ -166,8 +166,7 @@ theme_lbl := settings_ui.Add("Text","x440 y145 " . TXT_COLOR ,"Theme" )
 theme_field := settings_ui.Add("DDL", "vtheme w90 x330 y140", THEME_LIST )
 
 settings_ui.OnEvent("Close", settings_close)
-; settings_ui.Show(SETTINGS_SIZE)
-; return
+
 /*
 TODO    Get and Set hotstrings
 TODO    Look into python OCR library
@@ -225,7 +224,6 @@ save_btn_listener(*){
     recip_lbl.SetFont(TXT_COLOR)
     sign_lbl.SetFont(TXT_COLOR)
     theme_lbl.SetFont(TXT_COLOR)
-
 }
 
 send_email_listener(*){
