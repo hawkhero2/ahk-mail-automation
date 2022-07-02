@@ -77,7 +77,7 @@ doppelt_date_lbl := main_ui.Add("Text", "x140 y95 " . TXT_COLOR,"Doppelt Date" )
 doppelt_date := main_ui.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date x10 y90", "")
 
 ; *             DIFFERENCE
-diff_lbl main_ui.Add("Text", "x140 y135 " . TXT_COLOR,"Difference" )
+diff_lbl := main_ui.Add("Text", "x140 y135 " . TXT_COLOR,"Difference" )
 diff_val := main_ui.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val x10 y130", "")
 
 ; *             RADIO BUTTONS
@@ -159,8 +159,6 @@ signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature w90 
 
 ; *             THEME
 /*
-TODO:   Have a default option selected based on the current theme, from ini file
-TODO:   potentially using a function to get the current theme value and return int 1 or 2 
 */ 
 theme_lbl := settings_ui.Add("Text","x440 y145 " . TXT_COLOR ,"Theme" )
 theme_field := settings_ui.Add("DDL", "vtheme w90 x330 y140", THEME_LIST )
@@ -202,8 +200,6 @@ save_btn_listener(*){
 
     /*
      * Reload the color for the text labels
-     TODO    Make this a function or refactor into something else
-     TODO    that is smaller and easier to read
      */
     track_id_lbl.SetFont(TXT_COLOR)
     doppelt_nr_lbl.SetFont(TXT_COLOR)
@@ -367,4 +363,3 @@ Pause::
         stop_start_activity(true)
     }
 }
-
