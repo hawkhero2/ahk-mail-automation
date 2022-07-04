@@ -363,3 +363,6 @@ Pause::
         stop_start_activity(true)
     }
 }
+/*
+ TODO:  add hotstrings
+ */
