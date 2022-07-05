@@ -114,62 +114,74 @@ browse_btn_listener(*){
      * could be used for a functionality?
      */
 }
-
-
-
+ 
 /*
 *                                             SETTINGS UI
 */
 
 settings_ui := Gui("-Resize -MaximizeBox", "Settings",settings_ui_listener:=[] )
+settings_ui.OnEvent("Close", settings_close)
 
-misc := settings_ui.Add("GroupBox", "x290 y10 w250 h110 " . TXT_COLOR, "Misc")
-id_pos := settings_ui.Add("GroupBox", "x10 y10 w250 h110 " . TXT_COLOR, "Track Id Position")
+tabs := settings_ui.Add("Tab2", "w580",["Info","Hotkeys"])
 
+misc := settings_ui.Add("GroupBox", "x290 y40 w250 h110 " . TXT_COLOR, "Misc")
+id_pos := settings_ui.Add("GroupBox", "x15 y40 w250 h110 " . TXT_COLOR, "Track Id Position")
 
+tabs.UseTab()
 ; *             SAVE BUTTON
-settings_ui.Add("Button","x10 y200 Default" . A_Space . BUTTON_SIZE,"Save").OnEvent("Click", save_btn_listener )
+settings_ui.Add("Button","x20 y190 Default" . A_Space . BUTTON_SIZE,"Save").OnEvent("Click", save_btn_listener )
 
 ; *             CANCEL BUTTON
-settings_ui.Add("Button","x110 y200" . A_Space . BUTTON_SIZE,"Cancel").OnEvent("Click", cancel_btn_listener )
+settings_ui.Add("Button","x120 y190" . A_Space . BUTTON_SIZE,"Cancel").OnEvent("Click", cancel_btn_listener )
 
+tabs.UseTab(1)
 ; *                  ID LOCATION
-def_pos_lbl := settings_ui.Add("Text","x110 y35 " . TXT_COLOR ,"Set default track id location")
-settings_ui.Add("Button","x15 y30" . A_Space . BUTTON_SIZE,"Set").OnEvent("Click",set_btn_listener )
+def_pos_lbl := settings_ui.Add("Text","x115 y65 " . TXT_COLOR ,"Set default track id location")
+settings_ui.Add("Button","x20 y60" . A_Space . BUTTON_SIZE,"Set").OnEvent("Click",set_btn_listener )
 
 ; *             FLEET ID LOCATION 
-fleet_pos_lbl := settings_ui.Add("Text", "x110 y85 " . TXT_COLOR,"Set Fleet track id location" )
-settings_ui.Add("Button","x15 y80" . A_Space . BUTTON_SIZE,"Set").OnEvent("Click", set_fleet_btn_listener )
+fleet_pos_lbl := settings_ui.Add("Text", "x115 y115 " . TXT_COLOR,"Set Fleet track id location" )
+settings_ui.Add("Button","x20 y110" . A_Space . BUTTON_SIZE,"Set").OnEvent("Click", set_fleet_btn_listener )
 
 ; *            RUN AT STARTUP
-settings_ui.Add("Button","x10 y140" . A_Space . BUTTON_SIZE,"Run at startup").OnEvent("Click", run_at_startup_listener )
+settings_ui.Add("Button","x220 y190" . A_Space . BUTTON_SIZE,"Run at startup").OnEvent("Click", run_at_startup_listener )
 
 
 ; *             ACCOUNT
-acc_lbl := settings_ui.Add("Text", "x440 y20 " . TXT_COLOR,"Account" )
-acc_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vaccount w90 x330 y25",ACC )
+acc_lbl := settings_ui.Add("Text", "x440 y60 " . TXT_COLOR,"Account" )
+acc_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vaccount w90 x330 y55",ACC )
 
 ; *             RECIPIENT
-recip_lbl := settings_ui.Add("Text","x440 y50 " . TXT_COLOR ,"Chat Recipient" )
-chat_acc := settings_ui.Add("Edit",CENTER_INPUT . " " . "vrecipient w90 x330 y55" ,RECIPIENT )
+recip_lbl := settings_ui.Add("Text","x440 y90 " . TXT_COLOR ,"Chat Recipient" )
+chat_acc := settings_ui.Add("Edit",CENTER_INPUT . " " . "vrecipient w90 x330 y85" ,RECIPIENT )
 
 ; *             SIGNATURE
-sign_lbl := settings_ui.Add("Text","x440 y80 " . TXT_COLOR ,"Signature" )
-signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature w90 x330 y85", SIGN )
+sign_lbl := settings_ui.Add("Text","x440 y120 " . TXT_COLOR ,"Signature" )
+signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature w90 x330 y115", SIGN )
 
-; *             THEME
 /*
+*               THEME
 */ 
-theme_lbl := settings_ui.Add("Text","x440 y145 " . TXT_COLOR ,"Theme" )
-theme_field := settings_ui.Add("DDL", "vtheme w90 x330 y140", THEME_LIST )
+theme_lbl := settings_ui.Add("Text","x440 y165 " . TXT_COLOR ,"Theme" )
+theme_field := settings_ui.Add("DDL", "vtheme w90 x330 y160", THEME_LIST )
 
-settings_ui.OnEvent("Close", settings_close)
+tabs.UseTab(2)
+hotkeys := settings_ui.Add("GroupBox", "x10 y40 w250 h110 " . TXT_COLOR, "Track Id Hotkeys")
+mbutton := settings_ui.Add("Checkbox", "x15 y60 " . TXT_COLOR, "Middle Mouse Button")
+x1btn := settings_ui.Add("Checkbox", "x15 y80 " . TXT_COLOR, "Side Button 1")
+x2btn := settings_ui.Add("Checkbox", "x15 y100 " . TXT_COLOR, "Side Button 2")
+scrlock := settings_ui.Add("Checkbox", "x15 y120 " . TXT_COLOR, "Scroll Lock")
 
-/*
-TODO    Get and Set hotstrings
-TODO    Look into python OCR library
-TODO    Quick Launch apps hotkeys
-*/
+ss_macro := settings_ui.Add("GroupBox", "x290 y40 w250 h110 " . TXT_COLOR, "Start/Stop Macro")
+pausebreak := settings_ui.Add("Checkbox", "x300 y60 " . TXT_COLOR, "Pause Break")
+fseven := settings_ui.Add("Checkbox", "x300 y80 " . TXT_COLOR, "F7")
+
+mbutton.Value := get_state("mbutton")
+x1btn.Value := get_state("x1button")
+x2btn.Value := get_state("x2button")
+scrlock.Value := get_state("scrllock")
+pausebreak.Value := get_state("pausebreak")
+fseven.Value := get_state("fseven")
 
 /*
 *                                             LISTENERS
@@ -198,6 +210,12 @@ save_btn_listener(*){
     main_ui.BackColor := get_default_theme( SETTINGS_FILE )
     TXT_COLOR := "C" . get_def_txt_color(SETTINGS_FILE)
 
+    set_state("mbutton", mbutton.Value) 
+    set_state("x1button", x1btn.Value) 
+    set_state("x2button", x2btn.Value) 
+    set_state("scrllock", scrlock.Value)
+    set_state("pausebreak", pausebreak.Value)
+    set_state("fseven", fseven.Value)
     /*
      * Reload the color for the text labels
      */
@@ -220,6 +238,9 @@ save_btn_listener(*){
     recip_lbl.SetFont(TXT_COLOR)
     sign_lbl.SetFont(TXT_COLOR)
     theme_lbl.SetFont(TXT_COLOR)
+    mbutton.SetFont(TXT_COLOR)
+    x1btn.SetFont(TXT_COLOR)
+    x2btn.SetFont(TXT_COLOR)
 }
 
 send_email_listener(*){
@@ -311,6 +332,28 @@ settings_btn_listener(*){
     main_ui.Hide()
     settings_ui.Show(SETTINGS_SIZE)
     settings_ui.BackColor := get_default_theme(SETTINGS_FILE)
+    track_id_lbl.SetFont(TXT_COLOR)
+    doppelt_nr_lbl.SetFont(TXT_COLOR)
+    doppelt_date_lbl.SetFont(TXT_COLOR)
+    diff_lbl.SetFont(TXT_COLOR)
+    List.SetFont(TXT_COLOR)
+    Doppelt.SetFont(TXT_COLOR)
+    Doppelt2.SetFont(TXT_COLOR)
+    Diff.SetFont(TXT_COLOR)
+    Kurze.SetFont(TXT_COLOR)
+    rejections_lbl.SetFont(TXT_COLOR)
+    check_fleet.SetFont(TXT_COLOR)
+    misc.SetFont(TXT_COLOR)
+    id_pos.SetFont(TXT_COLOR)
+    def_pos_lbl.SetFont(TXT_COLOR)
+    fleet_pos_lbl.SetFont(TXT_COLOR)
+    acc_lbl.SetFont(TXT_COLOR)
+    recip_lbl.SetFont(TXT_COLOR)
+    sign_lbl.SetFont(TXT_COLOR)
+    theme_lbl.SetFont(TXT_COLOR)
+    mbutton.SetFont(TXT_COLOR)
+    x1btn.SetFont(TXT_COLOR)
+    x2btn.SetFont(TXT_COLOR)
 }
 run_at_startup_listener(*){
 
@@ -326,43 +369,68 @@ run_at_startup_listener(*){
 MButton::
 {
     main_ui.Submit(true)
-    if !(check_fleet.Value){
-        set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
-    }
-    else{
-        set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+    if(mbutton.Value){
+
+        if !(check_fleet.Value){
+            set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
+        }
+        else{
+            set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+        }
     }
 }
 XButton2::
 {
     main_ui.Submit(true)
-    if !(check_fleet.Value){
-        set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
-    }
-    else{
-        set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+    if(x2btn.Value){
+
+        if !(check_fleet.Value){
+            set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
+        }
+        else{
+            set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+        }
     }
 }
 ScrollLock::
 {
     main_ui.Submit(true)
-    if !(check_fleet.Value){
-        set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
-    }
-    else{
-        set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, SETTINGS_FILE)
+    if(scrlock.Value){
+
+        if !(check_fleet.Value){
+            set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
+        }
+        else{
+            set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, SETTINGS_FILE)
+        }
     }
 }
 Pause::
 {
     main_ui.Submit(true)
-    if !(check_fleet.Value){
-        stop_start_activity(false)
+    if(pausebreak.Value){
+
+        if !(check_fleet.Value){
+            stop_start_activity(false)
+        }
+        else{
+            stop_start_activity(true)
+        }
     }
-    else{
-        stop_start_activity(true)
+}
+F7::
+{
+    main_ui.Submit(true)
+    if(fseven.Value){
+
+        if !(check_fleet.Value){
+            stop_start_activity(false)
+        }
+        else{
+            stop_start_activity(true)
+        }
     }
 }
 /*
  TODO:  add hotstrings
- */
+*/

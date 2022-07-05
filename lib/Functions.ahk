@@ -5,7 +5,7 @@ Set state of element
 @return void
 */
 set_state(key :="", state := False){
-
+	IniWrite(state,"data\settings.ini", "States", key)
 }	
 
 /*
@@ -16,8 +16,8 @@ Get state of element
 */
 get_state(key :="") {
 	state := false
-	if(IniRead("data\settings.ini", "States", key, "state") = "true") {
-		state = true
+	if(IniRead("data\settings.ini", "States", key) = true) {
+		state := true
 	}
 	return state
 }
@@ -177,7 +177,7 @@ mail_send(body, subject, filename){
 	If WinExist("Roundcube"){
 		WinActivate
 		Sleep(350)
-        MouseClick(left, 60, 140)
+        MouseClick(L, 60, 140)
 		A_Clipboard := ""
 		A_Clipboard := get_email(filename)
 		Sleep(1000)
