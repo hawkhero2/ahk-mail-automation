@@ -1,4 +1,26 @@
+/*
+Set state of element
+@param String element
+@param boolean state
+@return void
+*/
+set_state(key :="", state := False){
 
+}	
+
+/*
+Get state of element
+@param string filename
+@param string key
+@return boolean
+*/
+get_state(key :="") {
+	state := false
+	if(IniRead("data\settings.ini", "States", key, "state") = "true") {
+		state = true
+	}
+	return state
+}
 /*
 Grab default txt color from ini file
 @param String filename
@@ -231,10 +253,10 @@ Set track id to counter and write to .txt file
 */
 set_track_id(x1,y1,x2,y2,filename){
 	    ;Check if process capture2text is running
-    ProcessExist("Capture2text")
+    ; ProcessExist("Capture2text")
 
     ;if the ErrorLevel is not 0 that means its running, and the automation will commence
-    If !(ErrorLevel=0){
+    If !(ProcessExist("Capture2text")){
         If (WinExist("CaptureThis")){
             WinActivate()
 			grab_track_id(x1,y1,x2,y2)
@@ -255,7 +277,7 @@ set_track_id(x1,y1,x2,y2,filename){
         } else
             MsgBox("Counter not running")
     }Else
-        Run("Capture2Text\Capture2Text.exe")
+        Run("Capture2Text\Capture2Text.exe") ; ! NOT WORKING
 }
 
 /*
