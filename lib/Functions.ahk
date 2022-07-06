@@ -174,76 +174,91 @@ Send mail macro
 @param String filename
 */
 mail_send(body, subject, filename){
-	If WinExist("Roundcube"){
-		WinActivate
-		Sleep(350)
-        MouseClick(L, 60, 140)
-		A_Clipboard := ""
-		A_Clipboard := get_email(filename)
-		Sleep(1000)
-		Send "^{V}"
-		Loop 3{
+	try {
+		if WinExist("Roundcube"){
+			WinActivate
+			Sleep(350)
+			MouseClick(L, 60, 140)
+			A_Clipboard := ""
+			A_Clipboard := get_email(filename)
+			Sleep(1000)
+			Send "^{V}"
+			Loop 3{
+				Send "{Tab}"
+			}
+			A_Clipboard:=""
+			A_Clipboard := subject 
+			Sleep( 100)
+			Send "^{V}"
 			Send "{Tab}"
+			A_Clipboard := ""
+			A_Clipboard := body
+			Send "^{V}"
+			Send "{Tab}"
+			Sleep(100)
+			
 		}
-		A_Clipboard:=""
-		A_Clipboard := subject 
-		Sleep( 100)
-		Send "^{V}"
-		Send "{Tab}"
-		A_Clipboard := ""
-		A_Clipboard := body
-		Send "^{V}"
-		Send "{Tab}"
-		Sleep(100)
-		
+		else
+			MsgBox("Mail App not running")		
+	} 
+	catch Error as e {
+		MsgBox("An error has been produced: " . e.Message)
 	}
-	else
-		MsgBox("Mail App not running")	
 }
 /*
 Send message macro in chat in the appropiate channel
 @param String message
 */
 chat_send(message){
-	If WinExist("Data"){
-		WinActivate
-		Sleep(350)
-		Send "^{k}"
-		Sleep(300)
-		SendText(Respingeri) 
-		Sleep(500)
-		Send "{Enter}"
-		Sleep(1000)
-		SendText(1)
-		Sleep(150)
-		Send "{BackSpace}"
-		A_Clipboard := ""
-		A_Clipboard := message
-		Sleep(1000)
-		Send "^{V}"
-		Send "^{V}"
+	try{
+		If WinExist("Data"){
+			WinActivate
+			Sleep(350)
+			Send "^{k}"
+			Sleep(300)
+			SendText(Respingeri) 
+			Sleep(500)
+			Send "{Enter}"
+			Sleep(1000)
+			SendText(1)
+			Sleep(150)
+			Send "{BackSpace}"
+			A_Clipboard := ""
+			A_Clipboard := message
+			Sleep(1000)
+			Send "^{V}"
+			Send "^{V}"
+		}
+		else
+			MsgBox("Chat is not open")
 	}
-	else
-		MsgBox("Chat is not open")
+	catch Error as e {
+		MsgBox("An error has been produced: " . e.Message)
+	}
 }
 /*
 Grab track id from position in Cadosys
 @params int x1, int y1, int x2, int y2
 */
 grab_track_id(x1,y1,x2,y2){
-	/*
-	First x1, y2 coordinates are where the selection starts
-	*/
-	MouseMove( x1, y1, 0)
-    Sleep(80)
-	A_Clipboard := ""
-    Send "#q"
-    Sleep(60)
-	/*
-	Second x2, y2 coordinates are where the selection ends
-	*/
-    MouseClick("Left", x2,y2)
-    MouseMove(70, 400, 0)
+	try {
+		/*
+		First x1, y2 coordinates are where the selection starts
+		*/
+		MouseMove( x1, y1, 0)
+		Sleep(80)
+		A_Clipboard := ""
+		Send "#q"
+		Sleep(60)
+		/*
+		Second x2, y2 coordinates are where the selection ends
+		*/
+		MouseClick("Left", x2,y2)
+		MouseMove(70, 400, 0)
+	} 
+	catch Error as e {
+		MsgBox("An error has been produced: " . e.Message)
+	}
 }
 
 /*
@@ -252,32 +267,34 @@ Set track id to counter and write to .txt file
 @param String filename
 */
 set_track_id(x1,y1,x2,y2,filename){
-	    ;Check if process capture2text is running
-    ; ProcessExist("Capture2text")
+	try{
 
-    ;if the ErrorLevel is not 0 that means its running, and the automation will commence
-    If !(ProcessExist("Capture2text")){
-        If (WinExist("CaptureThis")){
-            WinActivate()
-			grab_track_id(x1,y1,x2,y2)
-            ;* writes id to .txt file for history
-			FileAppend(A_Clipboard, filename) ; ! Not tested appending to .txt file track id from Clipboard
-        }
-        ;checks for the counter app
-        If (WinExist("(")){
-            WinActivate()
-            A_Clipboard := Trim(A_Clipboard, " ")
-            Send "^{V}"
-
-            ;checks for the CadosysApp
-            If (WinExist("CaptureThis")){
-                WinActivate()
-            }Else
-                MsgBox("Cadosys not running")
-        } else
-            MsgBox("Counter not running")
-    }Else
-        Run( A_ScriptDir . "\Capture2Text\Capture2Text.exe")
+		if !(ProcessExist("Capture2text") = 0){
+			if (WinExist("CaptureThis")){
+				WinActivate()
+				grab_track_id(x1,y1,x2,y2)
+				;* writes id to .txt file for history
+				FileAppend(A_Clipboard, filename) ; ! Not tested appending to .txt file track id from Clipboard
+			}
+			;checks for the counter app
+			if (WinExist("(")){
+				WinActivate()
+				A_Clipboard := Trim(A_Clipboard, " ")
+				Send "^{V}"
+	
+				;checks for the CadosysApp
+				if (WinExist("CaptureThis")){
+					WinActivate()
+				}else
+					MsgBox("Cadosys not running")
+			} else
+				MsgBox("Counter not running")
+		}else
+			Run( A_ScriptDir . "\Capture2Text\Capture2Text.exe")
+	}catch Error as e {
+		MsgBox("An error has been produced: " . e.Message)
+	}
+	
 }
 
 /*
@@ -285,7 +302,7 @@ Start-stop macro for counter
 @param int tabs_nr : the amount of {Tabs} to send to counter
 */
 stop_start(tabs_nr){ ;is_glass is a boolean value, true if glass is being used, false if not
-    If (WinExist("(")) {
+    if (WinExist("(")) {
         WinActivate()
        Loop tabs_nr{
 			Sleep(50)
@@ -308,10 +325,10 @@ Runs stop_start() for the appropriate number of tabs based on the activity
 @param bool is_fleet
 */
 stop_start_activity(is_fleet){
-    If (is_fleet = True){
+    if (is_fleet = True){
         stop_start(6)
     }
-    Else{
+    else{
         stop_start(4)
     }
 }
