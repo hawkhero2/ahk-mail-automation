@@ -21,6 +21,7 @@
 #Include "lib\Functions.ahk" ;! import not working when compiling to .exe
 
 #Warn All, Off
+Persistent(true)
 ; ----------------------------------------
 
 /*
@@ -122,7 +123,7 @@ browse_btn_listener(*){
 settings_ui := Gui("-Resize -MaximizeBox", "Settings",settings_ui_listener:=[] )
 settings_ui.OnEvent("Close", settings_close)
 
-tabs := settings_ui.Add("Tab2", "w580",["Info","Hotkeys"])
+tabs := settings_ui.Add("Tab2", "w580", ["Info","Hotkeys"] )
 
 misc := settings_ui.Add("GroupBox", "x290 y40 w250 h110 " . TXT_COLOR, "Misc")
 id_pos := settings_ui.Add("GroupBox", "x15 y40 w250 h110 " . TXT_COLOR, "Track Id Position")
@@ -190,10 +191,12 @@ settings_close(*){
     settings_ui.Hide()
     main_ui.Show( MAIN_SIZE )
     main_ui.BackColor := get_default_theme(SETTINGS_FILE)
+    return
 }
 
 main_close(*){
     ExitApp
+    return
 }
 
 save_btn_listener(*){
@@ -241,6 +244,7 @@ save_btn_listener(*){
     mbutton.SetFont(TXT_COLOR)
     x1btn.SetFont(TXT_COLOR)
     x2btn.SetFont(TXT_COLOR)
+    return
 }
 
 send_email_listener(*){
@@ -271,7 +275,7 @@ send_email_listener(*){
     {
         MsgBox("Please select an option")
     }
-
+    return
 }
 
 send_chat_listener(*){
@@ -301,10 +305,12 @@ send_chat_listener(*){
     {
         MsgBox("Please select an option")
     }
+    return
 }
 cancel_btn_listener(*){
     settings_ui.Hide()
     main_ui.Show()
+    return
 }
 set_btn_listener(*){
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
@@ -316,6 +322,7 @@ set_btn_listener(*){
     
     set_default_pos(cstm_x1,cstm_y1,cstm_x2,cstm_y2,SETTINGS_FILE,"Track Id Location")
     MsgBox("Position set")
+    return
 }
 set_fleet_btn_listener(*){
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
@@ -327,6 +334,7 @@ set_fleet_btn_listener(*){
 
     set_default_pos(cstm_x1,cstm_y1,cstm_x2,cstm_y2,SETTINGS_FILE,"Fleet Track Id Location")
     MsgBox("Position set")
+    return
 }
 settings_btn_listener(*){
     main_ui.Hide()
@@ -354,6 +362,7 @@ settings_btn_listener(*){
     mbutton.SetFont(TXT_COLOR)
     x1btn.SetFont(TXT_COLOR)
     x2btn.SetFont(TXT_COLOR)
+    return
 }
 run_at_startup_listener(*){
 
@@ -362,6 +371,7 @@ run_at_startup_listener(*){
     }else{
         FileCreateShortcut(A_ScriptFullPath,A_Startup "\Work Enhancer.lnk")
     }
+    return
 }
 /*
 *                                               HOTKEYS 
@@ -378,6 +388,7 @@ MButton::
             set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
         }
     }
+    return
 }
 XButton2::
 {
@@ -391,6 +402,7 @@ XButton2::
             set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
         }
     }
+    return
 }
 ScrollLock::
 {
@@ -404,6 +416,7 @@ ScrollLock::
             set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, SETTINGS_FILE)
         }
     }
+    return
 }
 Pause::
 {
@@ -417,6 +430,7 @@ Pause::
             stop_start_activity(true)
         }
     }
+    return
 }
 F7::
 {
@@ -430,7 +444,11 @@ F7::
             stop_start_activity(true)
         }
     }
+    return
 }
 /*
  TODO:  add hotstrings
+ TODO:  for fleet -> make it add live after 4tabs 
+ TODO: put id -> 4 tabs put live -> 5 tabs to return back to file id field
+ TOdo: 6 tabs from file id to stop button
 */

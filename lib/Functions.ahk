@@ -260,7 +260,7 @@ set_track_id(x1,y1,x2,y2,filename){
         If (WinExist("CaptureThis")){
             WinActivate()
 			grab_track_id(x1,y1,x2,y2)
-            ; writes id to .txt file for history
+            ;* writes id to .txt file for history
 			FileAppend(A_Clipboard, filename) ; ! Not tested appending to .txt file track id from Clipboard
         }
         ;checks for the counter app
@@ -277,7 +277,7 @@ set_track_id(x1,y1,x2,y2,filename){
         } else
             MsgBox("Counter not running")
     }Else
-        Run("Capture2Text\Capture2Text.exe") ; ! NOT WORKING
+        Run( A_ScriptDir . "Capture2Text\Capture2Text.exe") ; ! NOT WORKING
 }
 
 /*
