@@ -377,8 +377,7 @@ run_at_startup_listener(*){
 *                                               HOTKEYS 
 */
 MButton::
-{
-    main_ui.Submit(true)
+{   
     if(mbutton.Value){
 
         if !(check_fleet.Value){
@@ -392,7 +391,6 @@ MButton::
 }
 XButton2::
 {
-    main_ui.Submit(true)
     if(x2btn.Value){
 
         if !(check_fleet.Value){
@@ -406,7 +404,6 @@ XButton2::
 }
 ScrollLock::
 {
-    main_ui.Submit(true)
     if(scrlock.Value){
 
         if !(check_fleet.Value){
@@ -420,7 +417,6 @@ ScrollLock::
 }
 Pause::
 {
-    main_ui.Submit(true)
     if(pausebreak.Value){
 
         if !(check_fleet.Value){
@@ -434,7 +430,6 @@ Pause::
 }
 F7::
 {
-    main_ui.Submit(true)
     if(fseven.Value){
 
         if !(check_fleet.Value){

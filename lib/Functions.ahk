@@ -277,7 +277,7 @@ set_track_id(x1,y1,x2,y2,filename){
         } else
             MsgBox("Counter not running")
     }Else
-        Run( A_ScriptDir . "Capture2Text\Capture2Text.exe") ; ! NOT WORKING
+        Run( A_ScriptDir . "\Capture2Text\Capture2Text.exe")
 }
 
 /*
