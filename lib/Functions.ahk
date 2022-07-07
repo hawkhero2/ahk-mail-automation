@@ -196,7 +196,6 @@ mail_send(body, subject, filename){
 			Send "^{V}"
 			Send "{Tab}"
 			Sleep(100)
-			
 		}
 		else
 			MsgBox("Mail App not running")		
@@ -271,7 +270,7 @@ set_track_id(x1,y1,x2,y2,filename){
 
 		if !(ProcessExist("Capture2text") = 0){
 			if (WinExist("CaptureThis")){
-				WinActivate()
+				WinActivate("CaptureThis")
 				grab_track_id(x1,y1,x2,y2)
 				;* writes id to .txt file for history
 				FileAppend(A_Clipboard, filename) ; ! Not tested appending to .txt file track id from Clipboard
@@ -281,10 +280,9 @@ set_track_id(x1,y1,x2,y2,filename){
 				WinActivate()
 				A_Clipboard := Trim(A_Clipboard, " ")
 				Send "^{V}"
-	
 				;checks for the CadosysApp
 				if (WinExist("CaptureThis")){
-					WinActivate()
+					WinActivate("CaptureThis")
 				}else
 					MsgBox("Cadosys not running")
 			} else
@@ -298,10 +296,23 @@ set_track_id(x1,y1,x2,y2,filename){
 }
 
 /*
+Set live to counter for fleet activity 
+*/
+set_live_activity(){
+	Loop 4{
+		Send("Tab")
+	}
+	Send("Live")
+	Loop 5{
+		Send("Tab")
+	}
+}
+
+/*
 Start-stop macro for counter
 @param int tabs_nr : the amount of {Tabs} to send to counter
 */
-stop_start(tabs_nr){ ;is_glass is a boolean value, true if glass is being used, false if not
+stop_start(tabs_nr){ 
     if (WinExist("(")) {
         WinActivate()
        Loop tabs_nr{
