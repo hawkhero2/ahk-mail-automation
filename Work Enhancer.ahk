@@ -335,28 +335,28 @@ settings_btn_listener(*){
     main_ui.Hide()
     settings_ui.Show(SETTINGS_SIZE)
     settings_ui.BackColor := get_default_theme(SETTINGS_FILE)
-    track_id_lbl.SetFont(TXT_COLOR)
-    doppelt_nr_lbl.SetFont(TXT_COLOR)
-    doppelt_date_lbl.SetFont(TXT_COLOR)
-    diff_lbl.SetFont(TXT_COLOR)
-    List.SetFont(TXT_COLOR)
-    Doppelt.SetFont(TXT_COLOR)
-    Doppelt2.SetFont(TXT_COLOR)
-    Diff.SetFont(TXT_COLOR)
-    Kurze.SetFont(TXT_COLOR)
-    rejections_lbl.SetFont(TXT_COLOR)
-    check_fleet.SetFont(TXT_COLOR)
-    misc.SetFont(TXT_COLOR)
-    id_pos.SetFont(TXT_COLOR)
-    def_pos_lbl.SetFont(TXT_COLOR)
-    fleet_pos_lbl.SetFont(TXT_COLOR)
-    acc_lbl.SetFont(TXT_COLOR)
-    recip_lbl.SetFont(TXT_COLOR)
-    sign_lbl.SetFont(TXT_COLOR)
-    theme_lbl.SetFont(TXT_COLOR)
-    mbutton.SetFont(TXT_COLOR)
-    x1btn.SetFont(TXT_COLOR)
-    x2btn.SetFont(TXT_COLOR)
+    ; track_id_lbl.SetFont(TXT_COLOR)
+    ; doppelt_nr_lbl.SetFont(TXT_COLOR)
+    ; doppelt_date_lbl.SetFont(TXT_COLOR)
+    ; diff_lbl.SetFont(TXT_COLOR)
+    ; List.SetFont(TXT_COLOR)
+    ; Doppelt.SetFont(TXT_COLOR)
+    ; Doppelt2.SetFont(TXT_COLOR)
+    ; Diff.SetFont(TXT_COLOR)
+    ; Kurze.SetFont(TXT_COLOR)
+    ; rejections_lbl.SetFont(TXT_COLOR)
+    ; check_fleet.SetFont(TXT_COLOR)
+    ; misc.SetFont(TXT_COLOR)
+    ; id_pos.SetFont(TXT_COLOR)
+    ; def_pos_lbl.SetFont(TXT_COLOR)
+    ; fleet_pos_lbl.SetFont(TXT_COLOR)
+    ; acc_lbl.SetFont(TXT_COLOR)
+    ; recip_lbl.SetFont(TXT_COLOR)
+    ; sign_lbl.SetFont(TXT_COLOR)
+    ; theme_lbl.SetFont(TXT_COLOR)
+    ; mbutton.SetFont(TXT_COLOR)
+    ; x1btn.SetFont(TXT_COLOR)
+    ; x2btn.SetFont(TXT_COLOR)
 }
 run_at_startup_listener(*){
 
@@ -379,6 +379,7 @@ MButton::
         }
         else{
             set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+            set_live_activity()
         }
     }
 }
@@ -392,6 +393,7 @@ XButton2::
         }
         else{
             set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+            set_live_activity()
         }
     }
 }
@@ -405,6 +407,7 @@ ScrollLock::
         }
         else{
             set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, SETTINGS_FILE)
+            set_live_activity()
         }
     }
 }

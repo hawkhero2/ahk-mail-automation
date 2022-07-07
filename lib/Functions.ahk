@@ -60,7 +60,12 @@ Set chat account to be @mentioned
 @return void
 */
 set_recipient(filename :="", recipient :=""){
-    IniWrite(recipient,filename,"Chat","acc")    
+	try {
+		IniWrite(recipient,filename,"Chat","acc")    
+	} 
+	catch Error as e {
+		MsgBox("There has been an error while setting the chat account. Please check your rs_config.ini file. " . e.Message , "Error")
+	}
 }
 
 /*
@@ -121,7 +126,12 @@ Set signature to ini file
 @return void
 */
 set_sign(filename :="", signature :=""){
-    IniWrite(signature, filename,"Signature","acc")
+	try {
+		IniWrite(signature, filename,"Signature","acc")
+	} 
+	catch Error as e {
+		MsgBox("There has been an error while setting signature: " . e.Message , "Error")
+	}
 }
 
 /*
@@ -139,17 +149,23 @@ Sets default theme color code to .ini file
 @return void
 */
 set_default_theme(filename := "", value := ""){
-	if(value = "Light"){
-		theme := IniRead(filename, "Themes", "Light")
-		txt_color := IniRead(filename, "Themes","Dark")
-		IniWrite(theme, filename, "Default Settings", "theme")
-		IniWrite(txt_color, filename, "Default Settings", "txt_color")
+	try{
+
+		if(value = "Light"){
+			theme := IniRead(filename, "Themes", "Light")
+			txt_color := IniRead(filename, "Themes","Dark")
+			IniWrite(theme, filename, "Default Settings", "theme")
+			IniWrite(txt_color, filename, "Default Settings", "txt_color")
+		}
+		if(value = "Dark"){
+			theme := IniRead(filename, "Themes", "Dark")
+			txt_color := IniRead(filename, "Themes","Light")
+			IniWrite(theme, filename, "Default Settings", "theme")
+			IniWrite(txt_color, filename, "Default Settings", "txt_color")
+		}
 	}
-	if(value = "Dark"){
-		theme := IniRead(filename, "Themes", "Dark")
-		txt_color := IniRead(filename, "Themes","Light")
-		IniWrite(theme, filename, "Default Settings", "theme")
-		IniWrite(txt_color, filename, "Default Settings", "txt_color")
+	catch Error as e{
+		MsgBox( "There has been an error when selecting theme: " . e.Message)
 	}
 /*
 TODO: Add support for other themes	
@@ -201,7 +217,7 @@ mail_send(body, subject, filename){
 			MsgBox("Mail App not running")		
 	} 
 	catch Error as e {
-		MsgBox("An error has been produced: " . e.Message)
+		MsgBox("An error has been produced while running mail macro: " . e.Message , "Error")
 	}
 }
 /*
@@ -232,7 +248,7 @@ chat_send(message){
 			MsgBox("Chat is not open")
 	}
 	catch Error as e {
-		MsgBox("An error has been produced: " . e.Message)
+		MsgBox("An error has been produced while running chat macro : " . e.Message , "Error")
 	}
 }
 /*
@@ -242,7 +258,7 @@ Grab track id from position in Cadosys
 grab_track_id(x1,y1,x2,y2){
 	try {
 		/*
-		First x1, y2 coordinates are where the selection starts
+		* First x1, y2 coordinates are where the selection starts
 		*/
 		MouseMove( x1, y1, 0)
 		Sleep(80)
@@ -250,13 +266,13 @@ grab_track_id(x1,y1,x2,y2){
 		Send "#q"
 		Sleep(60)
 		/*
-		Second x2, y2 coordinates are where the selection ends
+		* Second x2, y2 coordinates are where the selection ends
 		*/
 		MouseClick("Left", x2,y2)
 		MouseMove(70, 400, 0)
 	} 
 	catch Error as e {
-		MsgBox("An error has been produced: " . e.Message)
+		MsgBox("An error has been produced while running track id macro: " . e.Message , "Error")
 	}
 }
 
@@ -290,7 +306,7 @@ set_track_id(x1,y1,x2,y2,filename){
 		}else
 			Run( A_ScriptDir . "\Capture2Text\Capture2Text.exe")
 	}catch Error as e {
-		MsgBox("An error has been produced: " . e.Message)
+		MsgBox("An error has been produced while setting track id to counter : " . e.Message , "Error")
 	}
 	
 }
