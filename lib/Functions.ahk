@@ -192,25 +192,22 @@ Send mail macro
 mail_send(body, subject, filename){
 	try {
 		if WinExist("Roundcube"){
-			WinActivate
+			WinActivate("Roundcube")
 			Sleep(350)
 			MouseClick("Left", 60, 140)
-			A_Clipboard := ""
 			A_Clipboard := get_email(filename)
 			Sleep(1000)
-			Send "^{V}"
+			Send("^{V}")
 			Loop 3{
 				Send "{Tab}"
 			}
-			A_Clipboard:=""
 			A_Clipboard := subject 
-			Sleep( 100)
-			Send "^{V}"
-			Send "{Tab}"
-			A_Clipboard := ""
+			Sleep(100)
+			Send("^{V}")
+			Send("{Tab}")
 			A_Clipboard := body
-			Send "^{V}"
-			Send "{Tab}"
+			Send("^{V}")
+			Send("{Tab}")
 			Sleep(100)
 		}
 		else
@@ -229,20 +226,20 @@ chat_send(message){
 		If WinExist("Data"){
 			WinActivate("Data")
 			Sleep(350)
-			Send "^{k}"
+			Send("^{k}")
 			Sleep(300)
 			SendText("Respingeri") 
 			Sleep(500)
-			Send "{Enter}"
+			Send("{Enter}")
 			Sleep(1000)
 			SendText(1)
 			Sleep(150)
-			Send "{BackSpace}"
+			Send("{BackSpace}")
 			A_Clipboard := ""
 			A_Clipboard := message
 			Sleep(1000)
-			Send "^{V}"
-			Send "^{V}"
+			Send("^{V}")
+			Send("^{V}")
 		}
 		else
 			MsgBox("Chat is not open")
@@ -262,8 +259,7 @@ grab_track_id(x1,y1,x2,y2){
 		*/
 		MouseMove( x1, y1, 0)
 		Sleep(80)
-		A_Clipboard := ""
-		Send "#q"
+		Send("#q")
 		Sleep(60)
 		/*
 		* Second x2, y2 coordinates are where the selection ends
@@ -284,28 +280,35 @@ Set track id to counter and write to .txt file
 set_track_id(x1,y1,x2,y2,filename){
 	try{
 
-		if !(ProcessExist("Capture2text") = 0){
+		if !(ProcessExist("Capture2text.exe") = 0){
+			
 			if (WinExist("CaptureThis")){
+				
 				WinActivate("CaptureThis")
 				grab_track_id(x1,y1,x2,y2)
 				;* writes id to .txt file for history
 				FileAppend(A_Clipboard, filename) ; ! Not tested appending to .txt file track id from Clipboard
-			}
-			;checks for the counter app
-			if (WinExist("(")){
-				WinActivate()
-				A_Clipboard := Trim(A_Clipboard, " ")
-				Send "^{V}"
-				;checks for the CadosysApp
-				if (WinExist("CaptureThis")){
+				
+				;checks for the counter app
+				if (WinExist("(")){
+					WinActivate()
+					A_Clipboard := Trim(A_Clipboard, " ")
+					Send "^{V}"
 					WinActivate("CaptureThis")
-				}else
-					MsgBox("Cadosys not running")
-			} else
-				MsgBox("Counter not running")
-		}else
+				}
+				else{
+					MsgBox("Counter not running")
+				}
+			}
+			else{
+				MsgBox("Cadosys not running")
+			}
+		}
+		else{
 			Run( A_ScriptDir . "\Capture2Text\Capture2Text.exe")
-	}catch Error as e {
+		}
+	}
+	catch Error as e {
 		MsgBox("An error has been produced while setting track id to counter : " . e.Message , "Error")
 	}
 	

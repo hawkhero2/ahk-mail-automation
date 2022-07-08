@@ -194,9 +194,6 @@ main_close(*){
 }
 
 save_btn_listener(*){
-    settings_ui.Submit(true)
-    settings_ui.Show()
-
     set_acc( SETTINGS_FILE, acc_field.Text )
     set_sign( SETTINGS_FILE, signature_field.Text )
     set_recipient( SETTINGS_FILE, chat_acc.Text )
@@ -242,27 +239,26 @@ save_btn_listener(*){
 }
 
 send_email_listener(*){
-    main_ui.Submit(true)
     subject := track_id.Value . A_Space . CURRENT_DATE . "," . A_Space . ACC
     if (List.Value){
         body := "Hello, `n`n" . track_id.Value . "-" . reject_reason.Text . "`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Doppelt.Value){
-		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits am" . doppelt_date.Value . "unter Vorgang" . doppelt_nr.Value . "geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Value . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Doppelt2.Value){
-        body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits unter Vorgang" . doppelt_nr.Value . "geprüft. `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+        body := "Hello,`n`nDoppelt" . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
 
     }
     else if(Diff.Value){
-		body := "Hello, `n`n" . track_id.Value . "Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+		body := "Hello, `n`n" . track_id.Value . " Difference of " . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Kurze.Value){
-		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Der Vorgang steht unter der Vorgangsnummer" . doppelt_nr.Value . "zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+		body := "Hello,`n`nDoppelt " . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else
@@ -273,30 +269,28 @@ send_email_listener(*){
 }
 
 send_chat_listener(*){
-    main_ui.Submit()
     if (List.Value){
         body := RECIPIENT . " " . track_id.Value "-" reject_reason.Text
         chat_send(body)
     }
     else if(Doppelt.Value){
-		body := RECIPIENT . " " . track_id.Value . "-" . "Dieser Vorgang wurde bereits am" . doppelt_date.Value . "unter Vorgang" . doppelt_nr.Value . "geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
+		body := RECIPIENT . " " . track_id.Value . "-" . " Dieser Vorgang wurde bereits am " . doppelt_date.Value . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
         chat_send(body)
     }
     else if(Doppelt2.Value){
-        body := RECIPIENT . " " . track_id.Value . "-" . "Dieser Vorgang wurde bereits unter Vorgang" . doppelt_nr.Value . "geprüft."
+        body := RECIPIENT . " " . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft."
         chat_send(body)
 
     }
     else if(Diff.Value){
-		body := RECIPIENT . " " . track_id.Value . "Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
+		body := RECIPIENT . " " . track_id.Value . " Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
         chat_send(body)
     }
     else if(Kurze.Value){
-		body := RECIPIENT . " " . track_id.Value . "-" . "Der Vorgang steht unter der Vorgangsnummer" . doppelt_nr.Value . "zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
+		body := RECIPIENT . " " . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
         chat_send(body)
     }
-    else
-    {
+    else{
         MsgBox("Please select an option")
     }
     
@@ -334,35 +328,14 @@ settings_btn_listener(*){
     main_ui.Hide()
     settings_ui.Show(SETTINGS_SIZE)
     settings_ui.BackColor := get_default_theme(SETTINGS_FILE)
-    ; track_id_lbl.SetFont(TXT_COLOR)
-    ; doppelt_nr_lbl.SetFont(TXT_COLOR)
-    ; doppelt_date_lbl.SetFont(TXT_COLOR)
-    ; diff_lbl.SetFont(TXT_COLOR)
-    ; List.SetFont(TXT_COLOR)
-    ; Doppelt.SetFont(TXT_COLOR)
-    ; Doppelt2.SetFont(TXT_COLOR)
-    ; Diff.SetFont(TXT_COLOR)
-    ; Kurze.SetFont(TXT_COLOR)
-    ; rejections_lbl.SetFont(TXT_COLOR)
-    ; check_fleet.SetFont(TXT_COLOR)
-    ; misc.SetFont(TXT_COLOR)
-    ; id_pos.SetFont(TXT_COLOR)
-    ; def_pos_lbl.SetFont(TXT_COLOR)
-    ; fleet_pos_lbl.SetFont(TXT_COLOR)
-    ; acc_lbl.SetFont(TXT_COLOR)
-    ; recip_lbl.SetFont(TXT_COLOR)
-    ; sign_lbl.SetFont(TXT_COLOR)
-    ; theme_lbl.SetFont(TXT_COLOR)
-    ; mbutton.SetFont(TXT_COLOR)
-    ; x1btn.SetFont(TXT_COLOR)
-    ; x2btn.SetFont(TXT_COLOR)
     
 }
 run_at_startup_listener(*){
 
     if(FileExist(A_Startup . "\Work Enhancer.ink")){
         MsgBox("Work Enhancer is already set to run at startup")
-    }else{
+    }
+    else{
         FileCreateShortcut(A_ScriptFullPath,A_Startup "\Work Enhancer.lnk")
     }
     
@@ -375,8 +348,26 @@ MButton::
     try{
 
         if(mbutton.Value){
-    
-            main_ui.Submit()
+            if !(check_fleet.Value){
+                set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2, ID_HISTORY)
+            }
+            else{
+                set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+                set_live_activity()
+            }
+        }
+    }
+    catch Error as e{
+        MsgBox(e.Message)
+    }    
+}
+
+XButton2::
+{   
+    try{
+
+        if(x2btn.Value){
+        
             if !(check_fleet.Value){
                 set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
             }
@@ -389,63 +380,63 @@ MButton::
     catch Error as e{
         MsgBox(e.Message)
     }
-    
 }
-XButton2::
-{
-    main_ui.Submit()
-    if(x2btn.Value){
 
-        if !(check_fleet.Value){
-            set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
-        }
-        else{
-            set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
-            set_live_activity()
-        }
-    }
-    
-}
 ScrollLock::
-{
-    main_ui.Submit(true)
-    if(scrlock.Value){
-
-        if !(check_fleet.Value){
-            set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
-        }
-        else{
-            set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, SETTINGS_FILE)
-            set_live_activity()
+{   
+    try {
+        
+        if(scrlock.Value){
+    
+            if !(check_fleet.Value){
+                set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
+            }
+            else{
+                set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, SETTINGS_FILE)
+                set_live_activity()
+            }
         }
     }
-    
+    catch Error as e {
+        MsgBox(e.Message)
+    }
 }
+
 Pause::
 {
-    main_ui.Submit(true)
-    if(pausebreak.Value){
+    try {
 
-        if !(check_fleet.Value){
-            stop_start(4)
+        if(pausebreak.Value){
+    
+            if !(check_fleet.Value){
+                stop_start(4)
+            }
+            else{
+                stop_start(6)
+            }
         }
-        else{
-            stop_start(6)
-        }
+    }
+    catch Error as e {
+        MsgBox(e.Message)
     }
     
 }
 F7::
-{
-    main_ui.Submit(true)
-    if(fseven.Value){
+{   
+    try{
 
-        if !(check_fleet.Value){
-            stop_start(4)
+        if(fseven.Value){
+
+            if !(check_fleet.Value){
+                stop_start(4)
+            }
+            else{
+                stop_start(6)
+            }
         }
-        else{
-            stop_start(6)
-        }
+    }
+    catch Error as e{
+        MsgBox(e.Message)
     }
     
 }
@@ -453,4 +444,3 @@ F7::
  TODO: put id -> 4 tabs put live -> 5 tabs to return back to file id field
  TOdo: 6 tabs from file id to stop button
 */
-return
