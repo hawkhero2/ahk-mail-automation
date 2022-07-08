@@ -18,9 +18,6 @@
 
 
 #Include lib\Functions.ahk 
-
-#Warn All, Off
-Persistent(true)
 ; ----------------------------------------
 
 /*
@@ -190,7 +187,6 @@ settings_close(*){
     settings_ui.Hide()
     main_ui.Show( MAIN_SIZE )
     main_ui.BackColor := get_default_theme(SETTINGS_FILE)
-    
 }
 
 main_close(*){
@@ -262,7 +258,7 @@ send_email_listener(*){
 
     }
     else if(Diff.Value){
-		body := "Hello, `n`n" . track_id.Value . "Difference of" . difference_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . difference_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+		body := "Hello, `n`n" . track_id.Value . "Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Kurze.Value){
@@ -291,8 +287,8 @@ send_chat_listener(*){
         chat_send(body)
 
     }
-    else if(Difference.Value){
-		body := RECIPIENT . " " . track_id.Value . "Difference of" . difference_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . difference_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
+    else if(Diff.Value){
+		body := RECIPIENT . " " . track_id.Value . "Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von" . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
         chat_send(body)
     }
     else if(Kurze.Value){
@@ -303,10 +299,12 @@ send_chat_listener(*){
     {
         MsgBox("Please select an option")
     }
+    
 }
 cancel_btn_listener(*){
     settings_ui.Hide()
     main_ui.Show()
+    
 }
 set_btn_listener(*){
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
@@ -318,6 +316,7 @@ set_btn_listener(*){
     
     set_default_pos(cstm_x1,cstm_y1,cstm_x2,cstm_y2,SETTINGS_FILE,"Track Id Location")
     MsgBox("Position set")
+    
 }
 set_fleet_btn_listener(*){
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
@@ -329,6 +328,7 @@ set_fleet_btn_listener(*){
 
     set_default_pos(cstm_x1,cstm_y1,cstm_x2,cstm_y2,SETTINGS_FILE,"Fleet Track Id Location")
     MsgBox("Position set")
+    
 }
 settings_btn_listener(*){
     main_ui.Hide()
@@ -356,6 +356,7 @@ settings_btn_listener(*){
     ; mbutton.SetFont(TXT_COLOR)
     ; x1btn.SetFont(TXT_COLOR)
     ; x2btn.SetFont(TXT_COLOR)
+    
 }
 run_at_startup_listener(*){
 
@@ -364,23 +365,31 @@ run_at_startup_listener(*){
     }else{
         FileCreateShortcut(A_ScriptFullPath,A_Startup "\Work Enhancer.lnk")
     }
+    
 }
 /*
 *                                               HOTKEYS 
 */
 MButton::
 {
-    main_ui.Submit()
-    if(mbutton.Value){
+    try{
 
-        if !(check_fleet.Value){
-            set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
-        }
-        else{
-            set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
-            set_live_activity()
+        if(mbutton.Value){
+    
+            main_ui.Submit()
+            if !(check_fleet.Value){
+                set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
+            }
+            else{
+                set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+                set_live_activity()
+            }
         }
     }
+    catch Error as e{
+        MsgBox(e.Message)
+    }
+    
 }
 XButton2::
 {
@@ -395,6 +404,7 @@ XButton2::
             set_live_activity()
         }
     }
+    
 }
 ScrollLock::
 {
@@ -409,6 +419,7 @@ ScrollLock::
             set_live_activity()
         }
     }
+    
 }
 Pause::
 {
@@ -422,7 +433,7 @@ Pause::
             stop_start(6)
         }
     }
-    return
+    
 }
 F7::
 {
@@ -436,8 +447,10 @@ F7::
             stop_start(6)
         }
     }
+    
 }
 /*
  TODO: put id -> 4 tabs put live -> 5 tabs to return back to file id field
  TOdo: 6 tabs from file id to stop button
 */
+return

@@ -194,7 +194,7 @@ mail_send(body, subject, filename){
 		if WinExist("Roundcube"){
 			WinActivate
 			Sleep(350)
-			MouseClick(L, 60, 140)
+			MouseClick("Left", 60, 140)
 			A_Clipboard := ""
 			A_Clipboard := get_email(filename)
 			Sleep(1000)
@@ -227,7 +227,7 @@ Send message macro in chat in the appropiate channel
 chat_send(message){
 	try{
 		If WinExist("Data"){
-			WinActivate
+			WinActivate("Data")
 			Sleep(350)
 			Send "^{k}"
 			Sleep(300)
