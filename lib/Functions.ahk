@@ -231,7 +231,7 @@ chat_send(message){
 			Sleep(350)
 			Send "^{k}"
 			Sleep(300)
-			SendText(Respingeri) 
+			SendText("Respingeri") 
 			Sleep(500)
 			Send "{Enter}"
 			Sleep(1000)
@@ -318,7 +318,7 @@ set_live_activity(){
 	Loop 4{
 		Send("Tab")
 	}
-	Send("Live")
+	SendText("Live")
 	Loop 5{
 		Send("Tab")
 	}

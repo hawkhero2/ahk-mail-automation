@@ -17,8 +17,7 @@
 */
 
 
-#Include %A_WorkingDir%
-#Include "lib\Functions.ahk" ;! import not working when compiling to .exe
+#Include lib\Functions.ahk 
 
 #Warn All, Off
 Persistent(true)
@@ -278,7 +277,7 @@ send_email_listener(*){
 }
 
 send_chat_listener(*){
-    main_ui.Submit(true)
+    main_ui.Submit()
     if (List.Value){
         body := RECIPIENT . " " . track_id.Value "-" reject_reason.Text
         chat_send(body)
@@ -371,7 +370,7 @@ run_at_startup_listener(*){
 */
 MButton::
 {
-    main_ui.Submit(true)
+    main_ui.Submit()
     if(mbutton.Value){
 
         if !(check_fleet.Value){
@@ -385,7 +384,7 @@ MButton::
 }
 XButton2::
 {
-    main_ui.Submit(true)
+    main_ui.Submit()
     if(x2btn.Value){
 
         if !(check_fleet.Value){
