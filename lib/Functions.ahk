@@ -231,7 +231,7 @@ chat_send(message){
 			Sleep(350)
 			Send("^{k}")
 			Sleep(300)
-			SendText("mans") 
+			SendText("Respingeri") 
 			Sleep(500)
 			Send("{Enter}")
 			Sleep(1000)
