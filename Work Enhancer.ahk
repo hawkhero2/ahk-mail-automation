@@ -18,6 +18,7 @@
 
 
 #Include lib\Functions.ahk 
+#Include lib\Hotstrings.ahk
 ; ----------------------------------------
 
 /*

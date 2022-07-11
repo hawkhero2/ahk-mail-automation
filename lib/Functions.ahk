@@ -190,6 +190,7 @@ Send mail macro
 @param String filename
 */
 mail_send(body, subject, filename){
+	; ! Subject not working
 	try {
 		if WinExist("Roundcube"){
 			WinActivate("Roundcube")
@@ -222,9 +223,10 @@ Send message macro in chat in the appropiate channel
 @param String message
 */
 chat_send(message){
+	; ! not working
 	try{
-		If WinExist("Data"){
-			WinActivate("Data")
+		If WinExist("DataMondial Teams"){
+			WinActivate("DataMondial Teams")
 			Sleep(350)
 			Send("^{k}")
 			Sleep(300)
@@ -232,7 +234,7 @@ chat_send(message){
 			Sleep(500)
 			Send("{Enter}")
 			Sleep(1000)
-			SendText(1)
+			SendText("1")
 			Sleep(150)
 			Send("{BackSpace}")
 			A_Clipboard := ""
