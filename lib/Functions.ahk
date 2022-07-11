@@ -190,7 +190,7 @@ Send mail macro
 @param String filename
 */
 mail_send(body, subject, filename){
-	; ! Subject not working
+	
 	try {
 		if WinExist("Roundcube"){
 			WinActivate("Roundcube")
@@ -200,7 +200,7 @@ mail_send(body, subject, filename){
 			Sleep(1000)
 			Send("^{V}")
 			Loop 3{
-				Send "{Tab}"
+				Send("{Tab}")
 			}
 			A_Clipboard := subject 
 			Sleep(100)
@@ -212,10 +212,10 @@ mail_send(body, subject, filename){
 			Sleep(100)
 		}
 		else
-			MsgBox("Mail App not running")		
+			MsgBox("Mail not opened")		
 	} 
 	catch Error as e {
-		MsgBox("An error has been produced while running mail macro: " . e.Message , "Error")
+		MsgBox("An error has been produced while running mail macro: " . e.Message . " caused by: " . e.What , "Error")
 	}
 }
 /*
@@ -223,14 +223,15 @@ Send message macro in chat in the appropiate channel
 @param String message
 */
 chat_send(message){
-	; ! not working
+	
 	try{
-		If WinExist("DataMondial Teams"){
-			WinActivate("DataMondial Teams")
+		If WinExist("DataMondial"){
+			Sleep(500)
+			WinActivate("DataMondial")
 			Sleep(350)
 			Send("^{k}")
 			Sleep(300)
-			SendText("Respingeri") 
+			SendText("mans") 
 			Sleep(500)
 			Send("{Enter}")
 			Sleep(1000)
@@ -247,7 +248,7 @@ chat_send(message){
 			MsgBox("Chat is not open")
 	}
 	catch Error as e {
-		MsgBox("An error has been produced while running chat macro : " . e.Message , "Error")
+		MsgBox("An error has been produced while running chat macro : " . e.Message . " caused by: " . e.What, "Error")
 	}
 }
 /*
@@ -270,7 +271,7 @@ grab_track_id(x1,y1,x2,y2){
 		MouseMove(70, 400, 0)
 	} 
 	catch Error as e {
-		MsgBox("An error has been produced while running track id macro: " . e.Message , "Error")
+		MsgBox("An error has been produced while running track id macro: " . e.Message . " caused by:" . e.What , "Error")
 	}
 }
 
@@ -311,7 +312,7 @@ set_track_id(x1,y1,x2,y2,filename){
 		}
 	}
 	catch Error as e {
-		MsgBox("An error has been produced while setting track id to counter : " . e.Message , "Error")
+		MsgBox("An error has been produced while setting track id to counter : " . e.Message . " caused by: " . e.What, "Error")
 	}
 	
 }
@@ -333,23 +334,29 @@ set_live_activity(){
 Start-stop macro for counter
 @param int tabs_nr : the amount of {Tabs} to send to counter
 */
-stop_start(tabs_nr){ 
-    if (WinExist("(")) {
-        WinActivate()
-       Loop tabs_nr{
-			Sleep(50)
-			Send "{Tab}"
+stop_start(tabs_nr){
+	try{
+
+		if (WinExist("(")) {
+			WinActivate()
+		   Loop tabs_nr{
+				Sleep(50)
+				Send "{Tab}"
+			}
+			Loop 2{
+				Sleep(50)
+				Send "{Enter}"
+			}
+			Loop 2{
+				Send "{Tab}"
+			}
 		}
-		Loop 2{
-			Sleep(50)
-			Send "{Enter}"
-		}
-		Loop 2{
-			Send "{Tab}"
-		}
+		else
+			MsgBox("Counter is not running")
+	} 
+	catch Error as e {
+		MsgBox("An error has been produced while running stop-start macro: " . e.Message . " caused by: " . e.What, "Error")
 	}
-	else
-		MsgBox("Counter is not running")
 }
 
 /*

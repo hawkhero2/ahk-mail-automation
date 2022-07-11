@@ -246,7 +246,7 @@ send_email_listener(*){
         mail_send(body, subject, RS_CFG)
     }
     else if(Doppelt.Value){
-		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Value . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Doppelt2.Value){
@@ -271,24 +271,24 @@ send_email_listener(*){
 
 send_chat_listener(*){
     if (List.Value){
-        body := RECIPIENT . " " . track_id.Value "-" reject_reason.Text
+        body := RECIPIENT . A_Space . track_id.Value . "-" . A_Space . reject_reason.Text
         chat_send(body)
     }
     else if(Doppelt.Value){
-		body := RECIPIENT . " " . track_id.Value . "-" . " Dieser Vorgang wurde bereits am " . doppelt_date.Value . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
+		body := RECIPIENT . A_Space . track_id.Value . "-" . " Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
         chat_send(body)
     }
     else if(Doppelt2.Value){
-        body := RECIPIENT . " " . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft."
+        body := RECIPIENT . A_Space . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft."
         chat_send(body)
 
     }
     else if(Diff.Value){
-		body := RECIPIENT . " " . track_id.Value . " Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
+		body := RECIPIENT . A_Space . track_id.Value . " Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
         chat_send(body)
     }
     else if(Kurze.Value){
-		body := RECIPIENT . " " . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
+		body := RECIPIENT . A_Space . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
         chat_send(body)
     }
     else{
