@@ -222,27 +222,34 @@ mail_send(body, subject, filename){
 Send message macro in chat in the appropiate channel
 @param String message
 */
-chat_send(message){
+chat_macro(message){
 	
 	try{
-		If WinExist("DataMondial"){
+		If WinExist("DataMondial Teams"){
 			Sleep(500)
-			WinActivate("DataMondial")
+			
+			WinActivate("DataMondial Teams")
 			Sleep(350)
-			Send("^{k}")
+
+			SendInput("^{k}")
 			Sleep(300)
+
 			SendText("Respingeri") 
 			Sleep(500)
-			Send("{Enter}")
+
+			SendInput("{Enter}")
 			Sleep(1000)
+
 			SendText("1")
 			Sleep(150)
+
 			Send("{BackSpace}")
+
 			A_Clipboard := ""
 			A_Clipboard := message
 			Sleep(1000)
-			Send("^{V}")
-			Send("^{V}")
+
+			SendInput("^{V}")
 		}
 		else
 			MsgBox("Chat is not open")
