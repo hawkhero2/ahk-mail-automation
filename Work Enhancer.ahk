@@ -196,6 +196,7 @@ main_close(*){
 }
 
 save_btn_listener(*){
+
     set_acc( SETTINGS_FILE, acc_field.Text )
     set_sign( SETTINGS_FILE, signature_field.Text )
     set_recipient( SETTINGS_FILE, chat_acc.Text )
@@ -241,26 +242,27 @@ save_btn_listener(*){
 }
 
 send_email_listener(*){
-    subject := track_id.Value . A_Space . CURRENT_DATE . "," . A_Space . ACC
+
+    subject := track_id.Value . A_Space . CURRENT_DATE . "," . A_Space . get_acc( SETTINGS_FILE )
     if (List.Value){
-        body := "Hello, `n`n" . track_id.Value . "-" . reject_reason.Text . "`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+        body := "Hello, `n`n" . track_id.Value . "-" . reject_reason.Text . "`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Doppelt.Value){
-		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+		body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Doppelt2.Value){
-        body := "Hello,`n`nDoppelt" . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+        body := "Hello,`n`nDoppelt" . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
 
     }
     else if(Diff.Value){
-		body := "Hello, `n`n" . track_id.Value . " Difference of " . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+		body := "Hello, `n`n" . track_id.Value . " Difference of " . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else if(Kurze.Value){
-		body := "Hello,`n`nDoppelt " . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.`n`n`nBest Regards,`n" . SIGN . "`nDatamondial"
+		body := "Hello,`n`nDoppelt " . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     }
     else
@@ -271,25 +273,26 @@ send_email_listener(*){
 }
 
 send_chat_listener(*){
+
     if (List.Value){
-        body := RECIPIENT . A_Space . track_id.Value . "-" . A_Space . reject_reason.Text
+        body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . "-" . A_Space . reject_reason.Text
         chat_macro(body)
     }
     else if(Doppelt.Value){
-		body := RECIPIENT . A_Space . track_id.Value . "-" . " Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
+		body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . "-" . " Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
         chat_macro(body)
     }
     else if(Doppelt2.Value){
-        body := RECIPIENT . A_Space . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft."
+        body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft."
         chat_macro(body)
 
     }
     else if(Diff.Value){
-		body := RECIPIENT . A_Space . track_id.Value . " Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
+		body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . " Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
         chat_macro(body)
     }
     else if(Kurze.Value){
-		body := RECIPIENT . A_Space . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
+		body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
         chat_macro(body)
     }
     else{
@@ -298,6 +301,7 @@ send_chat_listener(*){
     
 }
 cancel_btn_listener(*){
+
     settings_ui.Hide()
     main_ui.Show()
     
@@ -315,6 +319,7 @@ set_btn_listener(*){
     
 }
 set_fleet_btn_listener(*){
+
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
     
     KeyWait("LButton","D")
@@ -327,6 +332,7 @@ set_fleet_btn_listener(*){
     
 }
 settings_btn_listener(*){
+
     main_ui.Hide()
     settings_ui.Show(SETTINGS_SIZE)
     settings_ui.BackColor := get_default_theme(SETTINGS_FILE)
@@ -349,7 +355,7 @@ MButton::
 {
     try{
 
-        if(mbutton.Value){
+        if(get_state("mbutton")){
             if !(check_fleet.Value){
                 set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2, ID_HISTORY)
             }
@@ -368,7 +374,7 @@ XButton2::
 {   
     try{
 
-        if(x2btn.Value){
+        if(get_state("x2button")){
         
             if !(check_fleet.Value){
                 set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
@@ -384,11 +390,26 @@ XButton2::
     }
 }
 
+XButton1::
+{
+    if(get_state("x1button")){
+        loop {
+            if(GetKeyState("XButton1","P")=true){
+                SendInput("{Enter}")
+                Sleep(50)
+            }
+            else {
+                break
+            }
+        }
+    }
+}
+
 ScrollLock::
 {   
     try {
         
-        if(scrlock.Value){
+        if(get_state("scrllock")){
     
             if !(check_fleet.Value){
                 set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
@@ -408,7 +429,7 @@ Pause::
 {
     try {
 
-        if(pausebreak.Value){
+        if(get_state("pause")){
     
             if !(check_fleet.Value){
                 stop_start(4)
@@ -427,7 +448,7 @@ F7::
 {   
     try{
 
-        if(fseven.Value){
+        if(get_state("fseven")){
 
             if !(check_fleet.Value){
                 stop_start(4)

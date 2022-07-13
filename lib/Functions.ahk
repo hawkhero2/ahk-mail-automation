@@ -196,18 +196,21 @@ mail_send(body, subject, filename){
 			WinActivate("Roundcube")
 			Sleep(350)
 			MouseClick("Left", 60, 140)
-			A_Clipboard := get_email(filename)
+			; A_Clipboard := get_email(filename)
 			Sleep(1000)
-			Send("^{V}")
+			SendText(get_email(filename))
+			; Send("^{V}")
 			Loop 3{
 				Send("{Tab}")
 			}
-			A_Clipboard := subject 
+			; A_Clipboard := subject
+			SendText(subject)
 			Sleep(100)
-			Send("^{V}")
+			; Send("^{V}")
 			Send("{Tab}")
-			A_Clipboard := body
-			Send("^{V}")
+			; A_Clipboard := body
+			SendText(body)
+			; Send("^{V}")
 			Send("{Tab}")
 			Sleep(100)
 		}
@@ -243,13 +246,15 @@ chat_macro(message){
 			SendText("1")
 			Sleep(150)
 
-			Send("{BackSpace}")
+			SendInput("{BackSpace}")
 
-			A_Clipboard := ""
-			A_Clipboard := message
+			; A_Clipboard := ""
+			; A_Clipboard := message
+			SendText(message)
 			Sleep(1000)
 
-			SendInput("^{V}")
+			; SendInput("^{V}")
+			SendInput("{Enter}")
 		}
 		else
 			MsgBox("Chat is not open")
@@ -297,7 +302,7 @@ set_track_id(x1,y1,x2,y2,filename){
 				WinActivate("CaptureThis")
 				grab_track_id(x1,y1,x2,y2)
 				;* writes id to .txt file for history
-				FileAppend(A_Clipboard, filename) ; ! Not tested appending to .txt file track id from Clipboard
+				FileAppend(A_Clipboard . A_Space . A_DD . "-" . A_MM . "-" . A_YYYY . "`n", filename) 
 				
 				;checks for the counter app
 				if (WinExist("(")){
