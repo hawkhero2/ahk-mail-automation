@@ -1,4 +1,15 @@
 /*
+Get current coodinates of the track id from settings.ini
+@param String filename
+@param String key
+@param String section
+@return int 
+*/
+get_coords(filename :="" , key :="", section :=""){
+	result := IniRead(filename, section, key)
+	return result
+}
+/*
 Set state of element
 @param String element
 @param boolean state
@@ -334,11 +345,11 @@ Set live to counter for fleet activity
 */
 set_live_activity(){
 	Loop 4{
-		Send("Tab")
+		Send("{Tab}")
 	}
 	SendText("Live")
 	Loop 5{
-		Send("Tab")
+		Send("{Tab}")
 	}
 }
 
