@@ -347,7 +347,7 @@ set_live_activity(){
 	Loop 4{
 		Send("{Tab}")
 	}
-	SendText("Live")
+	SendText("live")
 	Loop 5{
 		Send("{Tab}")
 	}

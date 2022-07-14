@@ -357,10 +357,22 @@ MButton::
 
         if(get_state("mbutton")){
             if !(check_fleet.Value){
-                set_track_id(x_pos_1, y_pos_1, x_pos_2, y_pos_2, ID_HISTORY)
+
+                x1 := get_coords(SETTINGS_FILE, "Track Id Location", "x1")
+                y1 := get_coords(SETTINGS_FILE, "Track Id Location", "y1")
+                x2 := get_coords(SETTINGS_FILE, "Track Id Location", "x2")
+                y2 := get_coords(SETTINGS_FILE, "Track Id Location", "y2")
+                
+                set_track_id(x1, y1, x2, y2, ID_HISTORY)
             }
             else{
-                set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+
+                x1 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "x1")
+                y1 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "y1")
+                x2 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "x2")
+                y2 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "y2")
+
+                set_track_id(x1, y1, x2, y2, ID_HISTORY)
                 set_live_activity()
             }
         }
@@ -377,15 +389,59 @@ XButton2::
         if(get_state("x2button")){
         
             if !(check_fleet.Value){
-                set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, ID_HISTORY)
+
+                x1 := get_coords(SETTINGS_FILE, "Track Id Location", "x1")
+                y1 := get_coords(SETTINGS_FILE, "Track Id Location", "y1")
+                x2 := get_coords(SETTINGS_FILE, "Track Id Location", "x2")
+                y2 := get_coords(SETTINGS_FILE, "Track Id Location", "y2")
+                
+                set_track_id(x1, y1, x2, y2, ID_HISTORY)
             }
             else{
-                set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, ID_HISTORY)
+
+                x1 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "x1")
+                y1 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "y1")
+                x2 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "x2")
+                y2 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "y2")
+
+                set_track_id(x1, y1, x2, y2, ID_HISTORY)
                 set_live_activity()
             }
         }
     }
     catch Error as e{
+        MsgBox(e.Message)
+    }
+}
+
+ScrollLock::
+{   
+    try {
+        
+        if(get_state("scrllock")){
+    
+            if !(check_fleet.Value){
+
+                x1 := get_coords(SETTINGS_FILE, "Track Id Location", "x1")
+                y1 := get_coords(SETTINGS_FILE, "Track Id Location", "y1")
+                x2 := get_coords(SETTINGS_FILE, "Track Id Location", "x2")
+                y2 := get_coords(SETTINGS_FILE, "Track Id Location", "y2")
+                
+                set_track_id(x1, y1, x2, y2, ID_HISTORY)
+            }
+            else{
+
+                x1 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "x1")
+                y1 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "y1")
+                x2 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "x2")
+                y2 := get_coords(SETTINGS_FILE, "Fleet Track Id Location", "y2")
+
+                set_track_id(x1, y1, x2, y2, ID_HISTORY)
+                set_live_activity()
+            }
+        }
+    }
+    catch Error as e {
         MsgBox(e.Message)
     }
 }
@@ -402,26 +458,6 @@ XButton1::
                 break
             }
         }
-    }
-}
-
-ScrollLock::
-{   
-    try {
-        
-        if(get_state("scrllock")){
-    
-            if !(check_fleet.Value){
-                set_track_id(x_pos_1, y_fleet_pos_1, x_pos_2, y_fleet_pos_2, SETTINGS_FILE)
-            }
-            else{
-                set_track_id(x_fleet_pos_1,y_fleet_pos_1,x_fleet_pos_2,y_fleet_pos_2, SETTINGS_FILE)
-                set_live_activity()
-            }
-        }
-    }
-    catch Error as e {
-        MsgBox(e.Message)
     }
 }
 
