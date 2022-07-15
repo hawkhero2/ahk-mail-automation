@@ -5,7 +5,7 @@ Get current coodinates of the track id from settings.ini
 @param String section
 @return int 
 */
-get_coords(filename :="" , key :="", section :=""){
+get_coords(filename :="" , section :="", key :=""){
 	result := IniRead(filename, section, key)
 	return result
 }

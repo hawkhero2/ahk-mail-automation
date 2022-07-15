@@ -77,7 +77,7 @@ doppelt_date := main_ui.Add("Edit",CENTER_INPUT . " " . "vdoppelt_date x10 y90",
 
 ; *             DIFFERENCE
 diff_lbl := main_ui.Add("Text", "x140 y135 " . TXT_COLOR,"Difference" )
-diff_val := main_ui.Add("Edit",NUMBERS_ONLY . " " . CENTER_INPUT . " " . "vdifference_val x10 y130", "")
+diff_val := main_ui.Add("Edit"," " . CENTER_INPUT . " " . "vdifference_val x10 y130", "")
 
 ; *             RADIO BUTTONS
 List := main_ui.Add("Radio","vList x260 y15 " . TXT_COLOR,"List")
