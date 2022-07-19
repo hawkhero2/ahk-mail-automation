@@ -1,5 +1,6 @@
-/*
-*                       Work Enhancer v1.0 is an AHK script used to macro some of the work.
+/************************************************************************
+ * @description 
+*   Work Enhancer v1.0 is an AHK script used to macro some of the work.
 *                       It uses AutoHotkey beta v2.
 *	                    Its features include:	
 *	                    -	Able to grab track id of a file using an Open Source OCR library.
@@ -11,7 +12,11 @@
 *	                    -	Storing previous track ids in a file.
 *                       -   Run at startup.
 *                       -   Hotstrings.
-*/
+ * @file Work Enhancer
+ * @author Andrei Ivanciu
+ * @date 2022/07/15
+ * @version 0.1.0
+ ***********************************************************************/
 
 /*
  *                                              IMPORTS
@@ -25,7 +30,7 @@
 /*
 *												GLOBAL VARIABLES
 */
-startup_path := A_Startup "\Work Enhancer.ink"
+
 global SETTINGS_FILE := "data/settings.ini"
 global ID_HISTORY := "data/id_history.txt"
 global DEFAULT_THEME := get_default_theme(SETTINGS_FILE)
@@ -110,7 +115,7 @@ main_ui.BackColor := DEFAULT_THEME
 browse_btn_listener(*){
     pick_file := FileSelect() ; returns the path of the file selected
     /*
-     * could be used for a functionality?
+     * could be used for a feature?
      */
 }
  

@@ -178,9 +178,6 @@ set_default_theme(filename := "", value := ""){
 	catch Error as e{
 		MsgBox( "There has been an error when selecting theme: " . e.Message)
 	}
-/*
-TODO: Add support for other themes	
- */
 }
 /*
 Reads items from .ini file and given section and returns array of strings
@@ -207,21 +204,21 @@ mail_send(body, subject, filename){
 			WinActivate("Roundcube")
 			Sleep(350)
 			MouseClick("Left", 60, 140)
-			; A_Clipboard := get_email(filename)
+
 			Sleep(1000)
 			SendText(get_email(filename))
-			; Send("^{V}")
+
 			Loop 3{
 				Send("{Tab}")
 			}
-			; A_Clipboard := subject
+
 			SendText(subject)
 			Sleep(100)
-			; Send("^{V}")
+
 			Send("{Tab}")
-			; A_Clipboard := body
+
 			SendText(body)
-			; Send("^{V}")
+
 			Send("{Tab}")
 			Sleep(100)
 		}
