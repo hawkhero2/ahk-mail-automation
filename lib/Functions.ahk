@@ -207,22 +207,18 @@ mail_send(body, subject, filename){
 			WinActivate("Roundcube")
 			Sleep(350)
 			MouseClick("Left", 60, 140)
-			; A_Clipboard := get_email(filename)
 			Sleep(1000)
 			SendText(get_email(filename))
-			; Send("^{V}")
 			Loop 3{
 				Send("{Tab}")
 			}
-			; A_Clipboard := subject
 			SendText(subject)
 			Sleep(100)
-			; Send("^{V}")
+
 			Send("{Tab}")
-			; A_Clipboard := body
+
 			SendText(body)
-			; Send("^{V}")
-			Send("{Tab}")
+			
 			Sleep(100)
 		}
 		else
@@ -259,12 +255,9 @@ chat_macro(message){
 
 			SendInput("{BackSpace}")
 
-			; A_Clipboard := ""
-			; A_Clipboard := message
 			SendText(message)
 			Sleep(1000)
 
-			; SendInput("^{V}")
 			SendInput("{Enter}")
 		}
 		else
