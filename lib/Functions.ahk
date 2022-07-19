@@ -256,12 +256,9 @@ chat_macro(message){
 
 			SendInput("{BackSpace}")
 
-			; A_Clipboard := ""
-			; A_Clipboard := message
 			SendText(message)
 			Sleep(1000)
 
-			; SendInput("^{V}")
 			SendInput("{Enter}")
 		}
 		else
