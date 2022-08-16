@@ -1,7 +1,7 @@
 # Work Enhancer
 ### Work Enhancer v1.0 is an AHK script used to macro some of the work.</br>
 
-*Currently it uses AutoHotkey v1.134*</br>
+*Currently it uses AutoHotkey v2*</br>
 
 **Its features include and may change in time:**	
 -	Able to grab track id of a file using an Open Source OCR App named [Capture2Text](https://sourceforge.net/projects/capture2text/) .
