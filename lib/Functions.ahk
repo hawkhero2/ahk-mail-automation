@@ -15,7 +15,7 @@ Set state of element
 @param boolean state
 @return void
 */
-set_state(key :="", state := False){
+set_state(key :="", state := false){
 	IniWrite(state,"data\settings.ini", "States", key)
 }	
 

@@ -23,8 +23,8 @@
 */
 
 
-#Include lib\Functions.ahk 
-#Include lib\Hotstrings.ahk
+#Include lib\Functions.ahk
+; #Include lib\Hotstrings.ahk
 ; ----------------------------------------
 
 /*
@@ -470,7 +470,7 @@ Pause::
 {
     try {
 
-        if(get_state("pause")){
+        if(get_state("pausebreak")){
     
             if !(check_fleet.Value){
                 stop_start(4)

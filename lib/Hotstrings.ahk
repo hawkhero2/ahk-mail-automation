@@ -11,20 +11,22 @@
 *                           To add a new hotstring, simply add a new line to the end of the file
 */
 
+Persistent(true)
+
 ::hohlr::Hohlraumschutzmaterial
 ::klein::Kleinersatzteile
-::stvk::Stossfaengerverkleidung
-::turvkl::Tuerverkleidung
+::stosfverkl::Stossfaengerverkleidung
+::tuerverkl::Tuerverkleidung
 ::oberfl::Oberflaechenlackierung
 ::ubsm::Unterbodenschutzmaterial
 ::ubs::Unterbodenschutz
 ::vorblack::Vorbereitung lackierung
-::frbton::Farbtonangleich mischanlage
+::farbton::Farbtonangleich mischanlage
 ::frtb::Frontblende
 ::gfsge::GFS/GEFUEHRTE FUNKTION
 ::stosf::Stossfaenger
-::stfabd::Stossf-Abdeckung H
+::stosfabd::Stossf-Abdeckung H
 ::abde::Abeckung
 ::fzgvb::Fahrzeug /Teile Verbringung
-::lackvb::Lackierung vorbereiten
+::lackvorb::Lackierung vorbereiten
 ::korro::Korrosionsschutzbehandlung
