@@ -23,7 +23,6 @@
  */
 
 #Include lib\Functions.ahk
-; #Include lib\Hotstrings.ahk
 ; ----------------------------------------
 
 /*
@@ -110,7 +109,7 @@ main_ui.Show(MAIN_SIZE)
 main_ui.BackColor := DEFAULT_THEME
 
 browse_btn_listener(*) {
-    pick_file := FileSelect()	; returns the path of the file selected
+    pick_file := FileSelect()    ; returns the path of the file selected
     /*
     * could be used for a feature?
      */

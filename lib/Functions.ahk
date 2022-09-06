@@ -285,16 +285,17 @@ grab_track_id(x1, y1, x2, y2) {
 }
 
 /*
-Trims the spaces between the given string
+Trims the spaces found in the string, and returns the trimmed string
 @param string string
 @return string
  */
-FullTrim(string := "") {
+FTrim(string := "") {
 	try {
 		strArray := StrSplit(string, A_Space)
-		if (strArray.length > 1) {
+		if (strArray.Length > 1) {
 			x := 1
-			while x < strArray.length() {
+			temp := ""
+			while x <= strArray.Length {
 				temp := temp . strArray[x]
 				x += 1
 			}
@@ -318,11 +319,7 @@ set_track_id(x1, y1, x2, y2, filename) {
 
 				WinActivate("CaptureThis")
 				grab_track_id(x1, y1, x2, y2)
-
-				;Split the track into chunks and concatenate it back into 1 single string
-				; TODO TEST FullTrim()
-				trackNr := FullTrim(A_Clipboard)
-
+				trackNr := FTrim(A_Clipboard)
 				;* writes id to .txt file for history
 				FileAppend(trackNr . A_Space . A_DD . "-" . A_MM . "-" . A_YYYY . "`n", filename)
 
