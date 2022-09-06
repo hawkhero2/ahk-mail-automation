@@ -451,10 +451,10 @@ Pause::
 
         if (get_state("pausebreak")) {
 
-            if !(check_fleet.Value) {
-                stop_start(4)
-            } else {
+            if (check_fleet.Value = 1) {
                 stop_start(6)
+            } else {
+                stop_start(4)
             }
         }
     } catch Error as e {
@@ -468,10 +468,10 @@ F7::
 
         if (get_state("fseven")) {
 
-            if !(check_fleet.Value) {
-                stop_start(4)
-            } else {
+            if (check_fleet.Value = 1) {
                 stop_start(6)
+            } else {
+                stop_start(4)
             }
         }
     } catch Error as e {
