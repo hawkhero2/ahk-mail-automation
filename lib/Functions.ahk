@@ -299,7 +299,8 @@ FTrim(string := "") {
 				temp := temp . strArray[x]
 				x += 1
 			}
-		}
+		} else
+			return string
 	} catch Error as e {
 		MsgBox("An error has been produced while trimming track id: " . e.Message)
 	}
