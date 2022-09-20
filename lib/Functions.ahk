@@ -85,9 +85,9 @@ Function used to write grabbed id + date to a .txt file to act as history
 @param String value
 @return void
  */
-write_id(filename := "", value := "") {
-	FileAppend(value . "->" . A_DD . "-" . A_MM . "-" . A_YYYY, filename)
-}
+; write_id(filename := "", value := "") {
+; 	FileAppend(value . "->" . A_DD . "-" . A_MM . "-" . A_YYYY, filename)
+; }
 
 /*
 Grab account from ini file
@@ -321,8 +321,10 @@ set_track_id(x1, y1, x2, y2, filename) {
 				WinActivate("CaptureThis")
 				grab_track_id(x1, y1, x2, y2)
 				trackNr := FTrim(A_Clipboard)
-				;* writes id to .txt file for history
-				FileAppend(trackNr . A_Space . A_DD . "-" . A_MM . "-" . A_YYYY . "`n", filename)
+
+				;writes id to .txt file for history
+				timestamp := A_Space . A_DD . "-" . A_MM . "-" . A_YYYY . A_Space . A_Hour . ":" . A_Min
+				FileAppend(trackNr . timestamp . "`n", filename)
 
 				;checks for the counter app
 				if (WinExist("(")) {
