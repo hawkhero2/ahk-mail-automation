@@ -20,14 +20,14 @@
 
 /*
  *                                              IMPORTS
- */
+*/
 
 #Include lib\Functions.ahk
 ; ----------------------------------------
 
 /*
 *												GLOBAL VARIABLES
- */
+*/
 
 global SETTINGS_FILE := "data/settings.ini"
 global ID_HISTORY := "data/id_history.txt"
@@ -61,7 +61,7 @@ global y_fleet_pos_2 := IniRead(SETTINGS_FILE, "Fleet Track Id Location", "y2")
 
 /*
  *                                              MAIN UI
- */
+*/
 
 main_ui := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0")
 
@@ -112,12 +112,12 @@ browse_btn_listener(*) {
     pick_file := FileSelect()    ; returns the path of the file selected
     /*
     * could be used for a feature?
-     */
+    */
 }
 
 /*
 *                                             SETTINGS UI
- */
+*/
 
 settings_ui := Gui("-Resize -MaximizeBox", "Settings", settings_ui_listener := [])
 settings_ui.OnEvent("Close", settings_close)
@@ -160,7 +160,7 @@ signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature w90 
 
 /*
 *               THEME
- */
+*/
 theme_lbl := settings_ui.Add("Text", "x440 y165 " . TXT_COLOR, "Theme")
 theme_field := settings_ui.Add("DDL", "vtheme w90 x330 y160", THEME_LIST)
 
@@ -184,7 +184,7 @@ fseven.Value := get_state("fseven")
 
 /*
 *                                             LISTENERS
- */
+*/
 settings_close(*) {
     settings_ui.Hide()
     main_ui.Show(MAIN_SIZE)
@@ -215,7 +215,7 @@ save_btn_listener(*) {
     set_state("fseven", fseven.Value)
     /*
     * Reload the color for the text labels
-     */
+    */
     track_id_lbl.SetFont(TXT_COLOR)
     doppelt_nr_lbl.SetFont(TXT_COLOR)
     doppelt_date_lbl.SetFont(TXT_COLOR)
@@ -339,7 +339,7 @@ run_at_startup_listener(*) {
 }
 /*
 *                                               HOTKEYS
- */
+*/
 
 MButton::
 {
@@ -481,4 +481,4 @@ F7::
 /*
  TODO: put id -> 4 tabs put live -> 5 tabs to return back to file id field
  TOdo: 6 tabs from file id to stop button
- */
+*/

@@ -1,6 +1,6 @@
 /************************************************************************
  * @description
- * This script will be used to search for the specified resource wihtin the specified file in the specified
+ * This script will be used to search for the specified resource wihtin the specified file
  * @file SearchBar.ahk
  * @author Andrei Ivanciu
  * @date 2022/08/24
@@ -15,7 +15,7 @@ results_bar := results_ui.Add("Edit", "+ReadOnly w480 h30", "")
 /*
 @param string input
 updates the search result list
- */
+*/
 update_list(input := "") {
     ; todo update the search result list based on the input string
 
@@ -24,8 +24,8 @@ update_list(input := "") {
 ^Space:: {
     search_ui.Show("w500 h50")
     ;todo check for key press
-    search_bar.OnEvent("Change",update_list(search_bar.Text()))
-        update_list(search_bar.Text)
+    search_bar.OnEvent("Change", update_list(search_bar.Text()))
+    update_list(search_bar.Text)
 }
 
 Esc:: {
