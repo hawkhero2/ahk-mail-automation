@@ -452,7 +452,7 @@ Pause::
     try {
 
         if (get_state("pausebreak")) {
-
+            ; todo move the ifs inside the function instead & pass in the checkbox state and value of the dropdown menu for the activity
             if (check_fleet.Value = 1 && fleet_activity.Value = "") {
                 stop_start_fleet(fleet_activity.Value)
             } else {
