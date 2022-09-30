@@ -96,7 +96,7 @@ reject_reason := main_ui.Add("DropDownList", "vreject_reason w580 x10 " . TXT_CO
 check_fleet := main_ui.Add("Checkbox", "vcheck_fleet x260 y130 " . TXT_COLOR, "Fleet Processesing ?")
 
 ; *             DROPDOWN LIST FOR FLEET ACTIVITY (LIFE / TEST)
-fleet_activ := main_ui.Add("DropDownList", "x360 y130 " . TXT_COLOR, "Live|Test")
+fleet_activity := main_ui.Add("DropDownList", "x360 y130 " . TXT_COLOR, "Live|Test")
 
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x10 y220", "Send Mail").OnEvent("Click", send_email_listener)
 
@@ -453,8 +453,8 @@ Pause::
 
         if (get_state("pausebreak")) {
 
-            if (check_fleet.Value = 1) {
-                stop_start(6)
+            if (check_fleet.Value = 1 && fleet_activity.Value = "") {
+                stop_start_fleet(fleet_activity.Value)
             } else {
                 stop_start(4)
             }
