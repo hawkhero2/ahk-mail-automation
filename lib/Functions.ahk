@@ -390,6 +390,27 @@ stop_start(tabs_nr) {
 }
 
 /*
+Stop-start-fleet macro
+Sets the appropriate activity before stop-startting the counter
+@param string activity
+*/
+stop_start_fleet(activity := "") {
+	try {
+		if (WinExist("(")) {
+			WinActivate()
+			Loop 4 {
+				SendText(activity)
+			}
+			Loop 2 {
+				Send "{Enter}"
+			}
+			Loop 2 {
+				Send "{Tab}"
+			}
+		}
+	}
+}
+/*
 Runs stop_start() for the appropriate number of tabs based on the activity
 @param bool is_fleet
 */
