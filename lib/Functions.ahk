@@ -365,10 +365,27 @@ set_live_activity() {
 /*
 Start-stop macro for counter
 @param int tabs_nr : the amount of {Tabs} to send to counter
+@param boolean is_fleet
+@param string activity
 */
-stop_start(tabs_nr) {
+stop_start(tabs_nr := "", is_fleet := "", activity := "") {
 	try {
-
+		if (is_fleet = "1") {
+			if (WinExist("(")) {
+				WinActivate()
+				Loop 4 {
+					SendText(activity)
+				}
+				Loop 2 {
+					Send "{Enter}"
+				}
+				Loop 2 {
+					Send "{Tab}"
+				}
+			} else {
+				MsgBox("Counter is not running")
+			}
+		}
 		if (WinExist("(")) {
 			WinActivate()
 			Loop tabs_nr {
@@ -407,6 +424,8 @@ stop_start_fleet(activity := "") {
 			Loop 2 {
 				Send "{Tab}"
 			}
+		} else {
+			MsgBox("Counter is not running")
 		}
 	}
 }
