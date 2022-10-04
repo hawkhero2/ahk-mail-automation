@@ -365,8 +365,8 @@ set_live_activity() {
 /*
 Start-stop macro for counter
 @param int tabs_nr : the amount of {Tabs} to send to counter
-@param boolean is_fleet
-@param string activity
+@param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet
+@param string activity , text from a dropdown menu
 */
 stop_start(tabs_nr := "", is_fleet := "", activity := "") {
 	try {
@@ -386,22 +386,26 @@ stop_start(tabs_nr := "", is_fleet := "", activity := "") {
 				MsgBox("Counter is not running")
 			}
 		}
-		if (WinExist("(")) {
-			WinActivate()
-			Loop tabs_nr {
-				Sleep(50)
-				Send "{Tab}"
+		if(is_fleet = "0"){
+			if (WinExist("(")) {
+				WinActivate()
+				Loop tabs_nr {
+					Sleep(50)
+					Send "{Tab}"
+				}
+				Loop 2 {
+					Sleep(50)
+					Send "{Enter}"
+				}
+				Loop 2 {
+					Send "{Tab}"
+				}
 			}
-			Loop 2 {
-				Sleep(50)
-				Send "{Enter}"
-			}
-			Loop 2 {
-				Send "{Tab}"
-			}
-		} else
-			MsgBox("Counter is not running")
-	} catch Error as e {
+			 else
+				MsgBox("Counter is not running")
+		}
+	}
+	catch Error as e {
 		MsgBox("An error has been produced while running stop-start macro: " . e.Message . " caused by: " . e.What, "Error")
 	}
 }
