@@ -377,7 +377,8 @@ stop_start(is_fleet := "", activity := "") {
 					Sleep(50)
 					Send "{Tab}"
 				}
-				SendText(activity)
+				Sleep(50)
+				SendText(activity)	; ! doesnt write anything
 				Loop 2 {
 					Sleep(50)
 					Send "{Enter}"
