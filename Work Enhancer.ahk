@@ -96,7 +96,7 @@ reject_reason := main_ui.Add("DropDownList", "vreject_reason w580 x10 " . TXT_CO
 check_fleet := main_ui.Add("Checkbox", "vcheck_fleet x260 y130 " . TXT_COLOR, "Fleet Processesing ?")
 
 ; *             DROPDOWN LIST FOR FLEET ACTIVITY (LIFE / TEST)
-fleet_ddl_items := ["LIVE", "TEST"]    ; ! not working
+fleet_ddl_items := ["LIVE", "TEST"]
 fleet_activity := main_ui.Add("DropDownList", "x380 y130 " . TXT_COLOR, fleet_ddl_items)
 
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x10 y220", "Send Mail").OnEvent("Click", send_email_listener)
@@ -105,19 +105,19 @@ main_ui.Add("Button", BUTTON_SIZE . A_Space . "x120 y220", "Send Chat").OnEvent(
 
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x230 y220", "Settings").OnEvent("Click", settings_btn_listener)
 
-main_ui.Add("Button", BUTTON_SIZE . A_Space . "x340 y220", "Browse").OnEvent("Click", browse_btn_listener)
+; main_ui.Add("Button", BUTTON_SIZE . A_Space . "x340 y220", "Browse").OnEvent("Click", browse_btn_listener)
 
 main_ui.OnEvent("Close", main_close)
 
 main_ui.Show(MAIN_SIZE)
 main_ui.BackColor := DEFAULT_THEME
 
+/*
 browse_btn_listener(*) {
     pick_file := FileSelect()    ; returns the path of the file selected
-    /*
-    * could be used for a feature?
-    */
+    ;* could be used for a feature?
 }
+*/
 
 /*
 *                                             SETTINGS UI
@@ -454,7 +454,15 @@ Pause::
         ; checks if the hotkey is enabled
         if (get_state("pausebreak")) {
             ; checks if the checkbox for fleet is enable and if the an activity was chosen
-            stop_start(check_fleet.Value, fleet_activity.Value)
+            if (check_fleet.Value = 1 && fleet_activity.Value = 0) {
+                MsgBox("Please select an activity from the dropdown menu next to the checkbox, you can pick either LIVE or TEST")
+            }
+            else if (check_fleet.Value = 1 && fleet_activity.Value = 1) {
+                stop_start(check_fleet.Value, fleet_activity.Text)
+            }
+            else {
+                stop_start(check_fleet.Value, "")
+            }
         }
     } catch Error as e {
         MsgBox(e.Message)
@@ -466,8 +474,16 @@ F7::
     try {
         ; checks if the hotkey is enabled
         if (get_state("fseven")) {
-            ; checks if the checkbox for fleet is enable and if the an activity was chosen
-            stop_start(check_fleet.Value, fleet_activity.Value)
+            ; checks if the checkbox for fleet is  enable and if the an activity was chosen
+            if (check_fleet.Value = 1 && fleet_activity.Value = 0) {
+                MsgBox("Please select an activity from the dropdown menu next to the checkbox, you can pick either LIVE or TEST")
+            }
+            else if (check_fleet.Value = 1 && fleet_activity.Value = 1) {
+                stop_start(check_fleet.Value, fleet_activity.Text)
+            }
+            else {
+                stop_start(check_fleet.Value, "")
+            }
         }
     } catch Error as e {
         MsgBox(e.Message)

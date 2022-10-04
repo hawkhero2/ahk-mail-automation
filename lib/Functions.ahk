@@ -364,13 +364,12 @@ set_live_activity() {
 
 /*
 Start-stop macro for counter
-@param int tabs_nr : the amount of {Tabs} to send to counter
 @param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet
 @param string activity , text from a dropdown menu
 */
 stop_start(is_fleet := "", activity := "") {
 	try {
-		if (is_fleet = "1") {
+		if (is_fleet = 1) {
 			if (WinExist("(")) {
 				WinActivate()
 				Loop 4 {
@@ -378,7 +377,7 @@ stop_start(is_fleet := "", activity := "") {
 					Send "{Tab}"
 				}
 				Sleep(50)
-				SendText(activity)	; ! doesnt write anything
+				SendText(activity)
 				Loop 2 {
 					Sleep(50)
 					Send "{Enter}"
@@ -391,7 +390,7 @@ stop_start(is_fleet := "", activity := "") {
 				MsgBox("Counter is not running")
 			}
 		}
-		if (is_fleet = "0") {
+		if (is_fleet = 0) {
 			if (WinExist("(")) {
 				WinActivate()
 				Loop 4 {
