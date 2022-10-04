@@ -452,12 +452,8 @@ Pause::
     try {
 
         if (get_state("pausebreak")) {
-            ; todo move the ifs inside the function instead & pass in the checkbox state and value of the dropdown menu for the activity
-            if (check_fleet.Value = 1 && fleet_activity.Value != " ") {
-                stop_start(6,check_fleet.Value,fleet_activity.Value)
-            } else {
-                stop_start(4)
-            }
+            ; checks if the checkbox for fleet is enable and if the an activity was chosen
+            stop_start(check_fleet.Value, fleet_activity.Value)
         }
     } catch Error as e {
         MsgBox(e.Message)
@@ -467,21 +463,15 @@ Pause::
 F7::
 {
     try {
-
         if (get_state("fseven")) {
-
-            if (check_fleet.Value = 1) {
-                stop_start(6)
-            } else {
-                stop_start(4)
-            }
+            ; checks if the checkbox for fleet is enable and if the an activity was chosen
+            stop_start(check_fleet.Value, fleet_activity.Value)
         }
     } catch Error as e {
         MsgBox(e.Message)
     }
-
 }
 /*
- TODO: put id -> 4 tabs put live -> 5 tabs to return back to file id field
- TOdo: 6 tabs from file id to stop button
+ put id -> 4 tabs put live -> 5 tabs to return back to file id field
+ 6 tabs from file id to stop button
 */

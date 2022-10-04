@@ -368,28 +368,32 @@ Start-stop macro for counter
 @param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet
 @param string activity , text from a dropdown menu
 */
-stop_start(tabs_nr := "", is_fleet := "", activity := "") {
+stop_start(is_fleet := "", activity := "") {
 	try {
 		if (is_fleet = "1") {
 			if (WinExist("(")) {
 				WinActivate()
 				Loop 4 {
-					SendText(activity)
+					Sleep(50)
+					Send "{Tab}"
 				}
+				SendText(activity)
 				Loop 2 {
+					Sleep(50)
 					Send "{Enter}"
 				}
 				Loop 2 {
+					Sleep(50)
 					Send "{Tab}"
 				}
 			} else {
 				MsgBox("Counter is not running")
 			}
 		}
-		if(is_fleet = "0"){
+		if (is_fleet = "0") {
 			if (WinExist("(")) {
 				WinActivate()
-				Loop tabs_nr {
+				Loop 4 {
 					Sleep(50)
 					Send "{Tab}"
 				}
@@ -401,7 +405,7 @@ stop_start(tabs_nr := "", is_fleet := "", activity := "") {
 					Send "{Tab}"
 				}
 			}
-			 else
+			else
 				MsgBox("Counter is not running")
 		}
 	}
