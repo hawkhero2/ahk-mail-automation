@@ -373,10 +373,10 @@ stop_start(is_fleet := "", activity := "") {
 			if (WinExist("(")) {
 				WinActivate()
 				Loop 4 {
-					Sleep(50)
+					Sleep(200)
 					Send "{Tab}"
 				}
-				Sleep(50)
+				Sleep(150)
 				SendText(activity)
 				Loop 2 {
 					Sleep(50)
@@ -411,30 +411,6 @@ stop_start(is_fleet := "", activity := "") {
 	}
 	catch Error as e {
 		MsgBox("An error has been produced while running stop-start macro: " . e.Message . " caused by: " . e.What, "Error")
-	}
-}
-
-/*
-Stop-start-fleet macro
-Sets the appropriate activity before stop-startting the counter
-@param string activity
-*/
-stop_start_fleet(activity := "") {
-	try {
-		if (WinExist("(")) {
-			WinActivate()
-			Loop 4 {
-				SendText(activity)
-			}
-			Loop 2 {
-				Send "{Enter}"
-			}
-			Loop 2 {
-				Send "{Tab}"
-			}
-		} else {
-			MsgBox("Counter is not running")
-		}
 	}
 }
 /*
