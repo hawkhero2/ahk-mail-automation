@@ -364,7 +364,7 @@ set_live_activity() {
 
 /*
 Start-stop macro for counter
-@param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet
+@param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet processing
 @param string activity , text from a dropdown menu
 */
 stop_start(is_fleet := "", activity := "") {
@@ -390,7 +390,7 @@ stop_start(is_fleet := "", activity := "") {
 				MsgBox("Counter is not running")
 			}
 		}
-		if (is_fleet = 0) {
+		else if (is_fleet = 0) {
 			if (WinExist("(")) {
 				WinActivate()
 				Loop 4 {
@@ -417,6 +417,7 @@ stop_start(is_fleet := "", activity := "") {
 Runs stop_start() for the appropriate number of tabs based on the activity
 @param bool is_fleet
 */
+/*
 stop_start_activity(is_fleet) {
 	if (is_fleet = True) {
 		stop_start(6)
@@ -424,3 +425,4 @@ stop_start_activity(is_fleet) {
 		stop_start(4)
 	}
 }
+*/

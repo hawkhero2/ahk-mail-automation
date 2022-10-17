@@ -93,11 +93,11 @@ arr_rej_list := get_list(RS_CFG, "Rejection")
 rejections_lbl := main_ui.Add("Text", "x10 y174 " . TXT_COLOR, "Rejection Reason")
 reject_reason := main_ui.Add("DropDownList", "vreject_reason w580 x10 " . TXT_COLOR, arr_rej_list)
 
-check_fleet := main_ui.Add("Checkbox", "vcheck_fleet x260 y130 " . TXT_COLOR, "Fleet Processesing ?")
+checkbox_fleet := main_ui.Add("Checkbox", "vcheckbox_fleet x260 y130 " . TXT_COLOR, "Fleet Processesing ?")
 
 ; *             DROPDOWN LIST FOR FLEET ACTIVITY (LIFE / TEST)
 fleet_ddl_items := ["LIVE", "TEST"]
-fleet_activity := main_ui.Add("DropDownList", "x380 y130 " . TXT_COLOR, fleet_ddl_items)
+fleet_activ_ddl := main_ui.Add("DropDownList", "x380 y130 " . TXT_COLOR, fleet_ddl_items)
 
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x10 y220", "Send Mail").OnEvent("Click", send_email_listener)
 
@@ -230,7 +230,7 @@ save_btn_listener(*) {
     Diff.SetFont(TXT_COLOR)
     Kurze.SetFont(TXT_COLOR)
     rejections_lbl.SetFont(TXT_COLOR)
-    check_fleet.SetFont(TXT_COLOR)
+    checkbox_fleet.SetFont(TXT_COLOR)
     misc.SetFont(TXT_COLOR)
     id_pos.SetFont(TXT_COLOR)
     def_pos_lbl.SetFont(TXT_COLOR)
@@ -350,7 +350,7 @@ MButton::
     try {
 
         if (get_state("mbutton")) {
-            if !(check_fleet.Value) {
+            if !(checkbox_fleet.Value) {
 
                 x1 := get_coords(SETTINGS_FILE, "Track Id Location", "x1")
                 y1 := get_coords(SETTINGS_FILE, "Track Id Location", "y1")
@@ -380,7 +380,7 @@ XButton2::
 
         if (get_state("x2button")) {
 
-            if !(check_fleet.Value) {
+            if !(checkbox_fleet.Value) {
 
                 x1 := get_coords(SETTINGS_FILE, "Track Id Location", "x1")
                 y1 := get_coords(SETTINGS_FILE, "Track Id Location", "y1")
@@ -410,7 +410,7 @@ ScrollLock::
 
         if (get_state("scrllock")) {
 
-            if !(check_fleet.Value) {
+            if !(checkbox_fleet.Value) {
 
                 x1 := get_coords(SETTINGS_FILE, "Track Id Location", "x1")
                 y1 := get_coords(SETTINGS_FILE, "Track Id Location", "y1")
@@ -454,14 +454,14 @@ Pause::
         ; checks if the hotkey is enabled
         if (get_state("pausebreak")) {
             ; checks if the checkbox for fleet is enable and if the an activity was chosen
-            if (check_fleet.Value = 1 && fleet_activity.Value = 0) {
+            if (checkbox_fleet.Value = 1 && fleet_activ_ddl.Value = 0) {
                 MsgBox("Please select an activity from the dropdown menu next to the checkbox, you can pick either LIVE or TEST")
             }
-            else if (check_fleet.Value = 1 && fleet_activity.Value = 1) {
-                stop_start(check_fleet.Value, fleet_activity.Text)
+            else if (checkbox_fleet.Value = 1 && fleet_activ_ddl.Value = 1) {
+                stop_start(checkbox_fleet.Value, fleet_activ_ddl.Text)
             }
             else {
-                stop_start(check_fleet.Value, "")
+                stop_start(checkbox_fleet.Value, "")
             }
         }
     } catch Error as e {
@@ -469,20 +469,21 @@ Pause::
     }
 
 }
+
 F7::
 {
     try {
         ; checks if the hotkey is enabled
         if (get_state("fseven")) {
             ; checks if the checkbox for fleet is  enable and if the an activity was chosen
-            if (check_fleet.Value = 1 && fleet_activity.Value = 0) {
+            if (checkbox_fleet.Value = 1 && fleet_activ_ddl.Value = 0) {
                 MsgBox("Please select an activity from the dropdown menu next to the checkbox, you can pick either LIVE or TEST")
             }
-            else if (check_fleet.Value = 1 && fleet_activity.Value = 1) {
-                stop_start(check_fleet.Value, fleet_activity.Text)
+            else if (checkbox_fleet.Value = 1 && fleet_activ_ddl.Value = 1) {
+                stop_start(checkbox_fleet.Value, fleet_activ_ddl.Text)
             }
             else {
-                stop_start(check_fleet.Value, "")
+                stop_start(checkbox_fleet.Value, "")
             }
         }
     } catch Error as e {
