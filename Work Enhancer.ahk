@@ -15,7 +15,7 @@
  * @file Work Enhancer
  * @author Andrei Ivanciu
  * @date 2022/07/15
- * @version 0.1.0
+ * @version 0.1.1
  ***********************************************************************/
 
 /*
