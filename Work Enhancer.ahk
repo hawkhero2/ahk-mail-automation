@@ -483,11 +483,11 @@ F7::
                 stop_start(checkbox_fleet.Value, fleet_activ_ddl.Text)
             }
             else {
-                stop_start(checkbox_fleet.Value, "")
+                stop_start(checkbox_fleet.Value, fleet_activ_ddl.Text)
             }
         }
     } catch Error as e {
-        MsgBox(e.Message)
+        MsgBox("Error ocurred while running F7 macro: " . e.Message)
     }
 }
 /*
