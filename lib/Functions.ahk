@@ -333,6 +333,7 @@ set_track_id(x1, y1, x2, y2, filename) {
 					WinActivate()
 					A_Clipboard := trackNr
 					Send "^{V}"
+					A_Clipboard := ""	;clear the clipboard
 					WinActivate("CaptureThis")
 				} else {
 					MsgBox("Counter not running")
