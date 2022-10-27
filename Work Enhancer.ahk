@@ -105,6 +105,7 @@ main_ui.Add("Button", BUTTON_SIZE . A_Space . "x120 y220", "Send Chat").OnEvent(
 
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x230 y220", "Settings").OnEvent("Click", settings_btn_listener)
 
+main_ui.Add("Button", BUTTON_SIZE . A_Space . "x340 y220", "Copy").OnEvent("Click", copy_btn_listener)
 ; main_ui.Add("Button", BUTTON_SIZE . A_Space . "x340 y220", "Browse").OnEvent("Click", browse_btn_listener)
 
 main_ui.OnEvent("Close", main_close)
@@ -189,6 +190,11 @@ fseven.Value := get_state("fseven")
 /*
 *                                             LISTENERS
 */
+copy_btn_listener(*) {
+    A_Clipboard := ""
+    A_Clipboard := reject_reason.Text
+}
+
 settings_close(*) {
     settings_ui.Hide()
     main_ui.Show(MAIN_SIZE)
