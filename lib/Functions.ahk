@@ -289,7 +289,7 @@ Trims the spaces found in the string, and returns the trimmed string
 @param string string
 @return string
 */
-FTrim(string := "") {
+full_trim(string := "") {
 	try {
 		strArray := StrSplit(string, A_Space)
 		if (strArray.Length > 1) {
@@ -322,7 +322,7 @@ set_track_id(x1, y1, x2, y2, filename) {
 
 				A_Clipboard := ""	; empty clipboard before grabbing the text
 				grab_track_id(x1, y1, x2, y2)
-				trackNr := FTrim(A_Clipboard)
+				trackNr := full_trim(A_Clipboard)
 
 				;writes id to .txt file for history
 				timestamp := A_Space . A_DD . "-" . A_MM . "-" . A_YYYY . A_Space . A_Hour . ":" . A_Min
