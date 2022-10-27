@@ -191,8 +191,25 @@ fseven.Value := get_state("fseven")
 *                                             LISTENERS
 */
 copy_btn_listener(*) {
-    A_Clipboard := ""
-    A_Clipboard := reject_reason.Text
+    if (List.Value = 1) {
+        A_Clipboard := ""
+        A_Clipboard := reject_reason.Text
+    } else if (Doppelt.Value = 1) {
+        A_Clipboard := ""
+        A_Clipboard := "Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
+    } else if (Doppelt2.Value = 1) {
+        A_Clipboard := ""
+        A_Clipboard := "Hello,`n`nDoppelt " . track_id.Value . " - " . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
+    } else if (Kurze.Value = 1) {
+        A_Clipboard := ""
+        A_Clipboard := " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
+    } else if (Diff.Value = 1) {
+        A_Clipboard := ""
+        A_Clipboard := "Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
+    } else {
+        MsgBox("Please select one of the options: `nList`nDoppelt`nDoppelt v2`nDifference`nDoppelt Kurze")
+    }
+
 }
 
 settings_close(*) {
@@ -254,20 +271,20 @@ save_btn_listener(*) {
 send_email_listener(*) {
 
     subject := track_id.Value . A_Space . CURRENT_DATE . "," . A_Space . get_acc(SETTINGS_FILE)
-    if (List.Value) {
-        body := "Hello, `n`n" . track_id.Value . "-" . reject_reason.Text . "`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
+    if (List.Value = 1) {
+        body := "Hello, `n`n" . track_id.Value . A_Space . "-" . A_Space . reject_reason.Text . "`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
-    } else if (Doppelt.Value) {
-        body := "Hello,`n`nDoppelt" . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
+    } else if (Doppelt.Value = 1) {
+        body := "Hello,`n`nDoppelt" . A_Space . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Text . A_Space . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
-    } else if (Doppelt2.Value) {
+    } else if (Doppelt2.Value = 1) {
         body := "Hello,`n`nDoppelt" . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
 
-    } else if (Diff.Value) {
+    } else if (Diff.Value = 1) {
         body := "Hello, `n`n" . track_id.Value . " Difference of " . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
-    } else if (Kurze.Value) {
+    } else if (Kurze.Value = 1) {
         body := "Hello,`n`nDoppelt " . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze.`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     } else
@@ -279,20 +296,20 @@ send_email_listener(*) {
 
 send_chat_listener(*) {
 
-    if (List.Value) {
+    if (List.Value = 1) {
         body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . "-" . A_Space . reject_reason.Text
         chat_macro(body)
-    } else if (Doppelt.Value) {
+    } else if (Doppelt.Value = 1) {
         body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . "-" . " Dieser Vorgang wurde bereits am " . doppelt_date.Text . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt"
         chat_macro(body)
-    } else if (Doppelt2.Value) {
+    } else if (Doppelt2.Value = 1) {
         body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft."
         chat_macro(body)
 
-    } else if (Diff.Value) {
+    } else if (Diff.Value = 1) {
         body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . " Difference of" . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!"
         chat_macro(body)
-    } else if (Kurze.Value) {
+    } else if (Kurze.Value = 1) {
         body := get_recipient(SETTINGS_FILE) . A_Space . track_id.Value . "-" . " Der Vorgang steht unter der Vorgangsnummer " . doppelt_nr.Value . " zur Prüfung an. Ein entsprechender Prüfbericht folgt in Kürze."
         chat_macro(body)
     } else {
