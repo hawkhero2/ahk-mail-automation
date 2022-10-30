@@ -1,12 +1,26 @@
 /*
 Get current coodinates of the track id from settings.ini
 @param String filename
-@param String key
 @param String section
-@return int
+@param String key
+@return array of coordinates or single coordinate if provided with key name
 */
 get_coords(filename := "", section := "", key := "") {
-	result := IniRead(filename, section, key)
+
+	if (StrLen(key) > 0) {
+		result := IniRead(filename, section, key)
+	} else {
+		result := Array()
+		source := StrSplit(IniRead(filename, section), "`n")
+
+		i := 1
+		while i <= source.Length {
+			tempArray := StrSplit(source[i], "=")
+			result.Push(tempArray[2])
+
+			i += 1
+		}
+	}
 	return result
 }
 /*
