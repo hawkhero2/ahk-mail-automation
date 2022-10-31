@@ -1,8 +1,8 @@
 /*
 Get current coodinates of the track id from settings.ini
-@param String filename
-@param String section
-@param String key
+@param string filename
+@param string section
+@param string key
 @return array of coordinates or single coordinate if provided with key name
 */
 get_coords(filename := "", section := "", key := "") {
@@ -17,7 +17,6 @@ get_coords(filename := "", section := "", key := "") {
 		while i <= source.Length {
 			tempArray := StrSplit(source[i], "=")
 			result.Push(tempArray[2])
-
 			i += 1
 		}
 	}
@@ -91,17 +90,6 @@ set_recipient(filename := "", recipient := "") {
 		MsgBox("There has been an error while setting the chat account. Please check your rs_config.ini file. " . e.Message, "Error")
 	}
 }
-
-/*
-Write id to file
-Function used to write grabbed id + date to a .txt file to act as history
-@param String filename
-@param String value
-@return void
-*/
-; write_id(filename := "", value := "") {
-; 	FileAppend(value . "->" . A_DD . "-" . A_MM . "-" . A_YYYY, filename)
-; }
 
 /*
 Grab account from ini file
@@ -364,18 +352,18 @@ set_track_id(x1, y1, x2, y2, filename) {
 
 }
 
-/*
-Set live to counter for fleet activity
-*/
-set_live_activity() {
-	Loop 4 {
-		Send("{Tab}")
-	}
-	SendText("live")
-	Loop 5 {
-		Send("{Tab}")
-	}
-}
+; /*
+; Set live to counter for fleet activity
+; */
+; set_live_activity() {
+; 	Loop 4 {
+; 		Send("{Tab}")
+; 	}
+; 	SendText("live")
+; 	Loop 5 {
+; 		Send("{Tab}")
+; 	}
+; }
 
 /*
 Start-stop macro for counter

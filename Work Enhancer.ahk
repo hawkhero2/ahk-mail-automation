@@ -47,18 +47,6 @@ global EMAIL := get_email(RS_CFG)
 global CURRENT_DATE := A_DD . "-" . A_MM . "-" . A_YYYY
 global THEME_LIST := ["Light", "Dark"]
 
-; Assign positions to variables for default position
-global x_pos_1 := IniRead(SETTINGS_FILE, "Track Id Location", "x1", "")
-global y_pos_1 := IniRead(SETTINGS_FILE, "Track Id Location", "y1", "")
-global x_pos_2 := IniRead(SETTINGS_FILE, "Track Id Location", "x2", "")
-global y_pos_2 := IniRead(SETTINGS_FILE, "Track Id Location", "y2", "")
-
-; Assign positions to variables for fleet
-global x_fleet_pos_1 := IniRead(SETTINGS_FILE, "Fleet Track Id Location", "x1")
-global y_fleet_pos_1 := IniRead(SETTINGS_FILE, "Fleet Track Id Location", "y1")
-global x_fleet_pos_2 := IniRead(SETTINGS_FILE, "Fleet Track Id Location", "x2")
-global y_fleet_pos_2 := IniRead(SETTINGS_FILE, "Fleet Track Id Location", "y2")
-
 /*
  *                                              MAIN UI
 */
@@ -339,7 +327,7 @@ MButton:: {
             } else if (fleet_radio.Value = 1) {
                 coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
-                set_live_activity()
+                ; set_live_activity()
             } else if (gc_radio.Value = 1) {
                 coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
