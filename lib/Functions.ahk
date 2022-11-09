@@ -352,18 +352,21 @@ set_track_id(x1, y1, x2, y2, filename) {
 
 }
 
-; /*
-; Set live to counter for fleet activity
-; */
-; set_live_activity() {
-; 	Loop 4 {
-; 		Send("{Tab}")
-; 	}
-; 	SendText("live")
-; 	Loop 5 {
-; 		Send("{Tab}")
-; 	}
-; }
+/*
+ Set live to counter for fleet activity
+*/
+set_live_activity() {
+	Loop 4 {
+		Send("{Tab}")
+	}
+	Sleep(150)
+	; SendText("L")
+	SendInput("L")
+	Sleep(150)
+	Loop 5 {
+		Send("{Tab}")
+	}
+}
 
 /*
 Start-stop macro for counter

@@ -327,7 +327,7 @@ MButton:: {
             } else if (fleet_radio.Value = 1) {
                 coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
-                ; set_live_activity()
+                set_live_activity()
             } else if (gc_radio.Value = 1) {
                 coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
