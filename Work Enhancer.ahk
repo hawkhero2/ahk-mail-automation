@@ -23,7 +23,10 @@
 */
 
 #Include lib\Functions.ahk
+#Include lib\RunAtStartUp.ahk
 ; ------------------------------------------------------------------------
+
+run_at_startup()
 
 /*
 *												GLOBAL VARIABLES
@@ -47,8 +50,9 @@ global EMAIL := get_email(RS_CFG)
 global CURRENT_DATE := A_DD . "-" . A_MM . "-" . A_YYYY
 global THEME_LIST := ["Light", "Dark"]
 
+
 /*
- *                                              MAIN UI
+*                                               MAIN UI
 */
 
 main_ui := Gui("-Resize -MaximizeBox", "Work Enhancer v1.0")
