@@ -1,7 +1,7 @@
 /************************************************************************
  * @description Used to create the default configuration for the settings.ini file
  * @file CreateSettings.ahk
- * @author
+ * @author Andrei Ivanciu
  * @date 2022/11/17
  * @version 0.0.1
  ***********************************************************************/

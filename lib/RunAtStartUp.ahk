@@ -1,7 +1,7 @@
 /************************************************************************
  * @description Run at startup checks for settings files and creates the settings files if necessary
  * @file RunAtStartUp.ahk
- * @author
+ * @author Andrei Ivanciu
  * @date 2022/11/13
  * @version 0.0.1
  ***********************************************************************/
@@ -37,6 +37,7 @@ run_at_startup() {
     }
     if (DirExist("data") = "D") {
         timestamp := FormatTime(A_Now, "")
+        ; FileExist returns "X" when true and "" when false
         if (FileExist("data/settings.ini") = "") {
             create_settings_ini()
         }
