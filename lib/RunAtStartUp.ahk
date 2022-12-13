@@ -1,11 +1,13 @@
 /************************************************************************
  * @description Run at startup checks for settings files and creates the settings files if necessary
  * @file RunAtStartUp.ahk
- * @author
+ * @author Andrei Ivanciu
  * @date 2022/11/13
  * @version 0.0.1
  ***********************************************************************/
 
+#Include CreateSettings.ahk
+#Include CreateIdHistory.ahk
 
 /*
 Run at startup checks for settings files and creates the settings files if necessary
@@ -13,12 +15,17 @@ Run at startup checks for settings files and creates the settings files if neces
 @return void
 */
 run_at_startup() {
-    ; check for the data folder
-    if (FileExist("data") = 0) {
+    /*
+    Checks for the data folder,
+    if it returns an empty string then
+    create folder and files
+    */
+    if (DirExist("data") = "") {
+
         ; creates data folder
         DirCreate("data")
 
-        files := ["data/settings.ini", "data/rs_config.ini", "data/id_history.txt"]
+        files := ["data/settings.ini", "data/id_history.txt"]
         x := 1
         while (x >= files.length) {
             if (FileExist(files[x]) = 0) {
