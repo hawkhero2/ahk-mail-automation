@@ -116,7 +116,7 @@ main_ui.Add("Button", BUTTON_SIZE . A_Space . "x450 y220", "Test").OnEvent("Clic
 test_btn_listener(*) {
     ; coords := get_list(SETTINGS_FILE, "Track Id Location")    ; returns the coordinates
     coords := get_coords(SETTINGS_FILE, "Track Id Location", "x")
-    set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+    ; set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
 }
 /*
 *                                             SETTINGS UI
@@ -326,15 +326,19 @@ MButton:: {
     try {
         if (get_state("mbutton")) {
             if (ec_radio.Value = 1) {
+
                 coords := get_coords(SETTINGS_FILE, "Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+
             } else if (fleet_radio.Value = 1) {
+
                 coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
-                set_live_activity()
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+
             } else if (gc_radio.Value = 1) {
+
                 coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
             }
         }
     } catch Error as e {
@@ -346,14 +350,18 @@ XButton2:: {
         if (get_state("x2button")) {
             if (ec_radio.Value = 1) {
                 coords := get_coords(SETTINGS_FILE, "Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+
             } else if (fleet_radio.Value = 1) {
+
                 coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
-                set_live_activity()
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+
             } else if (gc_radio.Value = 1) {
+
                 coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+
             }
         }
     } catch Error as e {
@@ -364,15 +372,20 @@ ScrollLock:: {
     try {
         if (get_state("scrllock")) {
             if (ec_radio.Value = 1) {
+
                 coords := get_coords(SETTINGS_FILE, "Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+
             } else if (fleet_radio.Value = 1) {
+
                 coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
-                set_live_activity()
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+
             } else if (gc_radio.Value = 1) {
+
                 coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+
             }
         }
     } catch Error as e {

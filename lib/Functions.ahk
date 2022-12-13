@@ -313,7 +313,7 @@ Set track id to counter and write to .txt file
 @params int x1, int y1, int x2, int y2
 @param String filename
 */
-set_track_id(x1, y1, x2, y2, filename) {
+set_track_id(x1, y1, x2, y2, filename, fleet, activity) {
 	try {
 
 		if !(ProcessExist("Capture2text.exe") = 0) {
@@ -336,6 +336,9 @@ set_track_id(x1, y1, x2, y2, filename) {
 					A_Clipboard := trackNr
 					Send "^{V}"
 					A_Clipboard := ""	;clear the clipboard
+					if (fleet = 1) {
+						set_live_activity(activity)
+					}
 					WinActivate("CaptureThis")
 				} else {
 					MsgBox("Counter not running")
@@ -355,14 +358,13 @@ set_track_id(x1, y1, x2, y2, filename) {
 /*
  Set live to counter for fleet activity
 */
-set_live_activity() {
+set_live_activity(activity) {
 	Loop 4 {
 		Send("{Tab}")
 	}
-	Sleep(150)
-	; SendText("L")
-	SendInput("L")
-	Sleep(150)
+	Sleep(350)
+	SendText(activity)
+	Sleep(500)
 	Loop 5 {
 		Send("{Tab}")
 	}
