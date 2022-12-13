@@ -413,10 +413,10 @@ Pause:: {
                 MsgBox("Please select an activity from the dropdown menu next to the checkbox, you can pick either LIVE or TEST")
             }
             else if (fleet_radio.Value = 1 && fleet_activ_ddl.Value = 1) {
-                stop_start(fleet_radio.Value, fleet_activ_ddl.Text)
+                stop_start(fleet_radio.Value)
             }
             else {
-                stop_start(fleet_radio.Value, "")
+                stop_start(fleet_radio.Value)
             }
         }
     } catch Error as e {
@@ -432,10 +432,10 @@ F7:: {
                 MsgBox("Please select an activity from the dropdown menu next to the checkbox, you can pick either LIVE or TEST")
             }
             else if (fleet_radio.Value = 1 && fleet_activ_ddl.Value = 1) {
-                stop_start(fleet_radio.Value, fleet_activ_ddl.Text)
+                stop_start(fleet_radio.Value)
             }
             else {
-                stop_start(fleet_radio.Value, fleet_activ_ddl.Text)
+                stop_start(fleet_radio.Value)
             }
         }
     } catch Error as e {

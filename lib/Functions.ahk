@@ -375,24 +375,23 @@ Start-stop macro for counter
 @param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet processing
 @param string activity , text from a dropdown menu
 */
-stop_start(is_fleet := "", activity := "") {
+stop_start(is_fleet := "") {
 	try {
 		if (is_fleet = 1) {
 			if (WinExist("(")) {
 				WinActivate()
-				Loop 4 {
+				Loop 6 {
 					Sleep(200)
-					Send "{Tab}"
+					SendInput("{Tab}")
 				}
 				Sleep(150)
-				SendText(activity)
 				Loop 2 {
-					Sleep(50)
-					Send "{Enter}"
+					Sleep(200)
+					SendInput("{Enter}")
 				}
 				Loop 2 {
 					Sleep(50)
-					Send "{Tab}"
+					SendInput("{Tab}")
 				}
 			} else {
 				MsgBox("Counter is not running")
@@ -403,14 +402,14 @@ stop_start(is_fleet := "", activity := "") {
 				WinActivate()
 				Loop 4 {
 					Sleep(50)
-					Send "{Tab}"
+					SendInput("{Tab}")
 				}
 				Loop 2 {
 					Sleep(50)
-					Send "{Enter}"
+					SendInput("{Enter}")
 				}
 				Loop 2 {
-					Send "{Tab}"
+					SendInput("{Tab}")
 				}
 			}
 			else
