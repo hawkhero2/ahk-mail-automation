@@ -442,7 +442,3 @@ F7:: {
         MsgBox("Error ocurred while running F7 macro: " . e.Message)
     }
 }
-/*
- put id -> 4 tabs put live -> 5 tabs to return back to file id field
- 6 tabs from file id to stop button
-*/
