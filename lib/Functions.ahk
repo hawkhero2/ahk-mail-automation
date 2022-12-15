@@ -420,16 +420,3 @@ stop_start(is_fleet := "") {
 		MsgBox("An error has been produced while running stop-start macro: " . e.Message . " caused by: " . e.What, "Error")
 	}
 }
-/*
-Runs stop_start() for the appropriate number of tabs based on the activity
-@param bool is_fleet
-*/
-/*
-stop_start_activity(is_fleet) {
-	if (is_fleet = True) {
-		stop_start(6)
-	} else {
-		stop_start(4)
-	}
-}
-*/
