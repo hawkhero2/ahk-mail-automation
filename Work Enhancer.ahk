@@ -14,9 +14,10 @@
  * -   Hotstrings.
  * @file Work Enhancer
  * @author Andrei Ivanciu
- * @date 2022/07/15
- * @version 0.1.1
+ * @date 2022/12/15
+ * @version 0.1.3
  ***********************************************************************/
+
 
 /*
  *                                              IMPORTS

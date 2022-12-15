@@ -362,7 +362,7 @@ set_live_activity(activity) {
 	Loop 4 {
 		Send("{Tab}")
 	}
-	Sleep(350)
+	Sleep(150)
 	SendText(activity)
 	Sleep(500)
 	Loop 5 {
