@@ -94,10 +94,14 @@ ec_radio := main_ui.Add("Radio", "x360 y35 " . TXT_COLOR, "EC / IC")
 ec_radio.Value := 1
 fleet_radio := main_ui.Add("Radio", "x360 y55 " . TXT_COLOR, "FLEET")
 gc_radio := main_ui.Add("Radio", "x360 y75 " . TXT_COLOR, "GC")
+
+/*
 ; *             DROPDOWN LIST FOR FLEET ACTIVITY (LIFE / TEST)
 fleet_ddl_items := ["LIVE", "TEST"]
 fleet_activ_ddl := main_ui.Add("DropDownList", "x430 y50 " . TXT_COLOR, fleet_ddl_items)
 fleet_activ_ddl.Choose("LIVE")
+*/
+
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x10 y220", "Send Mail").OnEvent("Click", send_email_listener)
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x120 y220", "Send Chat").OnEvent("Click", send_chat_listener)
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x230 y220", "Settings").OnEvent("Click", settings_btn_listener)
@@ -329,17 +333,17 @@ MButton:: {
             if (ec_radio.Value = 1) {
 
                 coords := get_coords(SETTINGS_FILE, "Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
 
             } else if (fleet_radio.Value = 1) {
 
                 coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
 
             } else if (gc_radio.Value = 1) {
 
                 coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
             }
         }
     } catch Error as e {
@@ -351,17 +355,17 @@ XButton2:: {
         if (get_state("x2button")) {
             if (ec_radio.Value = 1) {
                 coords := get_coords(SETTINGS_FILE, "Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
 
             } else if (fleet_radio.Value = 1) {
 
                 coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
 
             } else if (gc_radio.Value = 1) {
 
                 coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
 
             }
         }
@@ -375,17 +379,17 @@ ScrollLock:: {
             if (ec_radio.Value = 1) {
 
                 coords := get_coords(SETTINGS_FILE, "Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
 
             } else if (fleet_radio.Value = 1) {
 
                 coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
 
             } else if (gc_radio.Value = 1) {
 
                 coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
-                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value, fleet_activ_ddl.Text)
+                set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
 
             }
         }
