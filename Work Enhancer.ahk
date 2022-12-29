@@ -414,10 +414,7 @@ Pause:: {
         ; checks if the hotkey is enabled
         if (get_state("pausebreak")) {
             ; checks if the checkbox for fleet is enable and if the an activity was chosen
-            if (fleet_radio.Value = 1 && fleet_activ_ddl.Value = 0) {
-                MsgBox("Please select an activity from the dropdown menu next to the checkbox, you can pick either LIVE or TEST")
-            }
-            else if (fleet_radio.Value = 1 && fleet_activ_ddl.Value = 1) {
+            if (fleet_radio.Value = 1) {
                 stop_start(fleet_radio.Value)
             }
             else {
@@ -433,10 +430,8 @@ F7:: {
         ; checks if the hotkey is enabled
         if (get_state("fseven")) {
             ; checks if the checkbox for fleet is  enable and if the an activity was chosen
-            if (fleet_radio.Value = 1 && fleet_activ_ddl.Value = 0) {
-                MsgBox("Please select an activity from the dropdown menu next to the checkbox, you can pick either LIVE or TEST")
-            }
-            else if (fleet_radio.Value = 1 && fleet_activ_ddl.Value = 1) {
+
+            if (fleet_radio.Value = 1) {
                 stop_start(fleet_radio.Value)
             }
             else {
