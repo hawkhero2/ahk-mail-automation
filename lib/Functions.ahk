@@ -359,15 +359,15 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
  Set live to counter for fleet activity
 */
 set_live_activity() {
-	Loop 4 {
+	Loop 9 {
 		Send("{Tab}")
 	}
-	Sleep(150)
-	; SendText(activity)
-	Sleep(150)
-	Loop 5 {
-		Send("{Tab}")
-	}
+	; Sleep(150)
+	; ; SendText(activity)
+	; Sleep(150)
+	; Loop 5 {
+	; 	Send("{Tab}")
+	; }
 }
 
 /*
