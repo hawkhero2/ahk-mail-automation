@@ -1,3 +1,7 @@
+; imports
+#Include ErrorLogging.ahk
+
+
 /*
 Get current coodinates of the track id from settings.ini
 @param string filename
@@ -87,7 +91,8 @@ set_recipient(filename := "", recipient := "") {
 	try {
 		IniWrite(recipient, filename, "Chat", "acc")
 	} catch Error as e {
-		MsgBox("There has been an error while setting the chat account. Please check your rs_config.ini file. " . e.Message, "Error")
+		; MsgBox("There has been an error while setting the chat account. Please check your rs_config.ini file. " . e.Message, "Error")
+		error_logging(e.Message)
 	}
 }
 
@@ -141,7 +146,8 @@ set_sign(filename := "", signature := "") {
 	try {
 		IniWrite(signature, filename, "Signature", "acc")
 	} catch Error as e {
-		MsgBox("There has been an error while setting signature: " . e.Message, "Error")
+		; MsgBox("There has been an error while setting signature: " . e.Message, "Error")
+		error_logging(e.Message)
 	}
 }
 
@@ -175,7 +181,8 @@ set_default_theme(filename := "", value := "") {
 			IniWrite(txt_color, filename, "Default Settings", "txt_color")
 		}
 	} catch Error as e {
-		MsgBox("There has been an error when selecting theme: " . e.Message)
+		; MsgBox("There has been an error when selecting theme: " . e.Message)
+		error_logging(e.Message)
 	}
 }
 /*
@@ -192,9 +199,9 @@ get_list(filename := "", section := "", key := "") {
 }
 /*
 Send mail macro
-@param String subject
-@param string body
-@param String filename
+@param {String} subject
+@param {String} body
+@param {String} filename
 */
 mail_send(body, subject, filename) {
 
@@ -223,7 +230,8 @@ mail_send(body, subject, filename) {
 		} else
 			MsgBox("Mail not opened")
 	} catch Error as e {
-		MsgBox("An error has been produced while running mail macro: " . e.Message . " caused by: " . e.What, "Error")
+		; MsgBox("An error has been produced while running mail macro: " . e.Message . " caused by: " . e.What, "Error")
+		error_logging(e.Message)
 	}
 }
 /*
@@ -260,7 +268,8 @@ chat_macro(message) {
 		} else
 			MsgBox("Chat is not open")
 	} catch Error as e {
-		MsgBox("An error has been produced while running chat macro : " . e.Message . " caused by: " . e.What, "Error")
+		; MsgBox("An error has been produced while running chat macro : " . e.Message . " caused by: " . e.What, "Error")
+		error_logging(e.Message)
 	}
 }
 /*
@@ -282,14 +291,15 @@ grab_track_id(x1, y1, x2, y2) {
 		MouseClick("Left", x2, y2)
 		MouseMove(70, 400, 0)
 	} catch Error as e {
-		MsgBox("An error has been produced while running track id macro: " . e.Message . " caused by:" . e.What, "Error")
+		; MsgBox("An error has been produced while running track id macro: " . e.Message . " caused by:" . e.What, "Error")
+		error_logging(e.Message)
 	}
 }
 
 /*
 Trims the spaces found in the string, and returns the trimmed string
-@param string string
-@return string
+@param {String} string
+@return {String} trimmed string
 */
 full_trim(string := "") {
 	try {
@@ -304,14 +314,17 @@ full_trim(string := "") {
 		} else
 			return string
 	} catch Error as e {
-		MsgBox("An error has been produced while trimming track id: " . e.Message)
+		; MsgBox("An error has been produced while trimming track id: " . e.Message)
+		error_logging(e.Message)
 	}
 	return temp
 }
 /*
-Set track id to counter and write to .txt file
-@params int x1, int y1, int x2, int y2
-@param String filename
+Function sets track id to counter and write to .txt file
+@param {Int} x1, int y1, int x2, int y2 which are the coordinates of the track id
+@param {String} filename containing the filename of the .txt file in which the timestamp is written
+@param {Boolean} fleet  indicating if the track id should be
+@return {void}
 */
 set_track_id(x1, y1, x2, y2, filename, fleet) {
 	try {
@@ -324,7 +337,7 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
 
 				A_Clipboard := ""	; empty clipboard before grabbing the text
 				grab_track_id(x1, y1, x2, y2)
-				trackNr := full_trim(A_Clipboard)
+				trackNr := full_trim(A_Clipboard)	; trims spaces between track number if necessary
 
 				;writes id to .txt file for history
 				timestamp := A_Space . A_DD . "-" . A_MM . "-" . A_YYYY . A_Space . A_Hour . ":" . A_Min
@@ -350,7 +363,8 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
 			Run(A_ScriptDir . "\Capture2Text\Capture2Text.exe")
 		}
 	} catch Error as e {
-		MsgBox("An error has been produced while setting track id to counter : " . e.Message . " caused by: " . e.What, "Error")
+		; MsgBox("An error has been produced while setting track id to counter : " . e.Message . " caused by: " . e.What, "Error")
+		error_logging(e.Message)
 	}
 
 }
@@ -359,15 +373,16 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
  Set live to counter for fleet activity
 */
 set_live_activity() {
-	Loop 4 {
+	Loop 9 {
 		Send("{Tab}")
+		Sleep(150)
 	}
-	Sleep(150)
-	; SendText(activity)
-	Sleep(500)
-	Loop 5 {
-		Send("{Tab}")
-	}
+	; Sleep(150)
+	; ; SendText(activity)
+	; Sleep(150)
+	; Loop 5 {
+	; 	Send("{Tab}")
+	; }
 }
 
 /*
@@ -417,6 +432,7 @@ stop_start(is_fleet := "") {
 		}
 	}
 	catch Error as e {
-		MsgBox("An error has been produced while running stop-start macro: " . e.Message . " caused by: " . e.What, "Error")
+		; MsgBox("An error has been produced while running stop-start macro: " . e.Message . " caused by: " . e.What, "Error")
+		error_logging(e.Message)
 	}
 }
