@@ -8,12 +8,17 @@
 
 
 /*
+@description Logs the errors in the specified file
 @param {Error} error object
-Logs the errors in the specified file
+@return void
 */
 error_logging(error) {
     static logs := "data/error_log.txt"
     FileAppend(error, logs)
     FileAppend("---------------------------------------------", logs)
 
+}
+
+test_logging() {
+    throw Error()
 }

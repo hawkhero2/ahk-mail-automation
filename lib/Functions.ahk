@@ -320,7 +320,7 @@ full_trim(string := "") {
 	return temp
 }
 /*
-Function sets track id to counter and write to .txt file
+@Macro sets track id to counter and write to .txt file
 @param {Int} x1, int y1, int x2, int y2 which are the coordinates of the track id
 @param {String} filename containing the filename of the .txt file in which the timestamp is written
 @param {Boolean} fleet  indicating if the track id should be
@@ -370,7 +370,7 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
 }
 
 /*
- Set live to counter for fleet activity
+@Macro Set live to counter for fleet activity
 */
 set_live_activity() {
 	Loop 9 {
@@ -386,7 +386,7 @@ set_live_activity() {
 }
 
 /*
-Start-stop macro for counter
+@Macro Start-stop for counter
 @param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet processing
 @param string activity , text from a dropdown menu
 */

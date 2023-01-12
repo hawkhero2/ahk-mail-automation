@@ -6,15 +6,16 @@
  * @version 0.0.1
  ***********************************************************************/
 
-#Include CreateSettings.ahk
-#Include CreateIdHistory.ahk
+#Include IdHistoryClass.ahk
+#Include SettingsClass.ahk
 
 /*
 Run at startup checks for settings files and creates the settings files if necessary
-@params void
-@return void
 */
-run_at_startup() {
+at_startup() {
+    settings := SettingsClass()
+    id_history := IdHistoryClass()
+
     /*
     Checks for the data folder,
     if it returns an empty string then
@@ -24,7 +25,7 @@ run_at_startup() {
 
         ; creates data folder
         DirCreate("data")
-
+        /*
         files := ["data/settings.ini", "data/id_history.txt"]
         x := 1
         while (x >= files.length) {
@@ -32,19 +33,23 @@ run_at_startup() {
                 FileAppend("", files[x])
             }
         }
+        */
     }
-    ; if data folder exists then checks for the difference timestamp and when the settings files were created
-    if (FileExist("data") = 1) {
+    if (DirExist("data") = "D") {
         timestamp := FormatTime(A_Now, "")
-        ; If the difference between timestamp and when the file was created is equal to zero, the file was created recently and needs to be structured
+        /*
         if (DateDiff(A_Now, FileGetTime("data/settings.ini"), "days") = 0) {
-            create_settings_ini()
-
+            settings.create_settings_ini()
+        
         }
-        else if (DateDiff(A_Now, FileGetTime("data/rs_config.ini"), "days") = 0) {
-            ; writes the rs cfg file default structure
+        
+        */
+        if (FileExist(settings.file_location) = "") {
+            settings.create_settings_ini()
         }
-        ; id_history.txt does not need a special structure
+        else if (FileExist(id_history.file_location) = "") {
+            id_history.create_id_history()
+        }
     }
 
 }
