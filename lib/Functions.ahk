@@ -4,9 +4,9 @@
 
 /*
 Get current coodinates of the track id from settings.ini
-@param string filename
-@param string section
-@param string key
+@param {String} filename
+@param {String} section
+@param {String} key
 @return array of coordinates or single coordinate if provided with key name
 */
 get_coords(filename := "", section := "", key := "") {
@@ -28,8 +28,8 @@ get_coords(filename := "", section := "", key := "") {
 }
 /*
 Set state of element
-@param String element
-@param boolean state
+@param {String} key
+@param {boolean} state
 @return void
 */
 set_state(key := "", state := false) {
@@ -38,9 +38,8 @@ set_state(key := "", state := false) {
 
 /*
 Get state of enabled keys from the settings.ini file
-@param string filename
-@param string key
-@return boolean
+@param {string} key
+@return {boolean}
 */
 get_state(key := "") {
 	state := false
@@ -60,8 +59,8 @@ get_def_txt_color(filename) {
 }
 /*
 Set default location of the track id to ini file
-@params int x1, int y1, int x2, int y2
-@param String filename
+@params {int} x1, int y1, int x2, int y2
+@param {String} filename
 @return void
 */
 set_default_pos(x1 := "", y1 := "", x2 := "", y2 := "", filename := "", section := "") {
@@ -73,8 +72,8 @@ set_default_pos(x1 := "", y1 := "", x2 := "", y2 := "", filename := "", section 
 
 /*
 Get mail from rs_config.ini
-@param String filename
-@return String email
+@param {String} filename
+@return {String} email address
 */
 get_email(filename := "") {
 	result := IniRead(filename, "Email")
@@ -83,8 +82,8 @@ get_email(filename := "") {
 
 /*
 Set chat account to be @mentioned
-@param String filename
-@param String recipient
+@param {String} filename
+@param {String} recipient
 @return void
 */
 set_recipient(filename := "", recipient := "") {
@@ -98,8 +97,8 @@ set_recipient(filename := "", recipient := "") {
 
 /*
 Grab account from ini file
-@param String filename
-@return String account
+@param {String} filename
+@return {String} account
 */
 get_acc(filename := "") {
 	result := IniRead(filename, "Account", "acc")
@@ -108,8 +107,8 @@ get_acc(filename := "") {
 
 /*
 Set account to ini file
-@param string filename
-@param string value
+@param {String} filename
+@param {String} value
 @return void
 */
 set_acc(filename := "", value := "") {
@@ -118,8 +117,8 @@ set_acc(filename := "", value := "") {
 
 /*
 Grab recipient from ini file
-@param String filename
-@return String recipient
+@param {String} filename
+@return {String} recipient
 */
 get_recipient(filename := "") {
 	result := IniRead(filename, "Chat", "acc")
@@ -128,8 +127,8 @@ get_recipient(filename := "") {
 
 /*
 Grab signature from ini file
-@param String filename
-@return String signature
+@param {String} filename
+@return {String} signature
 */
 get_sign(filename := "") {
 	result := IniRead(filename, "Signature", "acc")
@@ -138,8 +137,8 @@ get_sign(filename := "") {
 
 /*
 Set signature to ini file
-@param String filename
-@param String signature
+@param {String} filename
+@param {String} signature
 @return void
 */
 set_sign(filename := "", signature := "") {
@@ -153,7 +152,7 @@ set_sign(filename := "", signature := "") {
 
 /*
 Grabs default theme color code from .ini file
-@param filename: String file path to .ini file
+@param {String} filename String file path to .ini file
 @return > String with color code
 */
 get_default_theme(filename := "") {
@@ -162,7 +161,7 @@ get_default_theme(filename := "") {
 }
 /*
 Sets default theme color code to .ini file
-@param filename: String file path to .ini file
+@param {String} filename: String file path to .ini file
 @return void
 */
 set_default_theme(filename := "", value := "") {
@@ -187,10 +186,10 @@ set_default_theme(filename := "", value := "") {
 }
 /*
 Reads items from .ini file and given section and returns array of strings
-@param filename: name of ini file, must be string
-@param section: name of section, must be string, if omitted, returns all sections
-@param key: name of key, must be string, if omitted, returns all items in section
-@return: Array of strings
+@param {String} filename: name of ini file, must be string
+@param {String} section: name of section, must be string, if omitted, returns all sections
+@param {String} key: name of key, must be string, if omitted, returns all items in section
+@return {Array} of strings
 */
 get_list(filename := "", section := "", key := "") {
 	; reads ini file => array of strings
@@ -236,7 +235,7 @@ mail_send(body, subject, filename) {
 }
 /*
 Send message macro in chat in the appropiate channel
-@param String message
+@param {String} message
 */
 chat_macro(message) {
 
@@ -274,7 +273,7 @@ chat_macro(message) {
 }
 /*
 Grab track id from position in Cadosys
-@params int x1, int y1, int x2, int y2
+@params {int} x1, int y1, int x2, int y2
 */
 grab_track_id(x1, y1, x2, y2) {
 	try {

@@ -25,25 +25,10 @@ at_startup() {
 
         ; creates data folder
         DirCreate("data")
-        /*
-        files := ["data/settings.ini", "data/id_history.txt"]
-        x := 1
-        while (x >= files.length) {
-            if (FileExist(files[x]) = 0) {
-                FileAppend("", files[x])
-            }
-        }
-        */
+
     }
     if (DirExist("data") = "D") {
         timestamp := FormatTime(A_Now, "")
-        /*
-        if (DateDiff(A_Now, FileGetTime("data/settings.ini"), "days") = 0) {
-            settings.create_settings_ini()
-        
-        }
-        
-        */
         if (FileExist(settings.file_location) = "") {
             settings.create_settings_ini()
         }
