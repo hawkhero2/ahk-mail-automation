@@ -1,16 +1,28 @@
 ; imports
 #Include ErrorLogging.ahk
 
+/*
+@param {String} color_value
+@return {String}
+*/
+get_theme_name(value := "") {
+	if (value == "333333") {
+		return "Dark"
+	}
+	if (value == "ffffff") {
+		return "Light"
+	}
+}
 
 /*
 Get current coodinates of the track id from settings.ini
-@param {String} filename
 @param {String} section
 @param {String} key
 @return array of coordinates or single coordinate if provided with key name
 */
-get_coords(filename := "", section := "", key := "") {
+get_coords(section := "", key := "") {
 
+	filename := "data/settings.ini"
 	if (StrLen(key) > 0) {
 		result := IniRead(filename, section, key)
 	} else {
@@ -63,7 +75,7 @@ Set default location of the track id to ini file
 @param {String} filename
 @return void
 */
-set_default_pos(x1 := "", y1 := "", x2 := "", y2 := "", filename := "", section := "") {
+set_pos(x1 := "", y1 := "", x2 := "", y2 := "", filename := "", section := "") {
 	IniWrite(x1, filename, section, "x1")
 	IniWrite(y1, filename, section, "y1")
 	IniWrite(x2, filename, section, "x2")

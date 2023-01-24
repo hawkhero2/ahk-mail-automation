@@ -35,7 +35,7 @@ class SettingsClass extends Object {
             while i <= source.Length {
                 tempArray := StrSplit(source[i], "=")
                 result.Push(tempArray[2])
-                '' i += 1
+                i += 1
             }
         }
         return result
@@ -53,7 +53,8 @@ class SettingsClass extends Object {
     }
 
     set_values(key, value) {
-        if (key)
+        if (key) {
+        }
     }
 
 
