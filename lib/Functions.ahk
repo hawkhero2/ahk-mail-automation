@@ -1,12 +1,28 @@
+; imports
+#Include ErrorLogging.ahk
+
+/*
+@param {String} color_value
+@return {String}
+*/
+get_theme_name(value := "") {
+	if (value == "333333") {
+		return "Dark"
+	}
+	if (value == "ffffff") {
+		return "Light"
+	}
+}
+
 /*
 Get current coodinates of the track id from settings.ini
-@param string filename
-@param string section
-@param string key
+@param {String} section
+@param {String} key
 @return array of coordinates or single coordinate if provided with key name
 */
-get_coords(filename := "", section := "", key := "") {
+get_coords(section := "", key := "") {
 
+	filename := "data/settings.ini"
 	if (StrLen(key) > 0) {
 		result := IniRead(filename, section, key)
 	} else {
@@ -24,8 +40,8 @@ get_coords(filename := "", section := "", key := "") {
 }
 /*
 Set state of element
-@param String element
-@param boolean state
+@param {String} key
+@param {boolean} state
 @return void
 */
 set_state(key := "", state := false) {
@@ -34,9 +50,8 @@ set_state(key := "", state := false) {
 
 /*
 Get state of enabled keys from the settings.ini file
-@param string filename
-@param string key
-@return boolean
+@param {string} key
+@return {boolean}
 */
 get_state(key := "") {
 	state := false
@@ -56,11 +71,12 @@ get_def_txt_color(filename) {
 }
 /*
 Set default location of the track id to ini file
-@params int x1, int y1, int x2, int y2
-@param String filename
+@params {int} x1, int y1, int x2, int y2
+@param {String} filename
 @return void
 */
-set_default_pos(x1 := "", y1 := "", x2 := "", y2 := "", filename := "", section := "") {
+set_pos(x1 := "", y1 := "", x2 := "", y2 := "", section := "") {
+	filename := "data/settings.ini"
 	IniWrite(x1, filename, section, "x1")
 	IniWrite(y1, filename, section, "y1")
 	IniWrite(x2, filename, section, "x2")
@@ -69,8 +85,8 @@ set_default_pos(x1 := "", y1 := "", x2 := "", y2 := "", filename := "", section 
 
 /*
 Get mail from rs_config.ini
-@param String filename
-@return String email
+@param {String} filename
+@return {String} email address
 */
 get_email(filename := "") {
 	result := IniRead(filename, "Email")
@@ -79,22 +95,23 @@ get_email(filename := "") {
 
 /*
 Set chat account to be @mentioned
-@param String filename
-@param String recipient
+@param {String} filename
+@param {String} recipient
 @return void
 */
 set_recipient(filename := "", recipient := "") {
 	try {
 		IniWrite(recipient, filename, "Chat", "acc")
 	} catch Error as e {
-		MsgBox("There has been an error while setting the chat account. Please check your rs_config.ini file. " . e.Message, "Error")
+		; MsgBox("There has been an error while setting the chat account. Please check your rs_config.ini file. " . e.Message, "Error")
+		error_logging(e.Message)
 	}
 }
 
 /*
 Grab account from ini file
-@param String filename
-@return String account
+@param {String} filename
+@return {String} account
 */
 get_acc(filename := "") {
 	result := IniRead(filename, "Account", "acc")
@@ -103,8 +120,8 @@ get_acc(filename := "") {
 
 /*
 Set account to ini file
-@param string filename
-@param string value
+@param {String} filename
+@param {String} value
 @return void
 */
 set_acc(filename := "", value := "") {
@@ -113,8 +130,8 @@ set_acc(filename := "", value := "") {
 
 /*
 Grab recipient from ini file
-@param String filename
-@return String recipient
+@param {String} filename
+@return {String} recipient
 */
 get_recipient(filename := "") {
 	result := IniRead(filename, "Chat", "acc")
@@ -123,8 +140,8 @@ get_recipient(filename := "") {
 
 /*
 Grab signature from ini file
-@param String filename
-@return String signature
+@param {String} filename
+@return {String} signature
 */
 get_sign(filename := "") {
 	result := IniRead(filename, "Signature", "acc")
@@ -133,21 +150,22 @@ get_sign(filename := "") {
 
 /*
 Set signature to ini file
-@param String filename
-@param String signature
+@param {String} filename
+@param {String} signature
 @return void
 */
 set_sign(filename := "", signature := "") {
 	try {
 		IniWrite(signature, filename, "Signature", "acc")
 	} catch Error as e {
-		MsgBox("There has been an error while setting signature: " . e.Message, "Error")
+		; MsgBox("There has been an error while setting signature: " . e.Message, "Error")
+		error_logging(e.Message)
 	}
 }
 
 /*
 Grabs default theme color code from .ini file
-@param filename: String file path to .ini file
+@param {String} filename String file path to .ini file
 @return > String with color code
 */
 get_default_theme(filename := "") {
@@ -156,7 +174,7 @@ get_default_theme(filename := "") {
 }
 /*
 Sets default theme color code to .ini file
-@param filename: String file path to .ini file
+@param {String} filename: String file path to .ini file
 @return void
 */
 set_default_theme(filename := "", value := "") {
@@ -175,15 +193,16 @@ set_default_theme(filename := "", value := "") {
 			IniWrite(txt_color, filename, "Default Settings", "txt_color")
 		}
 	} catch Error as e {
-		MsgBox("There has been an error when selecting theme: " . e.Message)
+		; MsgBox("There has been an error when selecting theme: " . e.Message)
+		error_logging(e.Message)
 	}
 }
 /*
 Reads items from .ini file and given section and returns array of strings
-@param filename: name of ini file, must be string
-@param section: name of section, must be string, if omitted, returns all sections
-@param key: name of key, must be string, if omitted, returns all items in section
-@return: Array of strings
+@param {String} filename: name of ini file, must be string
+@param {String} section: name of section, must be string, if omitted, returns all sections
+@param {String} key: name of key, must be string, if omitted, returns all items in section
+@return {Array} of strings
 */
 get_list(filename := "", section := "", key := "") {
 	; reads ini file => array of strings
@@ -192,9 +211,9 @@ get_list(filename := "", section := "", key := "") {
 }
 /*
 Send mail macro
-@param String subject
-@param string body
-@param String filename
+@param {String} subject
+@param {String} body
+@param {String} filename
 */
 mail_send(body, subject, filename) {
 
@@ -223,12 +242,13 @@ mail_send(body, subject, filename) {
 		} else
 			MsgBox("Mail not opened")
 	} catch Error as e {
-		MsgBox("An error has been produced while running mail macro: " . e.Message . " caused by: " . e.What, "Error")
+		; MsgBox("An error has been produced while running mail macro: " . e.Message . " caused by: " . e.What, "Error")
+		error_logging(e.Message)
 	}
 }
 /*
 Send message macro in chat in the appropiate channel
-@param String message
+@param {String} message
 */
 chat_macro(message) {
 
@@ -260,12 +280,13 @@ chat_macro(message) {
 		} else
 			MsgBox("Chat is not open")
 	} catch Error as e {
-		MsgBox("An error has been produced while running chat macro : " . e.Message . " caused by: " . e.What, "Error")
+		; MsgBox("An error has been produced while running chat macro : " . e.Message . " caused by: " . e.What, "Error")
+		error_logging(e.Message)
 	}
 }
 /*
 Grab track id from position in Cadosys
-@params int x1, int y1, int x2, int y2
+@params {int} x1, int y1, int x2, int y2
 */
 grab_track_id(x1, y1, x2, y2) {
 	try {
@@ -282,14 +303,15 @@ grab_track_id(x1, y1, x2, y2) {
 		MouseClick("Left", x2, y2)
 		MouseMove(70, 400, 0)
 	} catch Error as e {
-		MsgBox("An error has been produced while running track id macro: " . e.Message . " caused by:" . e.What, "Error")
+		; MsgBox("An error has been produced while running track id macro: " . e.Message . " caused by:" . e.What, "Error")
+		error_logging(e.Message)
 	}
 }
 
 /*
 Trims the spaces found in the string, and returns the trimmed string
-@param string string
-@return string
+@param {String} string
+@return {String} trimmed string
 */
 full_trim(string := "") {
 	try {
@@ -304,14 +326,17 @@ full_trim(string := "") {
 		} else
 			return string
 	} catch Error as e {
-		MsgBox("An error has been produced while trimming track id: " . e.Message)
+		; MsgBox("An error has been produced while trimming track id: " . e.Message)
+		error_logging(e.Message)
 	}
 	return temp
 }
 /*
-Set track id to counter and write to .txt file
-@params int x1, int y1, int x2, int y2
-@param String filename
+@Macro sets track id to counter and write to .txt file
+@param {Int} x1, int y1, int x2, int y2 which are the coordinates of the track id
+@param {String} filename containing the filename of the .txt file in which the timestamp is written
+@param {Boolean} fleet  indicating if the track id should be
+@return {void}
 */
 set_track_id(x1, y1, x2, y2, filename, fleet) {
 	try {
@@ -324,7 +349,7 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
 
 				A_Clipboard := ""	; empty clipboard before grabbing the text
 				grab_track_id(x1, y1, x2, y2)
-				trackNr := full_trim(A_Clipboard)
+				trackNr := full_trim(A_Clipboard)	; trims spaces between track number if necessary
 
 				;writes id to .txt file for history
 				timestamp := A_Space . A_DD . "-" . A_MM . "-" . A_YYYY . A_Space . A_Hour . ":" . A_Min
@@ -337,7 +362,7 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
 					Send "^{V}"
 					A_Clipboard := ""	;clear the clipboard
 					if (fleet = 1) {
-						set_live_activity()
+						; set_live_activity()
 					}
 					WinActivate("CaptureThis")
 				} else {
@@ -350,28 +375,30 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
 			Run(A_ScriptDir . "\Capture2Text\Capture2Text.exe")
 		}
 	} catch Error as e {
-		MsgBox("An error has been produced while setting track id to counter : " . e.Message . " caused by: " . e.What, "Error")
+		; MsgBox("An error has been produced while setting track id to counter : " . e.Message . " caused by: " . e.What, "Error")
+		error_logging(e.Message)
 	}
 
 }
 
 /*
- Set live to counter for fleet activity
+@Macro Set live to counter for fleet activity
 */
 set_live_activity() {
-	Loop 4 {
+	Loop 9 {
 		Send("{Tab}")
+		Sleep(150)
 	}
-	Sleep(150)
-	; SendText(activity)
-	Sleep(500)
-	Loop 5 {
-		Send("{Tab}")
-	}
+	; Sleep(150)
+	; ; SendText(activity)
+	; Sleep(150)
+	; Loop 5 {
+	; 	Send("{Tab}")
+	; }
 }
 
 /*
-Start-stop macro for counter
+@Macro Start-stop for counter
 @param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet processing
 @param string activity , text from a dropdown menu
 */
@@ -417,6 +444,7 @@ stop_start(is_fleet := "") {
 		}
 	}
 	catch Error as e {
-		MsgBox("An error has been produced while running stop-start macro: " . e.Message . " caused by: " . e.What, "Error")
+		; MsgBox("An error has been produced while running stop-start macro: " . e.Message . " caused by: " . e.What, "Error")
+		error_logging(e.Message)
 	}
 }

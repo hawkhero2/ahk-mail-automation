@@ -25,9 +25,10 @@
 
 #Include lib\Functions.ahk
 #Include lib\RunAtStartUp.ahk
+; #Include lib\TestClass.ahk
 ; ------------------------------------------------------------------------
 
-run_at_startup()
+at_startup()
 
 /*
 *												GLOBAL VARIABLES
@@ -50,6 +51,9 @@ global RECIPIENT := get_recipient(SETTINGS_FILE)
 global EMAIL := get_email(RS_CFG)
 global CURRENT_DATE := A_DD . "-" . A_MM . "-" . A_YYYY
 global THEME_LIST := ["Light", "Dark"]
+global DEF_ID_LOC := "Track Id Location"
+global FLEET_ID_LOC := "Fleet Track Id Location"
+global GC_ID_LOC := "GC Track Id Location"
 
 
 /*
@@ -119,16 +123,22 @@ browse_btn_listener(*) {
 ; *         TEST BUTTON
 main_ui.Add("Button", BUTTON_SIZE . A_Space . "x450 y220", "Test").OnEvent("Click", test_btn_listener)
 test_btn_listener(*) {
-    ; coords := get_list(SETTINGS_FILE, "Track Id Location")    ; returns the coordinates
+    /*
+    coords := get_list(SETTINGS_FILE, "Track Id Location")    ; returns the coordinates
     coords := get_coords(SETTINGS_FILE, "Track Id Location", "x")
-    ; set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+    set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+    test := TestClass()
+    
+    test.set_mymsg(test.test)
+    test.saysomething()
+    */
 }
 /*
 *                                             SETTINGS UI
 */
 settings_ui := Gui("-Resize -MaximizeBox", "Settings", settings_ui_listener := [])
 settings_ui.OnEvent("Close", settings_close)
-tabs := settings_ui.Add("Tab2", "w580", ["Info", "Hotkeys"])
+tabs := settings_ui.Add("Tab2", "w580", ["Info", "Hotkeys", "Configurations"])
 misc := settings_ui.Add("GroupBox", "x290 y40 w250 h110 " . TXT_COLOR, "Misc")
 id_pos := settings_ui.Add("GroupBox", "x15 y40 w250 h110 " . TXT_COLOR, "Track Id Position")
 tabs.UseTab()
@@ -159,6 +169,7 @@ signature_field := settings_ui.Add("Edit", CENTER_INPUT . " " . "vsignature w90 
 */
 theme_lbl := settings_ui.Add("Text", "x440 y165 " . TXT_COLOR, "Theme")
 theme_field := settings_ui.Add("DDL", "vtheme w90 x330 y160", THEME_LIST)
+theme_field.Choose(get_theme_name(DEFAULT_THEME))
 tabs.UseTab(2)
 hotkeys := settings_ui.Add("GroupBox", "x10 y40 w250 h110 " . TXT_COLOR, "Track Id Hotkeys")
 mbutton := settings_ui.Add("Checkbox", "x15 y60 " . TXT_COLOR, "Middle Mouse Button")
@@ -174,6 +185,45 @@ x2btn.Value := get_state("x2button")
 scrlock.Value := get_state("scrllock")
 pausebreak.Value := get_state("pausebreak")
 fseven.Value := get_state("fseven")
+tabs.UseTab(3)
+settings_ui.Add("GroupBox", "x10 y40 w180 h140 " . TXT_COLOR, "EC Position")
+mouse_x1_lbl := settings_ui.Add("Text", "x25 y60 " . TXT_COLOR, "x1")
+mouse_x2_lbl := settings_ui.Add("Text", "x25 y90 " . TXT_COLOR, "x2")
+mouse_y1_lbl := settings_ui.Add("Text", "x25 y120 " . TXT_COLOR, "y1")
+mouse_y2_lbl := settings_ui.Add("Text", "x25 y150 " . TXT_COLOR, "y2")
+mouse_x1_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x50 y55", get_coords(DEF_ID_LOC, "x1"))
+mouse_x2_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x50 y85", get_coords(DEF_ID_LOC, "x2"))
+mouse_y1_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x50 y115", get_coords(DEF_ID_LOC, "y1"))
+mouse_y2_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x50 y145", get_coords(DEF_ID_LOC, "y2"))
+
+settings_ui.Add("GroupBox", "x200 y40 w180 h140 " . TXT_COLOR, "Fleet Position")
+mouse_x1_fleet_lbl := settings_ui.Add("Text", "x220 y60 " . TXT_COLOR, "x1")
+mouse_x2_fleet_lbl := settings_ui.Add("Text", "x220 y90 " . TXT_COLOR, "x2")
+mouse_y1_fleet_lbl := settings_ui.Add("Text", "x220 y120 " . TXT_COLOR, "y1")
+mouse_y2_fleet_lbl := settings_ui.Add("Text", "x220 y150 " . TXT_COLOR, "y2")
+
+mouse_x1_fleet_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x245 y55", get_coords(FLEET_ID_LOC, "x1"))
+mouse_x2_fleet_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x245 y85", get_coords(FLEET_ID_LOC, "x2"))
+mouse_y1_fleet_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x245 y115", get_coords(FLEET_ID_LOC, "y1"))
+mouse_y2_fleet_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x245 y145", get_coords(FLEET_ID_LOC, "y2"))
+
+
+settings_ui.Add("GroupBox", "x390 y40 w180 h140 " . TXT_COLOR, "GC Position")
+mouse_x1_gc_lbl := settings_ui.Add("Text", "x415 y60 " . TXT_COLOR, "x1")
+mouse_x2_gc_lbl := settings_ui.Add("Text", "x415 y90 " . TXT_COLOR, "x2")
+mouse_y1_gc_lbl := settings_ui.Add("Text", "x415 y120 " . TXT_COLOR, "y1")
+mouse_y2_gc_lbl := settings_ui.Add("Text", "x415 y150 " . TXT_COLOR, "y2")
+
+
+mouse_x1_gc_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x445 y55", get_coords(GC_ID_LOC, "x1"))
+mouse_x2_gc_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x445 y85", get_coords(GC_ID_LOC, "x2"))
+mouse_y1_gc_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x445 y115", get_coords(GC_ID_LOC, "y1"))
+mouse_y2_gc_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x445 y145", get_coords(GC_ID_LOC, "y2"))
+
+
+settings_ui.BackColor := get_default_theme(SETTINGS_FILE)
+; main_ui.Hide()
+; settings_ui.Show()
 /*
 *                                             LISTENERS
 */
@@ -248,6 +298,10 @@ save_btn_listener(*) {
     mbutton.SetFont(TXT_COLOR)
     x1btn.SetFont(TXT_COLOR)
     x2btn.SetFont(TXT_COLOR)
+
+    set_pos(mouse_x1_field.Text, mouse_y1_field.Text, mouse_x2_field.Text, mouse_y2_field.Text, DEF_ID_LOC)
+    set_pos(mouse_x1_fleet_field.Text, mouse_y1_fleet_field.Text, mouse_x2_fleet_field.Text, mouse_y2_fleet_field.Text, FLEET_ID_LOC)
+    set_pos(mouse_x1_gc_field.Text, mouse_y1_gc_field.Text, mouse_x2_gc_field.Text, mouse_y2_gc_field.Text, GC_ID_LOC)
 }
 send_email_listener(*) {
     subject := track_id.Value . A_Space . CURRENT_DATE . "," . A_Space . get_acc(SETTINGS_FILE)
@@ -298,18 +352,26 @@ set_btn_listener(*) {
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
     KeyWait("LButton", "D")
     MouseGetPos(&cstm_x1, &cstm_y1)
+    x1 := cstm_x1
+    y1 := cstm_y1
     KeyWait("LButton", "U")
     MouseGetPos(&cstm_x2, &cstm_y2)
-    set_default_pos(cstm_x1, cstm_y1, cstm_x2, cstm_y2, SETTINGS_FILE, "Track Id Location")
+    x2 := cstm_x2
+    y2 := cstm_y2
+    set_pos(x1, y1, x2, y2, DEF_ID_LOC)
     MsgBox("Position set")
 }
 set_fleet_btn_listener(*) {
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
     KeyWait("LButton", "D")
     MouseGetPos(&cstm_x1, &cstm_y1)
+    x1 := cstm_x1
+    y1 := cstm_y1
     KeyWait("LButton", "U")
     MouseGetPos(&cstm_x2, &cstm_y2)
-    set_default_pos(cstm_x1, cstm_y1, cstm_x2, cstm_y2, SETTINGS_FILE, "Fleet Track Id Location")
+    x2 := cstm_x2
+    y2 := cstm_y2
+    set_pos(x1, y1, x2, y2, FLEET_ID_LOC)
     MsgBox("Position set")
 }
 settings_btn_listener(*) {
@@ -331,18 +393,13 @@ MButton:: {
     try {
         if (get_state("mbutton")) {
             if (ec_radio.Value = 1) {
-
-                coords := get_coords(SETTINGS_FILE, "Track Id Location")
+                coords := get_coords(DEF_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
-
             } else if (fleet_radio.Value = 1) {
-
-                coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
+                coords := get_coords(FLEET_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
-
             } else if (gc_radio.Value = 1) {
-
-                coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
+                coords := get_coords(GC_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
             }
         }
@@ -354,19 +411,14 @@ XButton2:: {
     try {
         if (get_state("x2button")) {
             if (ec_radio.Value = 1) {
-                coords := get_coords(SETTINGS_FILE, "Track Id Location")
+                coords := get_coords(DEF_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
-
             } else if (fleet_radio.Value = 1) {
-
-                coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
+                coords := get_coords(FLEET_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
-
             } else if (gc_radio.Value = 1) {
-
-                coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
+                coords := get_coords(GC_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
-
             }
         }
     } catch Error as e {
@@ -377,20 +429,14 @@ ScrollLock:: {
     try {
         if (get_state("scrllock")) {
             if (ec_radio.Value = 1) {
-
-                coords := get_coords(SETTINGS_FILE, "Track Id Location")
+                coords := get_coords(DEF_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
-
             } else if (fleet_radio.Value = 1) {
-
-                coords := get_coords(SETTINGS_FILE, "Fleet Track Id Location")
+                coords := get_coords(FLEET_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
-
             } else if (gc_radio.Value = 1) {
-
-                coords := get_coords(SETTINGS_FILE, "GC Track Id Location")
+                coords := get_coords(GC_ID_LOC)
                 set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY, fleet_radio.Value)
-
             }
         }
     } catch Error as e {
@@ -430,7 +476,6 @@ F7:: {
         ; checks if the hotkey is enabled
         if (get_state("fseven")) {
             ; checks if the checkbox for fleet is  enable and if the an activity was chosen
-
             if (fleet_radio.Value = 1) {
                 stop_start(fleet_radio.Value)
             }
