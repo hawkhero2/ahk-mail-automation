@@ -75,7 +75,8 @@ Set default location of the track id to ini file
 @param {String} filename
 @return void
 */
-set_pos(x1 := "", y1 := "", x2 := "", y2 := "", filename := "", section := "") {
+set_pos(x1 := "", y1 := "", x2 := "", y2 := "", section := "") {
+	filename := "data/settings.ini"
 	IniWrite(x1, filename, section, "x1")
 	IniWrite(y1, filename, section, "y1")
 	IniWrite(x2, filename, section, "x2")

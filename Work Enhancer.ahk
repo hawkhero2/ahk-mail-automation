@@ -299,9 +299,9 @@ save_btn_listener(*) {
     x1btn.SetFont(TXT_COLOR)
     x2btn.SetFont(TXT_COLOR)
 
-    set_pos(mouse_x1_field.Text, mouse_y1_field.Text, mouse_x2_field.Text, mouse_y2_field.Text, SETTINGS_FILE, DEF_ID_LOC)
-    set_pos(mouse_x1_fleet_field.Text, mouse_y1_fleet_field.Text, mouse_x2_fleet_field.Text, mouse_y2_fleet_field.Text, SETTINGS_FILE, FLEET_ID_LOC)
-    set_pos(mouse_x1_gc_field.Text, mouse_y1_gc_field.Text, mouse_x2_gc_field.Text, mouse_y2_gc_field.Text, SETTINGS_FILE, GC_ID_LOC)
+    set_pos(mouse_x1_field.Text, mouse_y1_field.Text, mouse_x2_field.Text, mouse_y2_field.Text, DEF_ID_LOC)
+    set_pos(mouse_x1_fleet_field.Text, mouse_y1_fleet_field.Text, mouse_x2_fleet_field.Text, mouse_y2_fleet_field.Text, FLEET_ID_LOC)
+    set_pos(mouse_x1_gc_field.Text, mouse_y1_gc_field.Text, mouse_x2_gc_field.Text, mouse_y2_gc_field.Text, GC_ID_LOC)
 }
 send_email_listener(*) {
     subject := track_id.Value . A_Space . CURRENT_DATE . "," . A_Space . get_acc(SETTINGS_FILE)
@@ -354,7 +354,7 @@ set_btn_listener(*) {
     MouseGetPos(&cstm_x1, &cstm_y1)
     KeyWait("LButton", "U")
     MouseGetPos(&cstm_x2, &cstm_y2)
-    set_pos(cstm_x1, cstm_y1, cstm_x2, cstm_y2, SETTINGS_FILE, "Track Id Location")
+    set_pos(cstm_x1, cstm_y1, cstm_x2, cstm_y2, DEF_ID_LOC)
     MsgBox("Position set")
 }
 set_fleet_btn_listener(*) {
@@ -363,7 +363,7 @@ set_fleet_btn_listener(*) {
     MouseGetPos(&cstm_x1, &cstm_y1)
     KeyWait("LButton", "U")
     MouseGetPos(&cstm_x2, &cstm_y2)
-    set_pos(cstm_x1, cstm_y1, cstm_x2, cstm_y2, SETTINGS_FILE, "Fleet Track Id Location")
+    set_pos(cstm_x1, cstm_y1, cstm_x2, cstm_y2, FLEET_ID_LOC)
     MsgBox("Position set")
 }
 settings_btn_listener(*) {
