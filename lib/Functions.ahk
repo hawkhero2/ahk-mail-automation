@@ -361,7 +361,7 @@ set_track_id(x1, y1, x2, y2, filename, fleet) {
 					Send "^{V}"
 					A_Clipboard := ""	;clear the clipboard
 					if (fleet = 1) {
-						set_live_activity()
+						; set_live_activity()
 					}
 					WinActivate("CaptureThis")
 				} else {

@@ -222,8 +222,8 @@ mouse_y2_gc_field := settings_ui.Add("Edit", CENTER_INPUT . " w90 x445 y145", ge
 
 
 settings_ui.BackColor := get_default_theme(SETTINGS_FILE)
-main_ui.Hide()
-settings_ui.Show()
+; main_ui.Hide()
+; settings_ui.Show()
 /*
 *                                             LISTENERS
 */
