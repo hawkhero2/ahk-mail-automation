@@ -352,18 +352,26 @@ set_btn_listener(*) {
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
     KeyWait("LButton", "D")
     MouseGetPos(&cstm_x1, &cstm_y1)
+    x1 := cstm_x1
+    y1 := cstm_y1
     KeyWait("LButton", "U")
     MouseGetPos(&cstm_x2, &cstm_y2)
-    set_pos(cstm_x1, cstm_y1, cstm_x2, cstm_y2, DEF_ID_LOC)
+    x2 := cstm_x2
+    y2 := cstm_y2
+    set_pos(x1, y1, x2, y2, DEF_ID_LOC)
     MsgBox("Position set")
 }
 set_fleet_btn_listener(*) {
     MsgBox("Make a diagonal selection of where the track id is positioned then click save")
     KeyWait("LButton", "D")
     MouseGetPos(&cstm_x1, &cstm_y1)
+    x1 := cstm_x1
+    y1 := cstm_y1
     KeyWait("LButton", "U")
     MouseGetPos(&cstm_x2, &cstm_y2)
-    set_pos(cstm_x1, cstm_y1, cstm_x2, cstm_y2, FLEET_ID_LOC)
+    x2 := cstm_x2
+    y2 := cstm_y2
+    set_pos(x1, y1, x2, y2, FLEET_ID_LOC)
     MsgBox("Position set")
 }
 settings_btn_listener(*) {
