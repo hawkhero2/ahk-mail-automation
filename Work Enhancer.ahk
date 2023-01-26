@@ -121,18 +121,18 @@ browse_btn_listener(*) {
 }
 */
 ; *         TEST BUTTON
-main_ui.Add("Button", BUTTON_SIZE . A_Space . "x450 y220", "Test").OnEvent("Click", test_btn_listener)
-test_btn_listener(*) {
-    /*
-    coords := get_list(SETTINGS_FILE, "Track Id Location")    ; returns the coordinates
-    coords := get_coords(SETTINGS_FILE, "Track Id Location", "x")
-    set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
-    test := TestClass()
-    
-    test.set_mymsg(test.test)
-    test.saysomething()
-    */
-}
+; main_ui.Add("Button", BUTTON_SIZE . A_Space . "x450 y220", "Test").OnEvent("Click", test_btn_listener)
+; test_btn_listener(*) {
+;     /*
+;     coords := get_list(SETTINGS_FILE, "Track Id Location")    ; returns the coordinates
+;     coords := get_coords(SETTINGS_FILE, "Track Id Location", "x")
+;     set_track_id(coords[1], coords[2], coords[3], coords[4], ID_HISTORY)
+;     test := TestClass()
+
+;     test.set_mymsg(test.test)
+;     test.saysomething()
+;     */
+; }
 /*
 *                                             SETTINGS UI
 */
