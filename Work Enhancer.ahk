@@ -26,6 +26,7 @@
 #Include lib\Functions.ahk
 #Include lib\RunAtStartUp.ahk
 ; #Include lib\TestClass.ahk
+#Include lib\IdPosClass.ahk
 ; ------------------------------------------------------------------------
 
 at_startup()
@@ -34,9 +35,16 @@ at_startup()
 *												GLOBAL VARIABLES
 */
 
+settings := SettingsClass()
+store_x1 := settings.x1
+
+idPosCls := IdPosClass()
+test := idPosCls.expertise.Get("x1")
+testmap := idPosCls.expertise
+
 global SETTINGS_FILE := "data/settings.ini"
 global ID_HISTORY := "data/id_history.txt"
-global DEFAULT_THEME := get_default_theme(SETTINGS_FILE)
+global DEFAULT_THEME := get_default_theme(settings.file_location)
 global RS_CFG := "data/rs_config.ini"
 
 global TXT_COLOR := "C" . get_def_txt_color(SETTINGS_FILE)
@@ -299,6 +307,7 @@ save_btn_listener(*) {
     x1btn.SetFont(TXT_COLOR)
     x2btn.SetFont(TXT_COLOR)
 
+    ; TODO possibly use Map for all the values and all sections in the settings file and call function only once?
     set_pos(mouse_x1_field.Text, mouse_y1_field.Text, mouse_x2_field.Text, mouse_y2_field.Text, DEF_ID_LOC)
     set_pos(mouse_x1_fleet_field.Text, mouse_y1_fleet_field.Text, mouse_x2_fleet_field.Text, mouse_y2_fleet_field.Text, FLEET_ID_LOC)
     set_pos(mouse_x1_gc_field.Text, mouse_y1_gc_field.Text, mouse_x2_gc_field.Text, mouse_y2_gc_field.Text, GC_ID_LOC)

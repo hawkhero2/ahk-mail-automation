@@ -9,13 +9,23 @@
 class SettingsClass extends Object {
 
     file_location := "data/settings.ini"
-    x1 := ""
-    x2 := ""
-    y1 := ""
-    y2 := ""
     recipient := ""
     account := ""
     email := ""
+    glassCheck := "GC Track Id Location"
+    expertise := "Track Id Location"
+    fleet := "Fleet Track Id Location"
+    default_theme := this.get_default_theme()
+
+
+    /*
+    Grabs default theme color code from .ini file
+    @return > String with color code
+    */
+    get_default_theme() {
+        global def_theme := IniRead(this.file_location, "Default Settings", "theme", "")
+        Return def_theme
+    }
 
     /*
     Get current coodinates of the track id from settings.ini
@@ -41,16 +51,16 @@ class SettingsClass extends Object {
         return result
     }
 
-    get_values(key) {
-        if (key == "x1")
-            return this.x1
-        else if (key == "x2")
-            return this.x2
-        else if (key == "y1")
-            return this.y1
-        else if (key == "y2")
-            return this.y2
-    }
+    ; get_values(key) {
+    ;     if (key == "x1")
+    ;         return this.x1
+    ;     else if (key == "x2")
+    ;         return this.x2
+    ;     else if (key == "y1")
+    ;         return this.y1
+    ;     else if (key == "y2")
+    ;         return this.y2
+    ; }
 
     set_values(key, value) {
         if (key) {
