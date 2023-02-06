@@ -5,7 +5,7 @@
 @param {String} color_value
 @return {String}
 */
-get_theme_name(value := "") {
+get_theme_name(value) {
 	if (value == "333333") {
 		return "Dark"
 	}
@@ -20,7 +20,7 @@ Get current coodinates of the track id from settings.ini
 @param {String} key
 @return array of coordinates or single coordinate if provided with key name
 */
-get_coords(section := "", key := "") {
+get_coords(section, key := "") {
 
 	filename := "data/settings.ini"
 	if (StrLen(key) > 0) {
@@ -44,7 +44,7 @@ Set state of element
 @param {boolean} state
 @return void
 */
-set_state(key := "", state := false) {
+set_state(key, state := false) {
 	IniWrite(state, "data\settings.ini", "States", key)
 }
 
@@ -53,7 +53,7 @@ Get state of enabled keys from the settings.ini file
 @param {string} key
 @return {boolean}
 */
-get_state(key := "") {
+get_state(key) {
 	state := false
 	if (IniRead("data\settings.ini", "States", key) = true) {
 		state := true
@@ -75,7 +75,7 @@ Set default location of the track id to ini file
 @param {String} filename
 @return void
 */
-set_pos(x1 := "", y1 := "", x2 := "", y2 := "", section := "") {
+set_pos(x1, y1, x2, y2, section) {
 	filename := "data/settings.ini"
 	IniWrite(x1, filename, section, "x1")
 	IniWrite(y1, filename, section, "y1")
@@ -88,7 +88,7 @@ Get mail from rs_config.ini
 @param {String} filename
 @return {String} email address
 */
-get_email(filename := "") {
+get_email(filename) {
 	result := IniRead(filename, "Email")
 	return result
 }
@@ -99,7 +99,7 @@ Set chat account to be @mentioned
 @param {String} recipient
 @return void
 */
-set_recipient(filename := "", recipient := "") {
+set_recipient(filename, recipient) {
 	try {
 		IniWrite(recipient, filename, "Chat", "acc")
 	} catch Error as e {
@@ -113,7 +113,7 @@ Grab account from ini file
 @param {String} filename
 @return {String} account
 */
-get_acc(filename := "") {
+get_acc(filename) {
 	result := IniRead(filename, "Account", "acc")
 	return result
 }
@@ -124,7 +124,7 @@ Set account to ini file
 @param {String} value
 @return void
 */
-set_acc(filename := "", value := "") {
+set_acc(filename, value) {
 	IniWrite(value, filename, "Account", "acc")
 }
 
@@ -133,7 +133,7 @@ Grab recipient from ini file
 @param {String} filename
 @return {String} recipient
 */
-get_recipient(filename := "") {
+get_recipient(filename) {
 	result := IniRead(filename, "Chat", "acc")
 	return result
 }
@@ -143,7 +143,7 @@ Grab signature from ini file
 @param {String} filename
 @return {String} signature
 */
-get_sign(filename := "") {
+get_sign(filename) {
 	result := IniRead(filename, "Signature", "acc")
 	return result
 }
@@ -154,7 +154,7 @@ Set signature to ini file
 @param {String} signature
 @return void
 */
-set_sign(filename := "", signature := "") {
+set_sign(filename, signature) {
 	try {
 		IniWrite(signature, filename, "Signature", "acc")
 	} catch Error as e {
@@ -168,7 +168,7 @@ Grabs default theme color code from .ini file
 @param {String} filename String file path to .ini file
 @return > String with color code
 */
-get_default_theme(filename := "") {
+get_default_theme(filename) {
 	global def_theme := IniRead(filename, "Default Settings", "theme", "")
 	Return def_theme
 }
@@ -177,7 +177,7 @@ Sets default theme color code to .ini file
 @param {String} filename: String file path to .ini file
 @return void
 */
-set_default_theme(filename := "", value := "") {
+set_default_theme(filename, value) {
 	try {
 
 		if (value = "Light") {
@@ -204,9 +204,9 @@ Reads items from .ini file and given section and returns array of strings
 @param {String} key: name of key, must be string, if omitted, returns all items in section
 @return {Array} of strings
 */
-get_list(filename := "", section := "", key := "") {
+get_list(filename, section) {
 	; reads ini file => array of strings
-	global rej_list := StrSplit(IniRead(filename, section, key, ""), "`n")
+	global rej_list := StrSplit(IniRead(filename, section, "", ""), "`n")
 	Return rej_list
 }
 /*
@@ -313,7 +313,7 @@ Trims the spaces found in the string, and returns the trimmed string
 @param {String} string
 @return {String} trimmed string
 */
-full_trim(string := "") {
+full_trim(string) {
 	try {
 		strArray := StrSplit(string, A_Space)
 		if (strArray.Length > 1) {
@@ -402,7 +402,7 @@ set_live_activity() {
 @param boolean is_fleet , a checkbox state used to determine if the counter is set for fleet processing
 @param string activity , text from a dropdown menu
 */
-stop_start(is_fleet := "") {
+stop_start(is_fleet) {
 	try {
 		if (is_fleet = 1) {
 			if (WinExist("(")) {

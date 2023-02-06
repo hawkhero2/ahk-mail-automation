@@ -23,7 +23,7 @@ class SettingsClass extends Object {
     @param string key
     @return array of coordinates or single coordinate if provided with key name
     */
-    get_coords(section := "", key := "") {
+    get_coords(section, key := "") {
 
         if (StrLen(key) > 0) {
             result := IniRead(this.file_location, section, key)
