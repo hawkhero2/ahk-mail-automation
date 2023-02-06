@@ -312,7 +312,7 @@ send_email_listener(*) {
         body := "Hello,`n`nDoppelt" . A_Space . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Text . A_Space . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     } else if (doppelt2_radio.Value = 1) {
-        body := "Hello,`n`nDoppelt" . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
+        body := "Hello,`n`nDoppelt " . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     } else if (diff_radio.Value = 1) {
         body := "Hello, `n`n" . track_id.Value . " Difference of " . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
