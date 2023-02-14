@@ -26,6 +26,7 @@
 #Include lib\Functions.ahk
 #Include lib\RunAtStartUp.ahk
 ; #Include lib\TestClass.ahk
+#Include lib\IdPosClass.ahk
 ; ------------------------------------------------------------------------
 
 at_startup()
@@ -34,9 +35,16 @@ at_startup()
 *												GLOBAL VARIABLES
 */
 
+settings := SettingsClass()
+store_x1 := settings.x1
+
+idPosCls := IdPosClass()
+test := idPosCls.expertise.Get("x1")
+testmap := idPosCls.expertise
+
 global SETTINGS_FILE := "data/settings.ini"
 global ID_HISTORY := "data/id_history.txt"
-global DEFAULT_THEME := get_default_theme(SETTINGS_FILE)
+global DEFAULT_THEME := get_default_theme(settings.file_location)
 global RS_CFG := "data/rs_config.ini"
 
 global TXT_COLOR := "C" . get_def_txt_color(SETTINGS_FILE)
@@ -300,6 +308,7 @@ save_btn_listener(*) {
     x1btn.SetFont(TXT_COLOR)
     x2btn.SetFont(TXT_COLOR)
 
+    ; TODO possibly use Map for all the values and all sections in the settings file and call function only once?
     set_pos(mouse_x1_field.Text, mouse_y1_field.Text, mouse_x2_field.Text, mouse_y2_field.Text, DEF_ID_LOC)
     set_pos(mouse_x1_fleet_field.Text, mouse_y1_fleet_field.Text, mouse_x2_fleet_field.Text, mouse_y2_fleet_field.Text, FLEET_ID_LOC)
     set_pos(mouse_x1_gc_field.Text, mouse_y1_gc_field.Text, mouse_x2_gc_field.Text, mouse_y2_gc_field.Text, GC_ID_LOC)
@@ -313,7 +322,7 @@ send_email_listener(*) {
         body := "Hello,`n`nDoppelt" . A_Space . track_id.Value . "-" . "Dieser Vorgang wurde bereits am " . doppelt_date.Text . A_Space . " unter Vorgang " . doppelt_nr.Value . " geprüft. Die Ergebnisberichte aus der vorangegangen Prüfung sind als eigene Dokumente beigefügt `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     } else if (doppelt2_radio.Value = 1) {
-        body := "Hello,`n`nDoppelt" . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
+        body := "Hello,`n`nDoppelt " . track_id.Value . "-" . " Dieser Vorgang wurde bereits unter Vorgang " . doppelt_nr.Value . " geprüft. `n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
         mail_send(body, subject, RS_CFG)
     } else if (diff_radio.Value = 1) {
         body := "Hello, `n`n" . track_id.Value . " Difference of " . diff_val.Value . "€ - Der Kostenvoranschlag ist leider nicht vollständig. In der Kalkulation ist eine Differenz von " . diff_val.Value . "€. Bitte senden Sie uns den Vorgang vollständig erneut zur Prüfung zu. Vielen Dank!`n`n`nBest Regards,`n" . get_sign(SETTINGS_FILE) . "`nDatamondial"
