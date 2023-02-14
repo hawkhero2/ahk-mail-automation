@@ -84,6 +84,7 @@ doppelt_radio := main_ui.Add("Radio", " x260 y35 " . TXT_COLOR, "Doppelt")
 doppelt2_radio := main_ui.Add("Radio", " x260 y55 " . TXT_COLOR, "Doppelt v2")
 diff_radio := main_ui.Add("Radio", " x260 y75 " . TXT_COLOR, "Difference")
 kurze_radio := main_ui.Add("Radio", " x260 y95 " . TXT_COLOR, "Doppelt Kurze")
+merge_radio := main_ui.Add("Radio", " x260 y115 " . TXT_COLOR, "Merge Docs")
 list_radio.Value := 1
 ; *             DROPDOWN REJECTION LIST
 arr_rej_list := get_list(RS_CFG, "Rejection")
