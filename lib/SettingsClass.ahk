@@ -11,7 +11,7 @@ class SettingsClass extends Object {
     file_location := "data/settings.ini"
     recipient := ""
     account := ""
-    email := ""
+    email := this.getEmail()
     glassCheck := "GC Track Id Location"
     expertise := "Track Id Location"
     fleet := "Fleet Track Id Location"
@@ -51,22 +51,15 @@ class SettingsClass extends Object {
         return result
     }
 
-    ; get_values(key) {
-    ;     if (key == "x1")
-    ;         return this.x1
-    ;     else if (key == "x2")
-    ;         return this.x2
-    ;     else if (key == "y1")
-    ;         return this.y1
-    ;     else if (key == "y2")
-    ;         return this.y2
-    ; }
-
     set_values(key, value) {
         if (key) {
         }
     }
 
+
+    getEmail() {
+        return IniRead(this.file_location, "Email")
+    }
 
     /*
     Creates the default configuration for the settings.ini file
